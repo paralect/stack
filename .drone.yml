@@ -1,0 +1,9 @@
+pipeline:
+  run-tests-suite:
+    image: michalpodeszwa/docker-compose:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    commands:
+      - echo "Hello Service Stack ;)"
+
+branches: [ master, "*:master" ]
