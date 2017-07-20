@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import combineSectionReducers from 'combine-section-reducers';
 
-import user from './resources/user/user.reducer';
+import user from './user/user.reducer';
 
 
 const reducer = combineSectionReducers({ user });

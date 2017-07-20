@@ -16,6 +16,11 @@ class Profile extends React.Component {
     user: PropTypes.object.isRequired,
   }
 
+  state = {
+    username: '',
+    info: '',
+  }
+
   updateUser = () => {
     this.props.updateUser(this.state);
   }

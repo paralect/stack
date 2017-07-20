@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
 import Layout from './components/layout';
-import store from './store';
+import store from './resources/store';
 
 
 ReactDOM.render((
