@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.jsx",
   "scripts": {
-    "start": "webpack-dev-server",
-    "lint": "eslint ."
+    "start": "cd ./src && webpack-dev-server",
+    "lint": "eslint ./src"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "babel-eslint": "^7.2.3",
     "classnames": "2.2.5",
     "combine-section-reducers": "1.0.4",
     "postcss-css-reset": "1.0.2",
