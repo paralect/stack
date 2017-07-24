@@ -30,7 +30,7 @@ Application structured in a way, which we find most efficient in both short and 
 
 ### Conventions
 
-1. Name of all your components should start from lowercased letter.
+1. Name of all files for components should start from lowercased letter.
 2. Code style. (TODO: add link to the common eslint configuration for the javascript)
 
 ### List of planned improvements
