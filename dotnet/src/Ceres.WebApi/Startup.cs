@@ -37,7 +37,6 @@ namespace Ceres.WebApi
         {
             // Add framework services.
             services.AddMvc();
-            services.AddAuthentication();
 
             services.Configure<JwtSettings>(Configuration.GetSection("JWTSettings"));
 
@@ -64,7 +63,9 @@ namespace Ceres.WebApi
                 {
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWTSettings:SecretKey"])),
                     ValidateIssuerSigningKey = true,
-                    ValidateLifetime = true
+                    ValidateLifetime = true,
+                    ValidAudience = Configuration["JWTSettings:Audience"],
+                    ValidIssuer = Configuration["JWTSettings:Issuer"]
                 }
             });
 
