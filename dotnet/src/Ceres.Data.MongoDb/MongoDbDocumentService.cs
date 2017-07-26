@@ -8,12 +8,12 @@ namespace Ceres.Data.MongoDb
 {
     public abstract class MongoDbDocumentService<T> : IDocumentService<T> where T: IEntity, new()
     {
+        protected abstract string CollectionName { get; }
         protected IMongoCollection<T> Collection { get; private set; }
 
-        protected MongoDbDocumentService(MongoClient client, string databaseName, string collectionName)
+        protected MongoDbDocumentService(IMongoDatabase database)
         {
-            var database = client.GetDatabase(databaseName);
-            Collection = database.GetCollection<T>(collectionName);
+            Collection = database.GetCollection<T>(CollectionName);
         }
         
         public async Task<T> GetByIdAsync(Guid id)
