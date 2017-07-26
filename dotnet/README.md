@@ -7,31 +7,14 @@ To make collaboration simpler and more efficient we will focus around very speci
 1. .NET Core
 2. MongoDB, PostgreSQL
 
-### Contribute to Service Stack
+### .NET Service Stack Solutions Ideas
 
-We want contributing to Service Stack to be enjoyable, educational and fun for everyone. There are multiple ways to contribute:
-
-1. Help with documentation.
-2. Submitting bug fixes or grammar fixes.
-3. Adding unit or functional tests.
-4. Adding new ideas to include into Service Stack.  
-5. Implementing new solutions, that will be used across many products.
-6. Helping answering questions in the github issues.
-
-### Structure of the repository
-
-Eventually we want to group solutions into logical groups, but since there is high probability of mistake. As we just starting we will keep things simple in the beginning and come up with a structure later on. For the moment every solution should just lie in his own folder and contain README.md with comprehensive description.
-
-### Service Stack Solution Documentation
-
-Every solution should include comprehensive documentation, which explains at least:
-
-1. Why there is a need in this solution. A couple of use cases.
-2. How to use this solution. A couple of code samples.
-3. Is there any limitations now or in the future we need to know about before using it.
-
-### Service Stack Solutions Ideas
-
+#### Priority tasks
+|:--:|:----|
+|Landing page (authentication and foundation for working with Web Api)|
+|JWT authentication (full authentication workflow in Web Api (registration, login, forgot password)|
+|MongoDb data service|
+|DocumentDb data service|
 
 #### Standalone packages
 
