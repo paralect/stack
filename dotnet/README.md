@@ -10,11 +10,12 @@ To make collaboration simpler and more efficient we will focus around very speci
 ### .NET Service Stack Solutions Ideas
 
 #### Priority tasks
+|Priority|Description|
 |:--:|:----|
-|Landing page (authentication and foundation for working with Web Api)|
-|JWT authentication (full authentication workflow in Web Api (registration, login, forgot password)|
-|MongoDb data service|
-|DocumentDb data service|
+|1|JWT authentication (full authentication workflow in Web Api (registration, login, forgot password)|
+|2|Landing page (authentication and foundation for working with Web Api)|
+|3|MongoDb data service|
+|4|DocumentDb data service|
 
 #### Standalone packages
 
