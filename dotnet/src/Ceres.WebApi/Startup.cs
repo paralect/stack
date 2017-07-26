@@ -38,6 +38,9 @@ namespace Ceres.WebApi
             // Add framework services.
             services.AddMvc();
 
+            services.AddIdentityWithMongoStores($"{Configuration["MongoDbConfiguration:ConnectionString"]}/{Configuration["MongoDbConfiguration:DatabaseName"]}")
+                .AddDefaultTokenProviders();
+
             services.Configure<JwtSettings>(Configuration.GetSection("JWTSettings"));
 
             RegisterComponents(services);

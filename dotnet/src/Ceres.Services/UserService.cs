@@ -31,7 +31,7 @@ namespace Ceres.Services
 
         public Task<User> FindByUsername(string username)
         {
-            return _users.FindOneAsync(x => x.Username == username);
+            return _users.FindOneAsync(x => x.UserName == username);
         }
     }
 }
