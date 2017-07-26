@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Ceres.Data.Entities
+namespace Ceres.Data.Entities.Auth
 {
     public class User : IEntity
     {

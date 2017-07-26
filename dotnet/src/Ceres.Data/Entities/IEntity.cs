@@ -1,7 +1,7 @@
 ﻿using System;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Ceres.Data
+namespace Ceres.Data.Entities
 {
     public interface IEntity
     {

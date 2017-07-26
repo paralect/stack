@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ceres.Data", "Ceres.Data\Ce
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ceres.Data.MongoDb", "Ceres.Data.MongoDb\Ceres.Data.MongoDb.csproj", "{0AAE2428-327B-49BC-94E7-8B58B826CA65}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ceres.Services", "Ceres.Services\Ceres.Services.csproj", "{712BB538-F520-4A4A-B2F5-17960A2183C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{0AAE2428-327B-49BC-94E7-8B58B826CA65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0AAE2428-327B-49BC-94E7-8B58B826CA65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0AAE2428-327B-49BC-94E7-8B58B826CA65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{712BB538-F520-4A4A-B2F5-17960A2183C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{712BB538-F520-4A4A-B2F5-17960A2183C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{712BB538-F520-4A4A-B2F5-17960A2183C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{712BB538-F520-4A4A-B2F5-17960A2183C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
