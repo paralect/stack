@@ -50,15 +50,15 @@ Every solution should include comprehensive documentation, which explains at lea
 
 #### Standalone packages
 
-|Name|Status|Description|Distribution|
-|:--:|:----:|:----------:||:------|
+|Name|Status|Description |Distribution|
+|:--:|:----:|:----------:|:------|
 |[Handy MongoDB layer](./mongo-node8/README.md)|![](https://img.shields.io/badge/status-solution-green.svg)|Handy MongoDB layer with database transaction log capabilities|npm package: `@paralect/mongo-node8`|
 |[Config management](./config-management/README.md)|![](https://img.shields.io/badge/status-solution-green.svg)|Describe a common way and show example of managing configs for different environments|source code|
 
 #### Starter apps
 
-Name|Status|Description|Distribution|
-|:--:|:----:|:----------:||:------|
+|Name|Status|Description |Distribution|
+|:--:|:----:|:----------:|:------|
 |[React.JS starter app](./react-starter/README.md)|![](https://img.shields.io/badge/status-solution-green.svg)|A simplest way to start your React.JS based app.|source code|
 
 
