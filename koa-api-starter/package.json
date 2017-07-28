@@ -1,0 +1,28 @@
+{
+  "name": "koa-api-starter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "lint": "eslint .",
+    "start": "node src/app.js"
+  },
+  "dependencies": {
+    "app-module-path": "^2.2.0",
+    "koa": "2.3.0",
+    "koa-bodyparser": "4.2.0",
+    "koa-cors": "0.0.16",
+    "koa-helmet": "3.2.0",
+    "koa-logger": "3.0.1",
+    "koa-mount": "3.0.0",
+    "koa-router": "7.2.1",
+    "koa-validate": "1.0.7"
+  },
+  "devDependencies": {
+    "eslint": "4.3.0",
+    "eslint-config-airbnb-base": "11.3.1",
+    "eslint-plugin-import": "2.7.0"
+  }
+}
