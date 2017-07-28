@@ -2,34 +2,15 @@ const MongoService = require('./MongoService');
 const MongoQueryService = require('./MongoQueryService');
 const monk = require('monk');
 const idGenerator = require('./idGenerator');
-const logger = global.logger;
 
-/**
-* Add factory methods to the database object
-**/
-const _extendWithFactoryMethods = (db) => {
-  db.createService = (collectionName, validateSchema, options = {}) => {
-    const opt = options;
-    if (validateSchema) {
-      opt.validateSchema = validateSchema;
-    }
-
-    const collection = db.get(collectionName, { castIds: false });
-    return new MongoService(collection, opt);
-  };
-
-  db.createQueryService = (collectionName) => {
-    const collection = db.get(collectionName, { castIds: false });
-    return new MongoQueryService(collection);
-  };
-};
+const logger = global.logger || console;
 
 /**
 * Inits connection with mongodb, manage reconnects, create factory methods
 *
 * @return {Object} with a factory method {createService}, that creates a
 * mongodb service
-**/
+*/
 const connect = (connectionString) => {
   // options docs: http://mongodb.github.io/node-mongodb-native/2.1/reference/connecting/connection-settings/
   const db = monk(connectionString, {
@@ -61,7 +42,21 @@ const connect = (connectionString) => {
     }
   });
 
-  _extendWithFactoryMethods(db);
+  // Add factory methods to the database object
+  db.createService = (collectionName, validateSchema, options = {}) => {
+    const opt = options;
+    if (validateSchema) {
+      opt.validateSchema = validateSchema;
+    }
+
+    const collection = db.get(collectionName, { castIds: false });
+    return new MongoService(collection, opt);
+  };
+
+  db.createQueryService = (collectionName) => {
+    const collection = db.get(collectionName, { castIds: false });
+    return new MongoQueryService(collection);
+  };
 
   return db;
 };

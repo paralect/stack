@@ -3,6 +3,7 @@ const EventEmitter = require('events').EventEmitter;
 const MongoQueryService = require('./MongoQueryService');
 const idGenerator = require('./idGenerator');
 const MongoServiceError = require('./MongoServiceError');
+
 const logger = global.logger;
 
 class MongoService extends MongoQueryService {
@@ -12,11 +13,11 @@ class MongoService extends MongoQueryService {
     this._bus = eventBus;
     this.logger = logger;
     this.atomic = {
-      update: (query, updateObject, options = {}) => {
-        return collection.update(query, updateObject, options);
+      update: (query, updateObject, updateOptions = {}) => {
+        return collection.update(query, updateObject, updateOptions);
       },
-      findOneAndUpdate: (query, update, options) => {
-        return collection.findOneAndUpdate(query, update, options);
+      findOneAndUpdate: (query, update, updateOptions) => {
+        return collection.findOneAndUpdate(query, update, updateOptions);
       },
     };
   }
@@ -28,8 +29,7 @@ class MongoService extends MongoQueryService {
         logger.error('Schema invalid', JSON.stringify(validationResult.errors, 0, 4));
         throw new MongoServiceError(
           MongoServiceError.INVALID_SCHEMA,
-          `Document schema is invalid: ${JSON.stringify(validationResult.errors)}`
-        );
+          `Document schema is invalid: ${JSON.stringify(validationResult.errors)}`);
       }
     }
   }
@@ -37,14 +37,14 @@ class MongoService extends MongoQueryService {
   /**
   * Subscribe to database change events only once. The first time evenName
   * is triggered listener handler is removed and then invoked
-  **/
+  */
   once(eventName, handler) {
     return this._bus.once(eventName, handler);
   }
 
   /**
   * Subscribe to database change events.
-  **/
+  */
   on(eventName, handler) {
     return this._bus.on(eventName, handler);
   }
@@ -56,7 +56,7 @@ class MongoService extends MongoQueryService {
   *
   * @param {array | object} Object or array of objects to create
   * @return {array | object} Object or array of created objects
-  **/
+  */
   async create(objs) {
     let entities = objs;
     if (!_.isArray(entities)) {
@@ -83,10 +83,6 @@ class MongoService extends MongoQueryService {
     return entities.length > 1 ? entities : entities[0];
   }
 
-  generateId() {
-    return idGenerator.generate();
-  }
-
   /**
   * Modifies entity found by query in the database
   * Publishes `updated` event {doc, prevDoc}
@@ -94,20 +90,18 @@ class MongoService extends MongoQueryService {
   *
   * @param query {Object} - mongo search query
   * @param updateFn {function(doc)} - function, that recieves document to be updated
-  * @param options {Object} - mongodb update options (http://mongodb.github.io/node-mongodb-native/2.0/api/Collection.html#update)
   * @return {Object} Updated object
-  **/
-  async update(query, updateFn, options) {
+  */
+  async update(query, updateFn) {
     if (!_.isFunction(updateFn)) {
       throw new Error('updateFn must be a function');
     }
 
-    const doc = await this.findOne(query, options);
+    const doc = await this.findOne(query);
     if (!doc) {
       throw new MongoServiceError(
         MongoServiceError.NOT_FOUND,
-        `Document not found while updating. Query: ${JSON.stringify(query)}`
-      );
+        `Document not found while updating. Query: ${JSON.stringify(query)}`);
     }
     const prevDoc = _.cloneDeep(doc);
     doc.updatedOn = new Date();
@@ -128,7 +122,7 @@ class MongoService extends MongoQueryService {
   * Remove one or many documents found by query
   *
   * @param query {Object} - mongodb search query
-  **/
+  */
   async remove(query) {
     const docsForRemove = await this.find(query);
     await this._collection.remove(query);
@@ -193,17 +187,16 @@ class MongoService extends MongoQueryService {
    * Deep compare doc & prevDoc from 'updated' event. When
    * something changed - executes callback
    *
-   * @param  {Array|Object} properties - see _deepCompare
+   * @param  {Array|Object} properties - see deepCompare
    * @param  {Function} callback - executes callback if something changed
    */
   onPropertiesUpdated(properties, callback) {
-    const self = this;
     return this.on('updated', (evt) => {
       const data = evt.doc;
       const initialData = evt.prevDoc;
-      const isChanged = self._deepCompare(data, initialData, properties);
+      const isChanged = MongoService.deepCompare(data, initialData, properties);
       if (isChanged) {
-        callback(data);
+        callback(evt);
       }
     });
   }
@@ -219,7 +212,7 @@ class MongoService extends MongoQueryService {
    * Note: . (dot) is used to compare deeply nested properties
    * @return {Boolean} - indicates if something has changed
    */
-  _deepCompare(data, initialData, properties) {
+  static deepCompare(data, initialData, properties) {
     let changed = false;
 
     if (Array.isArray(properties)) {
@@ -230,7 +223,7 @@ class MongoService extends MongoQueryService {
         return !_.isEqual(value, initialValue);
       }) !== undefined;
     } else {
-      Object.keys(properties).forEach(prop => {
+      Object.keys(properties).forEach((prop) => {
         if (changed) {
           return;
         }

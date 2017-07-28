@@ -5,11 +5,12 @@ class MongoQueryService {
   constructor(collection, options = {}) {
     this._collection = collection;
     this._options = options;
+    this._idGenerator = idGenerator;
   }
 
   /**
   * @return {string} name of the colleciton
-  **/
+  */
   get name() {
     return this._collection.collectionName;
   }
@@ -33,8 +34,8 @@ class MongoQueryService {
       options.skip = (options.page - 1) * perPage;
       options.limit = perPage;
     }
-    delete opt.perPage;
-    delete opt.page;
+    delete options.perPage;
+    delete options.page;
 
     const results = await this._collection.find(query, options);
     if (!hasPaging) {
@@ -43,7 +44,7 @@ class MongoQueryService {
       };
     }
 
-    const count = await this._collection.count(query)
+    const count = await this._collection.count(query);
     const pagesCount = Math.ceil(count / perPage) || 1;
 
     return {
@@ -60,14 +61,13 @@ class MongoQueryService {
   * @param options {Object} - search options, such fields and others
   *
   * @return {Object} - returns a document from the database
-  **/
+  */
   async findOne(query = {}, options = {}) {
     const data = await this.find(query, options);
     if (data.results.length > 1) {
       throw new MongoServiceError(
         MongoServiceError.MORE_THAN_ONE,
-        `findOne: More than one document return for query ${JSON.stringify(query)}`
-      );
+        `findOne: More than one document return for query ${JSON.stringify(query)}`);
     }
 
     return data.results.length === 1 ? data.results[0] : null;
@@ -78,7 +78,7 @@ class MongoQueryService {
   *
   * @param query {Object} - search query
   * @return {Number} - number of documents matched by query
-  **/
+  */
   count(query) {
     return this._collection.count(query);
   }
@@ -89,9 +89,9 @@ class MongoQueryService {
   * @param field {String} - field name
   * @param query {Object} - search query
   * @return {Array} - distinct values of given field
-  **/
-  distinct(field, query) {
-    return this._collection.distinct(field, query);
+  */
+  distinct(field, query, options) {
+    return this._collection.distinct(field, query, options);
   }
 
   /**
@@ -99,9 +99,9 @@ class MongoQueryService {
   *
   * @param query {string} - search query
   * @return {Boolean}
-  **/
+  */
   async exists(query) {
-    const count = await this.count(query)
+    const count = await this.count(query);
     return count > 0;
   }
 
@@ -111,16 +111,16 @@ class MongoQueryService {
   *
   * @param pipeline {Array} - aggregation pipeline
   * @return {Object} - aggregation result
-  **/
+  */
   aggregate(pipeline) {
     return this._collection.aggregate(pipeline);
   }
 
   /**
   * Generates mongodb id string
-  **/
+  */
   generateId() {
-    return idGenerator.generate();
+    return this._idGenerator.generate();
   }
 
   /**

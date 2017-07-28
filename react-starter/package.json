@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.jsx",
   "scripts": {
-    "start": "cd ./src && webpack-dev-server",
-    "lint": "eslint ./src"
+    "development": "cd ./src && webpack-dev-server",
+    "test": "eslint ./src"
   },
   "author": "",
   "license": "ISC",

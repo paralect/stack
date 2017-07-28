@@ -1,9 +1,10 @@
 const chai = require('chai');
+const MongoService = require('./MongoService');
+const config = require('./config');
+
 chai.should();
 
-const dbName = 'mongodb-node8-tests';
-const connectionString = `mongodb://localhost:27017/${dbName}`;
-const db = require('./').connect(connectionString);
+const db = require('./').connect(config.mongo.connection);
 
 module.exports = () => {
   describe('MongoService', () => {
@@ -14,7 +15,7 @@ module.exports = () => {
       await Promise.all([
         userService._collection.drop(),
         findUserService._collection.drop(),
-      ])
+      ]);
     });
 
     it('should create a document', async () => {
@@ -64,15 +65,15 @@ module.exports = () => {
       doc.name.should.be.equal('Alice');
     });
 
-    it('should emit `updated` event when document updated in the database', async() => {
-      let doc = await userService.create([{ name: 'Bob' }]);
+    it('should emit `updated` event when document updated in the database', async () => {
+      const doc = await userService.create([{ name: 'Bob' }]);
       userService.update({ _id: doc._id }, (u) => {
         const user = u;
         user.name = 'Alice';
       })
         .catch((err) => {
           throw err;
-        })
+        });
 
       await new Promise((resolve, reject) => {
         userService.once('updated', (evt) => {
@@ -97,7 +98,7 @@ module.exports = () => {
 
     it('should create a document', async () => {
       const user = { name: 'Bob' };
-      const doc = await userService.createOrUpdate({ _id: '1' }, dbUser => {
+      const doc = await userService.createOrUpdate({ _id: '1' }, (dbUser) => {
         Object.assign(dbUser, user);
       });
       doc._id.should.be.equal('1');
@@ -106,14 +107,14 @@ module.exports = () => {
 
     it('should create two documents', async () => {
       const user1 = { name: 'Bob' };
-      let doc = await userService.createOrUpdate({ _id: '1' }, dbUser => {
+      let doc = await userService.createOrUpdate({ _id: '1' }, (dbUser) => {
         Object.assign(dbUser, user1);
-      })
+      });
       doc._id.should.be.equal('1');
       doc.name.should.be.equal('Bob');
 
       const user2 = { name: 'Alice' };
-      doc = await userService.createOrUpdate({ _id: '2' }, dbUser => {
+      doc = await userService.createOrUpdate({ _id: '2' }, (dbUser) => {
         Object.assign(dbUser, user2);
       });
 
@@ -123,14 +124,14 @@ module.exports = () => {
 
     it('should update document', async () => {
       const user1 = { name: 'Bob' };
-      let doc = await userService.createOrUpdate({ _id: '1' }, dbUser => {
+      let doc = await userService.createOrUpdate({ _id: '1' }, (dbUser) => {
         Object.assign(dbUser, user1);
-      })
+      });
       doc._id.should.be.equal('1');
       doc.name.should.be.equal('Bob');
 
       const user2 = { name: 'Alice' };
-      doc = await userService.createOrUpdate({ _id: '1' }, dbUser => {
+      doc = await userService.createOrUpdate({ _id: '1' }, (dbUser) => {
         Object.assign(dbUser, user2);
       });
       doc._id.should.be.equal('1');
@@ -139,7 +140,7 @@ module.exports = () => {
 
     it('should perform atomic document update', async () => {
       const _id = 'atomic_update';
-      await userService.create({ _id, name: 'Bob' })
+      await userService.create({ _id, name: 'Bob' });
       await userService.atomic.update({ _id }, {
         $set: {
           name: 'Alice',
@@ -149,11 +150,11 @@ module.exports = () => {
       userDoc.name.should.be.equal('Alice');
     });
 
-    it('should _deepCompare nested properties passed as an Array', () => {
+    it('should deepCompare nested properties passed as an Array', () => {
       const data = { user: { firstName: 'Bob' } };
       const initialData = { user: { firstName: 'John' } };
 
-      const changed = userService._deepCompare(data, initialData, ['user.firstName']);
+      const changed = MongoService.deepCompare(data, initialData, ['user.firstName']);
       changed.should.be.equal(true);
     });
 
@@ -161,7 +162,7 @@ module.exports = () => {
       const data = { user: { firstName: 'Bob' } };
       const initialData = { user: { firstName: 'John' } };
 
-      const changed = userService._deepCompare(data, initialData, { 'user.firstName': 'Bob' });
+      const changed = MongoService.deepCompare(data, initialData, { 'user.firstName': 'Bob' });
       changed.should.be.equal(true);
     });
   });

@@ -1,0 +1,8 @@
+FROM node:8.2
+
+COPY ["./package.json", "./package-lock.json", "./.eslintrc.js", "./.eslintignore", "/app/"]
+WORKDIR /app
+RUN npm i
+COPY ./src /app/src
+
+CMD NODE_ENV=test npm test
