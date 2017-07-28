@@ -1,4 +1,4 @@
-# Paralect Service Stack
+# Paralect 🎉 Service 🎉 Stack.
 
 The main intent of this repository is to improve following:
 
@@ -38,7 +38,7 @@ Every solution should include comprehensive documentation, which explains at lea
 2. How to use this solution. A couple of code samples.
 3. Is there any limitations now or in the future we need to know about before using it.
 
-### Service 👋 Stack 👋 Solutions ![](https://img.shields.io/badge/status-solution-green.svg). 🎉 🎉 🎉
+### Service 👋 Stack 👋 Solutions ![](https://img.shields.io/badge/status-solution-green.svg).
 
 #### Conventions
 
@@ -51,37 +51,37 @@ Every solution should include comprehensive documentation, which explains at lea
 #### Standalone packages
 
 |Name|Status|Description|Distribution|
-|:--:|:----:|:----------:||:--|
+|:--:|:----:|:----------:||:------|
 |[Handy MongoDB layer](./mongo-node8/README.md)|![](https://img.shields.io/badge/status-solution-green.svg)|Handy MongoDB layer with database transaction log capabilities|npm package: `@paralect/mongo-node8`|
 |[Config management](./config-management/README.md)|![](https://img.shields.io/badge/status-solution-green.svg)|Describe a common way and show example of managing configs for different environments|source code|
 
 #### Starter apps
 
 Name|Status|Description|Distribution|
-|:--:|:----:|:----------:||:--|
+|:--:|:----:|:----------:||:------|
 |[React.JS starter app](./react-starter/README.md)|![](https://img.shields.io/badge/status-solution-green.svg)|A simplest way to start your React.JS based app.|source code|
 
 
-### Service 👋 Stack 👋 Ideas ![](https://img.shields.io/badge/https://img.shields.io/badge/status-idea-orange.svg). 🎉 🎉 🎉
+### Service 👋 Stack 👋 Ideas ![](https://img.shields.io/badge/status-idea-orange.svg).
 
 #### Standalone packages
 
 |Name|Status|Description|
 |:--:|:----:|:----------|
-|Stylish common email templates|![](https://img.shields.io/badge/https://img.shields.io/badge/status-idea-orange.svg)|Welcome, Invite, Forgot Password, Payment Receipt |
-|Common logger|![](https://img.shields.io/badge/https://img.shields.io/badge/status-idea-orange.svg)| Should support logging to the File, Logstash, Loggly|
-|MongoDB migrations|![](https://img.shields.io/badge/https://img.shields.io/badge/status-idea-orange.svg)|Steamline MongoDB database migrations process|
+|Stylish common email templates|![](https://img.shields.io/badge/status-idea-orange.svg)|Welcome, Invite, Forgot Password, Payment Receipt |
+|Common logger|![](https://img.shields.io/badge/status-idea-orange.svg)| Should support logging to the File, Logstash, Loggly|
+|MongoDB migrations|![](https://img.shields.io/badge/status-idea-orange.svg))|Steamline MongoDB database migrations process|
 
 #### Starter apps & common REST resources
 
 |Name|Status|Description|
 |:--:|:----:|:----------|
-|Koa.JS 2 web application starter|![](https://img.shields.io/badge/https://img.shields.io/badge/status-idea-orange.svg)|Sample web application with Dockerfiles, empty main screen and nice progress bar while application loading|
-|Stripe subscriptions resource|![](https://img.shields.io/badge/https://img.shields.io/badge/status-idea-orange.svg)|Restful API and simple react client that implement subscribe to a plan, update credit card and cancel subscription (with an easy way to embed this into Koa 2 web app starter and Koa 2 api starter)|
-|Koa.JS 2 api application starter|![](https://img.shields.io/badge/https://img.shields.io/badge/status-idea-orange.svg)|Simple API starter that already have logging, connection to mongodb and sample resource implementation|
-|Koa.JS 2 Registration resource|![](https://img.shields.io/badge/https://img.shields.io/badge/status-idea-orange.svg)|Resource which implement account functionality: Login, Signup (first name, last name, email, confirm email, password, confirm password)|
-|Koa.JS image processing service|![](https://img.shields.io/badge/https://img.shields.io/badge/status-idea-orange.svg)|Service that allows common manipulations with images, such as thumbnail generator, resizing, etc. Node.JS wrapper for this service|
-|Koa.JS pdf generation service|![](https://img.shields.io/badge/https://img.shields.io/badge/status-idea-orange.svg)|Service that allow generate PDF documents from html files|
+|Koa.JS 2 web application starter|![](https://img.shields.io/badge/status-idea-orange.svg)|Sample web application with Dockerfiles, empty main screen and nice progress bar while application loading|
+|Stripe subscriptions resource|![](https://img.shields.io/badge/status-idea-orange.svg)|Restful API and simple react client that implement subscribe to a plan, update credit card and cancel subscription (with an easy way to embed this into Koa 2 web app starter and Koa 2 api starter)|
+|Koa.JS 2 api application starter|![](https://img.shields.io/badge/status-idea-orange.svg)|Simple API starter that already have logging, connection to mongodb and sample resource implementation|
+|Koa.JS 2 Registration resource|![](https://img.shields.io/badge/status-idea-orange.svg)|Resource which implement account functionality: Login, Signup (first name, last name, email, confirm email, password, confirm password)|
+|Koa.JS image processing service|![](https://img.shields.io/badge/status-idea-orange.svg)|Service that allows common manipulations with images, such as thumbnail generator, resizing, etc. Node.JS wrapper for this service|
+|Koa.JS pdf generation service|![](https://img.shields.io/badge/status-idea-orange.svg)|Service that allow generate PDF documents from html files|
 
 
 #### Deployment resources
