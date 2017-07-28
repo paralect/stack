@@ -1,9 +1,20 @@
 pipeline:
-  run-tests-suite:
-    image: michalpodeszwa/docker-compose:latest
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+  run-node-tests:
+    image: node:8.2
     commands:
-      - echo "Hello Service Stack ;)"
+      - sleep 5
+      - cd mongo-node8 && ./bin/run.sh
 
+  # publish-mongo-node8:
+  #   image: plugins/npm
+  #   secrets: [ npm_username, npm_password, npm_email ]
+  #   access: public
+  #   folder: ./mongo-node-8
+  #   username: paralect
+  #   email: an.orsich@gmail.com
+  #   password:
+
+services:
+  mongo:
+    image: mongo:3.4
 branches: [ master, "*:master" ]

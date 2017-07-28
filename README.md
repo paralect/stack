@@ -11,19 +11,20 @@ The main intent of this repository is to improve following:
 To make collaboration simpler and more efficient we will focus around very specific and concise technology stack, which includes following:
 
 1. Node.JS 8 / Koa.JS 2
-2. React.JS, SCSS
+2. React.JS, POST CSS
 3. MongoDB, PostgreSQL
 
 ### Contribute to Service Stack
 
 We want contributing to Service Stack to be enjoyable, educational and fun for everyone. There are multiple ways to contribute:
 
-1. Help with documentation.
+1. Help with documentation. Great documentation is a key.
 2. Submitting bug fixes or grammar fixes.
 3. Adding unit or functional tests.
 4. Adding new ideas to include into Service Stack.  
 5. Implementing new solutions, that will be used across many products.
 6. Helping answering questions in the github issues.
+
 
 ### Structure of the repository
 

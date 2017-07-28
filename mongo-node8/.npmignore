@@ -1,0 +1,8 @@
+bin/
+.eslintignore
+.eslintrc.js
+Dockerfile.test
+src/config
+src/MongoService.test.js
+src/index.test.js
+tmp/
