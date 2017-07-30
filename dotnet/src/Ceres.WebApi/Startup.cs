@@ -37,6 +37,7 @@ namespace Ceres.WebApi
         {
             // Add framework services.
             services.AddMvc();
+            services.AddCors();
 
             services.AddIdentityWithMongoStores($"{Configuration["MongoDbConfiguration:ConnectionString"]}/{Configuration["MongoDbConfiguration:DatabaseName"]}")
                 .AddDefaultTokenProviders();
@@ -53,7 +54,7 @@ namespace Ceres.WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 

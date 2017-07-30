@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ceres.WebApi", "Ceres.WebApi\Ceres.WebApi.csproj", "{760E899E-36BD-494C-A1E0-D970B455BE97}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ceres.WebApi", "Ceres.WebApi\Ceres.WebApi.csproj", "{760E899E-36BD-494C-A1E0-D970B455BE97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ceres.Landing", "Ceres.Landing\Ceres.Landing.csproj", "{909844DD-D7B9-4A2E-999F-0AC219CB8FC8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ceres.Data", "Ceres.Data\Ceres.Data.csproj", "{4A6FDEA1-ABE9-4DB5-9DCB-7F8CD90D5501}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ceres.Data", "Ceres.Data\Ceres.Data.csproj", "{4A6FDEA1-ABE9-4DB5-9DCB-7F8CD90D5501}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ceres.Data.MongoDb", "Ceres.Data.MongoDb\Ceres.Data.MongoDb.csproj", "{0AAE2428-327B-49BC-94E7-8B58B826CA65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ceres.Data.MongoDb", "Ceres.Data.MongoDb\Ceres.Data.MongoDb.csproj", "{0AAE2428-327B-49BC-94E7-8B58B826CA65}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ceres.Services", "Ceres.Services\Ceres.Services.csproj", "{712BB538-F520-4A4A-B2F5-17960A2183C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ceres.Services", "Ceres.Services\Ceres.Services.csproj", "{712BB538-F520-4A4A-B2F5-17960A2183C5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ceres.Landing", "Ceres.Landing\Ceres.Landing.csproj", "{14BCF4DB-A35E-4836-882C-31A988094E5C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,6 @@ Global
 		{760E899E-36BD-494C-A1E0-D970B455BE97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{760E899E-36BD-494C-A1E0-D970B455BE97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{760E899E-36BD-494C-A1E0-D970B455BE97}.Release|Any CPU.Build.0 = Release|Any CPU
-		{909844DD-D7B9-4A2E-999F-0AC219CB8FC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{909844DD-D7B9-4A2E-999F-0AC219CB8FC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{909844DD-D7B9-4A2E-999F-0AC219CB8FC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{909844DD-D7B9-4A2E-999F-0AC219CB8FC8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4A6FDEA1-ABE9-4DB5-9DCB-7F8CD90D5501}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4A6FDEA1-ABE9-4DB5-9DCB-7F8CD90D5501}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A6FDEA1-ABE9-4DB5-9DCB-7F8CD90D5501}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +35,10 @@ Global
 		{712BB538-F520-4A4A-B2F5-17960A2183C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{712BB538-F520-4A4A-B2F5-17960A2183C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{712BB538-F520-4A4A-B2F5-17960A2183C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14BCF4DB-A35E-4836-882C-31A988094E5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14BCF4DB-A35E-4836-882C-31A988094E5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14BCF4DB-A35E-4836-882C-31A988094E5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14BCF4DB-A35E-4836-882C-31A988094E5C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
