@@ -3,9 +3,9 @@ pipeline:
     image: node:8.2
     commands:
       - sleep 5
-      - cd mongo-node8 && ./bin/run.sh
-      - cd logger && ./bin/run.sh
-      - cd koa-api-starter && ./bin/run.sh
+      - cd mongo-node8 && ./bin/run.sh && cd ../
+      - cd logger && ./bin/run.sh && cd ../
+      - cd koa-api-starter && ./bin/run.sh && cd ../
 
   # publish-mongo-node8:
   #   image: plugins/npm
