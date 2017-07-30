@@ -1,8 +1,15 @@
-const router = require('koa-router')();
+const config = require('config');
+const indexRouter = require('koa-router')();
 
+// match all routes but not files (i.e. routes with dots)
+indexRouter.get(/^((?!\.).)*$/, async (ctx) => {
+  const data = {
+    config: {
+      apiUrl: config.apiUrl,
+    },
+  };
 
-router.get('/', async ctx => {
-  await ctx.render('index', { info: 'this is index.html' });
+  return ctx.render('index', data);
 });
 
-module.exports = router.routes();
+module.exports = indexRouter.routes();
