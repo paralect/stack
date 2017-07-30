@@ -157,8 +157,3 @@ module.exports = (obj) => validator.validate(obj, companySchema);
 const schema = require('./user.schema')
 const usersService = db.createService('users', { validateSchema: schema });
 ```
-
-
-TODO list:
-
-1. Publish as npm package

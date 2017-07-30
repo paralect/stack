@@ -1,8 +1,6 @@
 const mount = require('koa-mount');
-
-const index = require('resources/index');
-
+const accountResource = require('resources/account/public');
 
 module.exports = (app) => {
-  app.use(mount('/index', index));
+  app.use(mount('/account', accountResource));
 };

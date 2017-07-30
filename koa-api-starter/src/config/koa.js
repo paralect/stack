@@ -1,25 +1,18 @@
-const cors = require('koa-cors');
+const cors = require('kcors');
 const bodyParser = require('koa-bodyparser');
 const helmet = require('koa-helmet');
 const validate = require('koa-validate');
-const logger = require('koa-logger');
+const requestLogger = require('koa-logger');
 
+const logger = global.logger;
 const routes = require('./routes');
 
 
 module.exports = (app) => {
   app.use(cors());
-
-  app.use(helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: ['\'self\''],
-      styleSrc: ['\'self\'', 'maxcdn.bootstrapcdn.com'],
-    },
-  }));
-
+  app.use(helmet());
   app.use(bodyParser({ enableTypes: ['json', 'form', 'text'] }));
-
-  app.use(logger());
+  app.use(requestLogger());
 
   validate(app);
 
@@ -27,8 +20,12 @@ module.exports = (app) => {
     try {
       await next();
     } catch (err) {
-      ctx.status = err.status || 500;
-      ctx.body = err.message;
+      logger.error(err);
+      this.status = err.status || 500;
+      this.body = {
+        errors: [{ _global: 'An error has occurred' }],
+      };
+      this.app.emit('error', err, this);
     }
   });
 
