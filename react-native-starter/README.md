@@ -2,12 +2,12 @@
 
 React Native starter is what we think an ideal starting point for the most ReactNative frontend applications. It is based on the following primary technologies:
 
-- react
-- react-native
-- react-router
-- redux
-- postcss
-- eslint
+- [react](https://github.com/facebook/react)
+- [react-native](https://github.com/facebook/react-native)
+- [react-router](https://github.com/ReactTraining/react-router)
+- [redux](http://redux.js.org/)
+- [postcss](https://github.com/postcss/postcss)
+- [eslint](http://eslint.org)
 
 Application structured in a way, which we find most efficient in both short and long term projects. The main intention of the current structure is to keep logical components close to each other and define clear structure for the common things, such as routers, store, api wrappers, reducers, action creators, store selectors.
 
@@ -28,13 +28,15 @@ Application structured in a way, which we find most efficient in both short and 
 
 To run android version of app:
 
-1. Setup [Android Studio](https://developer.android.com/studio/index.html?gclid=EAIaIQobChMIjuCC6qyz1QIVxLftCh0angiSEAAYASAAEgKlWvD_BwE)
-2. Follow [guide](https://facebook.github.io/react-native/releases/0.21/docs/running-on-device-android.html)
+1. Install [react-native](https://github.com/facebook/react-native) , [react-native-cli](https://www.npmjs.com/package/react-native-cli) with -g flag
+2. Setup [Android Studio](https://developer.android.com/studio/index.html?gclid=EAIaIQobChMIjuCC6qyz1QIVxLftCh0angiSEAAYASAAEgKlWvD_BwE)
+3. Follow [guide](https://facebook.github.io/react-native/releases/0.21/docs/running-on-device-android.html)
 
 To run ios version of app:
 
-1. Setup [Xcode](https://developer.apple.com/xcode/)
-2. Follow [guide](https://facebook.github.io/react-native/docs/running-on-simulator-ios.html)
+1. Install [react-native](https://github.com/facebook/react-native) , [react-native-cli](https://www.npmjs.com/package/react-native-cli) with -g flag
+2. Setup [Xcode](https://developer.apple.com/xcode/)
+3. Follow [guide](https://facebook.github.io/react-native/docs/running-on-simulator-ios.html)
 
 ### Important things to keep in mind
 
