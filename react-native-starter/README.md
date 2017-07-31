@@ -24,6 +24,18 @@ Application structured in a way, which we find most efficient in both short and 
     - **[src/app/resource/*/*.selectors.js](./src/app/resources/user/user.selectors.js)** - consist selectors for the given resource. You should never access store directly, but always use selectors instead. That would simplify things when structure of the store data changes.
 5. **[src/app/services](./src/app/services)** - folder should consist the logic for the the third party service integrations (such as Intercom, Segment, etc). Not limited only to the third party services, but could consist some standalone application related services.
 
+### Run project
+
+To run android version of app:
+
+1. Setup [Android Studio](https://developer.android.com/studio/index.html?gclid=EAIaIQobChMIjuCC6qyz1QIVxLftCh0angiSEAAYASAAEgKlWvD_BwE)
+2. Follow [guide](https://facebook.github.io/react-native/releases/0.21/docs/running-on-device-android.html)
+
+To run ios version of app:
+
+1. Setup [Xcode](https://developer.apple.com/xcode/)
+2. Follow [guide](https://facebook.github.io/react-native/docs/running-on-simulator-ios.html)
+
 ### Important things to keep in mind
 
 1. Logical components should be tightly coupled. Keep all component related files, such as images, styles, sub components as close as possible to the component. Do not put component into the `common` folder for the *future use*.
