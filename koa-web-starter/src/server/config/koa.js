@@ -33,10 +33,15 @@ const configureWebpack = (app) => {
 
 module.exports = (app) => {
   app.use(requestLogger());
-  app.use(views(pathToStatic), {
+  app.use(views(pathToStatic, {
     default: 'html',
     map: { html: 'handlebars' },
-  });
+    options: {
+      helpers: {
+        json: ctx => JSON.stringify(ctx),
+      },
+    },
+  }));
 
   app.use(bodyParser());
   configureWebpack(app);
