@@ -15,4 +15,4 @@ WORKDIR /app
 RUN npm i --quiet
 COPY ./src /app/src
 
-CMD npm start
+CMD npm run development

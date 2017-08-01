@@ -13,3 +13,10 @@ module.exports.generateByUrl = async (ctx) => {
 
   ctx.body = wkhtmltopdf(data.url);
 };
+
+module.exports.generateByHtml = async (ctx) => {
+  ctx.type = 'application/pdf';
+  ctx.attachment('out.pdf');
+  console.log(ctx.request.body.html);
+  ctx.body = wkhtmltopdf(ctx.request.body.html);
+};

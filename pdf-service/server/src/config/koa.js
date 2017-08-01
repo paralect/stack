@@ -1,5 +1,6 @@
 const cors = require('kcors');
 const helmet = require('koa-helmet');
+const bodyParser = require('koa-bodyparser');
 const requestLogger = require('koa-logger');
 const validate = require('koa-validate');
 
@@ -10,6 +11,7 @@ module.exports = (app) => {
   app.use(cors());
   app.use(helmet());
   app.use(requestLogger());
+  app.use(bodyParser({ enableTypes: ['json', 'text'] }));
 
   validate(app);
 
