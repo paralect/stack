@@ -1,6 +1,6 @@
 {
   "name": "@paralect/mongo-node8",
-  "version": "0.1.10",
+  "version": "0.1.12",
   "author": "Paralect Service Stack",
   "description": "MongoDB wrapper for Node.JS 8",
   "private": false,

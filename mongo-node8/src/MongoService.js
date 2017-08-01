@@ -132,6 +132,8 @@ class MongoService extends MongoQueryService {
         doc,
       });
     });
+
+    return docsForRemove;
   }
 
   /**
