@@ -1,6 +1,7 @@
 const cors = require('kcors');
 const helmet = require('koa-helmet');
 const requestLogger = require('koa-logger');
+const validate = require('koa-validate');
 
 const logger = global.logger;
 const routes = require('./routes');
@@ -9,6 +10,8 @@ module.exports = (app) => {
   app.use(cors());
   app.use(helmet());
   app.use(requestLogger());
+
+  validate(app);
 
   app.use(async (ctx, next) => {
     try {
