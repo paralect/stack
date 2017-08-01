@@ -6,7 +6,7 @@ Install as npm package: `npm i @paralect/mongo-node8`
 
 There are few reasons, why we think this layer could be helpful to many projects:
 
-1. Every update method emits `*.updated`, `*.created`, `*.deleted` events, which allow to listen for the database changes and perform business logic based on this updates. That could help keep your entities weakly coupled with each other.
+1. Every update method emits `*.updated`, `*.created`, `*.removed` events, which allow to listen for the database changes and perform business logic based on this updates. That could help keep your entities weakly coupled with each other.
 2. Implements more high level api, such as paging.
 3. Implements database schema validation based on [jsonschema](https://github.com/tdegrunt/jsonschema). See examples below for more details.
 
