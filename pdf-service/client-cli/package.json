@@ -1,0 +1,41 @@
+{
+  "name": "client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^2.0.1",
+    "clear": "0.0.1",
+    "clui": "^0.3.6",
+    "figlet": "^1.2.0",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^4.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-inline-css": "^3.1.0",
+    "gulp-less": "^3.3.2",
+    "gulp-runtime": "^2.0.0",
+    "gulp-sass": "^3.1.0",
+    "inquirer": "^3.2.1",
+    "isomorphic-fetch": "^2.2.1",
+    "map-stream": "0.0.7",
+    "merge-stream": "^1.0.1",
+    "minimist": "^1.2.0",
+    "preferences": "^0.2.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "7.2.3",
+    "eslint": "4.3.0",
+    "eslint-config-airbnb": "15.1.0",
+    "eslint-plugin-import": "2.7.0",
+    "eslint-plugin-jsx-a11y": "5.0.1",
+    "eslint-plugin-react": "7.1.0",
+    "grunt-inline-css": "^1.0.0",
+    "gulp-concat-css": "^2.3.0"
+  }
+}
