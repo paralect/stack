@@ -37,7 +37,12 @@ namespace Ceres.WebApi
         {
             // Add framework services.
             services.AddMvc();
-            services.AddCors();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                    builder => builder.WithOrigins("http://localhost:45348").AllowAnyHeader().AllowAnyMethod().AllowCredentials());
+            });
 
             services.AddIdentityWithMongoStores($"{Configuration["MongoDbConfiguration:ConnectionString"]}/{Configuration["MongoDbConfiguration:DatabaseName"]}")
                 .AddDefaultTokenProviders();
@@ -57,6 +62,8 @@ namespace Ceres.WebApi
             
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            app.UseCors("AllowSpecificOrigin");
 
             // Add JWT support
             app.UseJwtBearerAuthentication(new JwtBearerOptions

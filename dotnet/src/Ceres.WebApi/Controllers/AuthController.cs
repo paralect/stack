@@ -62,7 +62,8 @@ namespace Ceres.WebApi.Controllers
             return Ok(new
             {
                 token = new JwtSecurityTokenHandler().WriteToken(token),
-                expiration = token.ValidTo
+                expiration = token.ValidTo,
+                payload = token.Payload
             });
         }
 
@@ -89,8 +90,9 @@ namespace Ceres.WebApi.Controllers
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
-                    expiration = token.ValidTo
-                });
+                    expiration = token.ValidTo,
+                    payload = token.Payload
+                }); 
             }
 
             return BadRequest("Invalid email or password.");

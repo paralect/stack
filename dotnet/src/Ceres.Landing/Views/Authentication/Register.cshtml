@@ -1,0 +1,47 @@
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+
+<div class="row">
+    <br />
+    <div class="col-md-4 col-md-offset-4">
+        <div class="well">
+            <form id="register-form" class="form-horizontal">
+                <p>
+                    <h4>Create new account</h4>
+                </p>
+                <div class="form-group">
+                    <label for="email" class="col-md-4 control-label">Email</label>
+                    <div class="col-md-8">
+                        <input type="email" class="form-control" id="email" placeholder="Email">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="username" class="col-md-4 control-label">Username</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" id="username" placeholder="Username">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="col-md-4 control-label">Password</label>
+                    <div class="col-md-8">
+                        <input type="password" class="form-control" id="password" placeholder="Password">
+                    </div>
+                </div>
+                <button id="register-btn" type="submit" class="btn btn-default">Register</button> or <a asp-controller="Authentication" asp-action="SignIn">Sign in</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#register-btn").click(function() {
+        var email = $("#email").val();
+        var username = $("#email").val();
+        var password = $("#password").val();
+
+        signUp(email, username, password);
+    })
+</script>

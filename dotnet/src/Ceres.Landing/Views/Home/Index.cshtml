@@ -58,13 +58,19 @@
                     <li>
                         <a href="#contact">Contact</a>
                     </li>
+                    <li>
+                        <a asp-controller="Authentication" asp-action="SignIn">Sign in</a>
+                    </li>
+                    <li>
+                        <a asp-controller="Authentication" asp-action="Register">Register</a>
+                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container -->
     </nav>
-
+    
     <!-- Header -->
     <a name="about"></a>
     <div class="intro-header">
@@ -208,6 +214,22 @@
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
     </script>
     <script src="~/js/site.min.js" asp-append-version="true"></script>
+    <script>
+        $("#signin-btn").click(function() {
+            var email = $("#login_email").val();
+            var password = $("#login_password").val();
+
+            signIn(email, password);
+        });
+
+        $("#signup-btn").click(function () {
+            var email = $("#register_email").val();
+            var username = $("#register_username").val();
+            var password = $("#register_password").val();
+
+            signUp(email, username, password);
+        });
+    </script>
 </body>
 
 

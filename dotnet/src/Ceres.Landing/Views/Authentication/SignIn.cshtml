@@ -1,0 +1,41 @@
+@{
+    ViewData["Title"] = "SignIn";
+}
+
+<div class="row">
+    <br />
+    <div class="col-md-4 col-md-offset-4">
+        <div class="well">
+            <form id="signin-form" class="form-horizontal">
+                <p>
+                    <h4>Sign in to continue</h4>
+                </p>
+                <div class="form-group">
+                    <label for="email" class="col-md-4 control-label">Email</label>
+                    <div class="col-md-8">
+                        <input type="email" class="form-control" id="email" placeholder="Email">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="col-md-4 control-label">Password</label>
+                    <div class="col-md-8">
+                        <input type="password" class="form-control" id="password" placeholder="Password">
+                    </div>
+                </div>
+                <button id="signin-btn" type="submit" class="btn btn-default">Sign in</button> or <a asp-controller="Authentication" asp-action="Register">Register</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#signin-btn").click(function (e) {
+        e.preventDefault();
+        var email = $("#email").val();
+        var password = $("#password").val();
+
+        signIn(email, password, function (data) {window.location.href='@Url.Action("Index", "App")'}, function(data) {
+            alert(data.responseText);
+        });
+    })
+</script>
