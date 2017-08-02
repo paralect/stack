@@ -1,84 +1,109 @@
+// cli packages
 const chalk = require('chalk');
 const clear = require('clear');
-const CLI = require('clui');
+const { Spinner } = require('clui');
 const figlet = require('figlet');
-const inquirer = require('inquirer');
-const Preferences = require('preferences');
 
-const Spinner = CLI.Spinner;
-const { promisify } = require('util');
-const fs = require('fs');
-const gulp = require('./gulpTask');
+// promisified fs methods
+const fs = require('./lib/promiseFs');
 
-const readDir = promisify(fs.readdir);
-const readFile = promisify(fs.readFile);
-const writeFile = promisify(fs.writeFile);
+// dynamic gulp task
+const gulp = require('./lib/gulpTask');
+
+const questions = require('./lib/questions');
+const fetchService = require('./lib/fetchService');
 
 const path = require('path');
 
-const fetch = require('isomorphic-fetch');
+const mapValues = require('lodash.mapvalues');
+const { getAbsolutePath, getAbsoluteDirPath } = require('./lib/utils');
 
-const init = () => {
+const greetings = () => {
   clear();
   console.log(chalk.yellow(
     figlet.textSync('HTML => PDF', { horizontalLayout: 'full' }),
   ));
 };
 
-function getBuildFolder() {
-  const questions = [
-    {
-      name: 'buildFolder',
-      type: 'input',
-      message: 'Enter your html folder:',
-      validate(value) {
-        if (value.length) {
-          return true;
-        }
-        return 'Please enter your html folder';
-      },
-    },
-  ];
+const readFiles = (fileNames, outPath) => {
+  const promises = fileNames.map(async (name) => {
+    try {
+      const filePath = getAbsolutePath(path.join(outPath, name));
 
-  return inquirer.prompt(questions);
-}
-
-init();
-getBuildFolder()
-  .then(({ buildFolder }) => gulp(buildFolder))
-  .then(() => readDir(path.join(__dirname, './build')))
-  .then((files) => {
-    const promises = files.map(file => readFile(path.join(__dirname, './build', file)));
-    return Promise.all(promises);
-  })
-  .then((files) => {
-    return files.map(file => file.toString('binary'));
-  })
-  .then((htmls) => {
-    console.log(htmls);
-    const promises = htmls.map((html) => {
-      return fetch('http://localhost:3000/pdf/html', {
-        method: 'POST',
-        body: JSON.stringify({
-          html,
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        responseType: 'blob',
-      });
-    });
-    return Promise.all(promises);
-  })
-  .then((responses) => {
-    const promises = responses.map(res => res.buffer());
-
-    return Promise.all(promises);
-  })
-  .then((texts) => {
-    console.log(texts[0].toString());
-    const promises = texts.map((text, i) => writeFile(`${i}.pdf`, text, { encoding: 'binary' }));
-
-    return Promise.all(promises);
+      return {
+        name,
+        html: (await fs.readFile(filePath)).toString('binary'),
+      };
+    } catch (err) {
+      throw err;
+    }
   });
 
+  return Promise.all(promises)
+    .catch((err) => {
+      console.error(chalk.red('Something irreparable happened !!!\n', 'When read files', err.message, err.stack));
+      throw err;
+    });
+};
+
+const getPdfs = (files) => {
+  const promises = files.map(async (file) => {
+    try {
+      const response = await fetchService.fetchPdf(file.html);
+
+      return {
+        name: file.name,
+        text: await response.buffer(),
+      };
+    } catch (err) {
+      throw err;
+    }
+  });
+
+  return Promise.all(promises)
+    .catch((err) => {
+      console.error(chalk.red('Something irreparable happened !!!\n', 'When get pdf files', err.message, err.stack));
+      throw err;
+    });
+};
+
+const writePdfs = (targetDir, fetchedPdfs) => {
+  const promises = fetchedPdfs.map(async (file) => {
+    try {
+      const absolueDirPath = getAbsoluteDirPath(targetDir);
+
+      await fs.mkdir(absolueDirPath);
+
+      const filePath = getAbsolutePath(path.join(absolueDirPath, `${file.name}.pdf`));
+
+      return fs.writeFile(filePath, file.text, { encoding: 'binary' });
+    } catch (err) {
+      throw err;
+    }
+  });
+
+  return Promise.all(promises)
+    .catch((err) => {
+      console.error(chalk.red('Something irreparable happened !!!\n', 'When write pdf to file', err.message, err.stack));
+      throw err;
+    });
+};
+
+const main = async () => {
+  greetings();
+  const spinner = new Spinner();
+  try {
+    const paths = await questions.askSourcesFolder();
+    const {
+      outHtml,
+      outPdf } = await gulp(mapValues(paths, fp => (fp ? getAbsoluteDirPath(fp) : fp)));
+    const fileNames = await fs.readDir(getAbsoluteDirPath(outHtml));
+    const files = await readFiles(fileNames, outHtml);
+    const fetchedPdfs = await getPdfs(files);
+    await writePdfs(outPdf, fetchedPdfs);
+  } catch (err) {
+    console.error(chalk.red('Fatal error happened => exit'));
+  }
+};
+
+main();
