@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Security.Authentication;
 using System.Text;
-using System.Threading.Tasks;
-using Ceres.Data;
-using Ceres.Data.Entities.Auth;
-using Ceres.Data.MongoDb;
-using Ceres.Services;
 using Ceres.WebApi.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.MongoDB;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -35,20 +30,37 @@ namespace Ceres.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<JwtSettings>(Configuration.GetSection("JWTSettings"));
+            
             // Add framework services.
             services.AddMvc();
+            services.AddOptions();
 
             services.AddCors(options =>
             {
+                var corsSettings = Configuration.GetSection("CorsSettings").Get<CorsSettings>();
                 options.AddPolicy("AllowSpecificOrigin",
-                    builder => builder.WithOrigins("http://localhost:45348").AllowAnyHeader().AllowAnyMethod().AllowCredentials());
+                    builder => builder.WithOrigins(corsSettings.AllowedOrigins).AllowAnyHeader().AllowAnyMethod().AllowCredentials());
             });
 
-            services.AddIdentityWithMongoStores($"{Configuration["MongoDbConfiguration:ConnectionString"]}/{Configuration["MongoDbConfiguration:DatabaseName"]}")
-                .AddDefaultTokenProviders();
+            services.AddSingleton<IUserStore<IdentityUser>>(provider =>
+            {
+                var connectionString = Configuration["MongoDbConfiguration:ConnectionString"];
+                var settings = MongoClientSettings.FromUrl(new MongoUrl(connectionString));
+                settings.SslSettings = new SslSettings
+                {
+                    EnabledSslProtocols = SslProtocols.Tls12
+                };
 
-            services.Configure<JwtSettings>(Configuration.GetSection("JWTSettings"));
+                var client = new MongoClient(settings);
+                var database = client.GetDatabase(Configuration["MongoDbConfiguration:DatabaseName"]);
+                var collection = database.GetCollection<IdentityUser>("users");
 
+                return new UserStore<IdentityUser>(collection);
+            });
+            
+            services.AddIdentity<IdentityUser, IdentityRole>();
+            
             RegisterComponents(services);
         }
 
@@ -87,12 +99,17 @@ namespace Ceres.WebApi
         {
             services.AddSingleton<IMongoDatabase>((_) =>
             {
-                var mongoClient = new MongoClient(Configuration["MongoDbConfiguration:ConnectionString"]);
-                return mongoClient.GetDatabase(Configuration["MongoDbConfiguration:DatabaseName"]);
-            });
+                var connectionString = Configuration["MongoDbConfiguration:ConnectionString"];
+                var settings = MongoClientSettings.FromUrl(new MongoUrl(connectionString));
+                settings.SslSettings = new SslSettings
+                {
+                    EnabledSslProtocols = SslProtocols.Tls12
+                };
 
-            services.AddSingleton<IDocumentRepository<User>, MongoDbDocumentRepository<User>>();
-            services.AddTransient<IUserService, UserService>();
+                var client = new MongoClient(settings);
+                var database = client.GetDatabase(Configuration["MongoDbConfiguration:DatabaseName"]);
+                return database;
+            });
         }
     }
 }

@@ -19,7 +19,7 @@ function signIn(email, password, success, fail) {
 function signUp(email, username, password, success, fail) {
     var registerModel = {
         Email: email,
-        Username: username,
+        UserName: username,
         Password: password
     };
 

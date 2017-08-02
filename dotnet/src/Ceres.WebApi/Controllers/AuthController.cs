@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Ceres.Data;
 using Ceres.Data.Entities;
 using Ceres.Data.Entities.Auth;
-using Ceres.Services;
 using Ceres.WebApi.Configuration;
 using Ceres.WebApi.Models;
 using Microsoft.AspNetCore.Identity;

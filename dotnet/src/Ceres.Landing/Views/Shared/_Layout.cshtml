@@ -49,7 +49,7 @@
                         <a asp-controller="Home" asp-action="Index">Home</a>
                     </li>
                     <li id="account" style="display: none;" class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="username"></span><span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="loggeduser"></span><span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a id="logout" href="#">Logout</a></li>
                         </ul>
@@ -113,7 +113,7 @@
         var user = getUser();
         if (user !== null) {
             $("#account").show();
-            $("#username").text(user);
+            $("#loggeduser").text(user);
         } else {
             $("#account").hide();
         }
