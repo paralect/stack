@@ -9,6 +9,25 @@ To make collaboration simpler and more efficient we will focus around very speci
 
 ### .NET Service Stack Solutions Ideas
 
+#### Solution Structure
+Currently solution consists of 5 projects. 
+|Project name|Description|
+|:--:|:----|
+|Ceres.Data|This project contains interfaces for document repository and entites. As well it contains entities implementations. All entites should implement IEntity interface in order to be used with document repository implementations.|
+|Ceres.Data.MongoDb| Implementation of MongoDb document repository.|
+|Ceres.Landing| Landing site converted to .NET Core MVC application. Contains landing page itself (with free Boostrap theme), login/register pages and App controller (and page) as foundation for SPA.|
+|Ceres.WebApi| .NET Core Web Api. Issues and validates JWT tokens for authentication. Current implementation uses MongoDb user manager (and user store), and will be updated to support DocumentDb user manager and user store.|
+|Ceres.Services| Will contain implementations of data services.|
+
+##### Ceres.WebApi configuration and deployment
+TODO
+
+##### Ceres.Landing configuration and deployment
+TODO
+
+##### Ceres.Data: Entities and document repositories implementation
+TODO
+
 #### Priority tasks
 |Priority|Description|
 |:--:|:----|
@@ -16,15 +35,6 @@ To make collaboration simpler and more efficient we will focus around very speci
 |2|Landing page (authentication and foundation for working with Web Api)|
 |3|MongoDb data service|
 |4|DocumentDb data service|
-
-#### Standalone packages
-
-|Name|Status|Description|
-|:--:|:----:|:----------|
-|Stylish common email templates|idea|Welcome, Invite, Forgot Password, Payment Receipt |
-|Config management|idea|Describe a common way and show example of managing configs for different environments|
-|Common logger|idea| Should support logging to the File, Logstash, Loggly|
-|MongoDB migrations|idea|Steamline MongoDB database migrations process|
 
 #### Starter apps & common REST resources
 
