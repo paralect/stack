@@ -36,7 +36,13 @@
         var password = $("#password").val();
 
         signIn(email, password, function (data) { window.location.href = '@Url.Action("Index", "App")' }, function (data) {
-            $("#errors").text(data.responseText);
+            var errors = JSON.parse(data.responseText);
+            var errorsText = "<ul>";
+            errors.forEach(function (error) {
+                errorsText += "<li>" + error + "</li>";
+            });
+            errorsText += "</ul>";
+            $("#errors").html(errorsText);
             $("#errors").show();
         });
     })

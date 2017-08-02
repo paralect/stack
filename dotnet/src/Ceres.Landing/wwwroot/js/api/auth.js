@@ -20,13 +20,15 @@ function signIn(email, password, success, fail) {
         beforeSend: function (xhr) {
             xhr.setRequestHeader("Content-Type", "application/json");
         }
-    }).success(function (data) {
-        sessionStorage.setItem(token_key, data.token);
-        sessionStorage.setItem(username_key, data.payload.sub);
-        success(data);
-    }).fail(function (data) {
-        fail(data);
-    });
+    })
+        .success(function (data) {
+            sessionStorage.setItem(token_key, data.token);
+            sessionStorage.setItem(username_key, data.payload.sub);
+            success(data);
+        })
+        .fail(function (data) {
+            fail(data);
+        });
 }
 
 function signUp(email, username, password, success, fail) {
@@ -47,19 +49,21 @@ function signUp(email, username, password, success, fail) {
         beforeSend: function (xhr) {
             xhr.setRequestHeader("Content-Type", "application/json");
         }
-    }).success(function (data) {
-        sessionStorage.setItem(token_key, data.token);
-        sessionStorage.setItem(username_key, data.payload.sub);
-        success(data);
-    }).fail(function (data) {
-        console.log(data);
-        fail(data);
-    });
+    })
+        .success(function (data) {
+            sessionStorage.setItem(token_key, data.token);
+            sessionStorage.setItem(username_key, data.payload.sub);
+            success(data);
+        })
+        .fail(function (data) {
+           fail(data);
+        });
 }
 
-function Logout() {
+function Logout(success) {
     sessionStorage.removeItem(token_key);
-    sessionStorage.removeITem(username_key);
+    sessionStorage.removeItem(username_key);
+    success();
 }
 
 function getUser() {

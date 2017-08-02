@@ -30,6 +30,7 @@
                         <input type="password" class="form-control" id="password" placeholder="Password">
                     </div>
                 </div>
+                <div id="errors" class="alert alert-danger alert-hidden"></div>
                 <button id="register-btn" type="submit" class="btn btn-default">Register</button> or <a asp-controller="Authentication" asp-action="SignIn">Sign in</a>
             </form>
         </div>
@@ -37,11 +38,21 @@
 </div>
 
 <script>
-    $("#register-btn").click(function() {
+    $("#register-btn").click(function (e) {
+        e.preventDefault();
         var email = $("#email").val();
-        var username = $("#email").val();
+        var username = $("#username").val();
         var password = $("#password").val();
 
-        signUp(email, username, password);
+        signUp(email, username, password, function (data) { window.location.href = '@Url.Action("Index", "App")' }, function (data) {
+            var errors = JSON.parse(data.responseText);
+            var errorsText = "<ul>";
+            errors.forEach(function (error) {
+                errorsText += "<li>" + error + "</li>";
+            });
+            errorsText += "</ul>";
+            $("#errors").html(errorsText);
+            $("#errors").show();
+        });
     })
 </script>

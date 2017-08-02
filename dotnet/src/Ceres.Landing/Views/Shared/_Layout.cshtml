@@ -48,8 +48,11 @@
                     <li>
                         <a asp-controller="Home" asp-action="Index">Home</a>
                     </li>
-                    <li id="account" style="display: none;">
-                        <a id="logout" href="#">Logout</a>
+                    <li id="account" style="display: none;" class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="username"></span><span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a id="logout" href="#">Logout</a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>
@@ -102,8 +105,8 @@
         </div>
     </footer>
     @RenderSection("Scripts", required: false)
-    
-<script>
+
+    <script>
    $("document").ready(function () {
         var user = getUser();
         if (user !== null) {
@@ -113,7 +116,13 @@
             $("#account").hide();
         }
     });
-</script>
+
+   $("#logout").click(function(e) {
+       Logout(function() {
+           window.location.href = '@Url.Action("Index", "Home")';
+       });
+        });
+    </script>
 </body>
 
 </html>

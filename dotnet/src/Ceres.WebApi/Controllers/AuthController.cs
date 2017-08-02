@@ -83,7 +83,7 @@ namespace Ceres.WebApi.Controllers
 
                 if (passwordVerificationResult != PasswordVerificationResult.Success)
                 {
-                    return BadRequest("Invalid email or password.");
+                    return BadRequest(new[] {"Invalid email or password."});
                 }
 
                 var token = GetToken(identityUser);
@@ -95,7 +95,7 @@ namespace Ceres.WebApi.Controllers
                 }); 
             }
 
-            return BadRequest("Invalid email or password.");
+            return BadRequest(new[] { "Invalid email or password." });
         }
 
         private JwtSecurityToken GetToken(IdentityUser user)
