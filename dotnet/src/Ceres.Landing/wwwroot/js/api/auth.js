@@ -9,26 +9,11 @@ function signIn(email, password, success, fail) {
         Password: password
     };
 
-    $.ajax({
-        type: 'POST',
-        url: authApiBaseUrl + "signin",
-        data: JSON.stringify(loginModel),
-        crossDomain: true,
-        xhrFields: {
-            withCredentials: true
-        },
-        beforeSend: function (xhr) {
-            xhr.setRequestHeader("Content-Type", "application/json");
-        }
-    })
-        .success(function (data) {
+    callApi("auth", "signin", "POST", loginModel, true, function (data) {
             sessionStorage.setItem(token_key, data.token);
             sessionStorage.setItem(username_key, data.payload.sub);
             success(data);
-        })
-        .fail(function (data) {
-            fail(data);
-        });
+        }, fail);
 }
 
 function signUp(email, username, password, success, fail) {
@@ -38,26 +23,11 @@ function signUp(email, username, password, success, fail) {
         Password: password
     };
 
-    $.ajax({
-        type: 'POST',
-        url: authApiBaseUrl + "register",
-        data: JSON.stringify(registerModel),
-        crossDomain: true,
-        xhrFields: {
-            withCredentials: true
-        },
-        beforeSend: function (xhr) {
-            xhr.setRequestHeader("Content-Type", "application/json");
-        }
-    })
-        .success(function (data) {
+    callApi("auth", "register", "POST", registerModel, false, function(data) {
             sessionStorage.setItem(token_key, data.token);
             sessionStorage.setItem(username_key, data.payload.sub);
             success(data);
-        })
-        .fail(function (data) {
-           fail(data);
-        });
+        }, fail);
 }
 
 function Logout(success) {
