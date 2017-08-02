@@ -99,7 +99,12 @@ const main = async () => {
       outPdf } = await gulp(mapValues(paths, fp => (fp ? getAbsoluteDirPath(fp) : fp)));
     const fileNames = await fs.readDir(getAbsoluteDirPath(outHtml));
     const files = await readFiles(fileNames, outHtml);
+
+    spinner.message('Fetching pdf files');
+    spinner.start();
     const fetchedPdfs = await getPdfs(files);
+    spinner.stop();
+
     await writePdfs(outPdf, fetchedPdfs);
   } catch (err) {
     console.error(chalk.red('Fatal error happened => exit'));
