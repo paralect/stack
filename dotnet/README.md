@@ -39,18 +39,33 @@ To make collaboration simpler and more efficient we will focus around very speci
 #### MongoDb
 
 ##### Azure setup
-1. In Azure console add new service -> Databases -> Azure Cosmos DB
+1. In Azure portal add new service -> Databases -> Azure Cosmos DB
 2. Enter desired account ID
 3. Select MongoDB in API dropdown
 4. Select subscription, resource group and location
-5. Click 'Create' and wait for provisioning to complete
+5. Click 'Create' and wait for database provisioning to complete
 6. In resources list select created database and go to Settings -> Connection Strings to find connection info
 
 ##### Local setup
-Follow instructions https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
+[Installation instructions](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/)
 
 #### Web Api
-TODO
+1. In Azure portal add new service -> Web + Mobile -> Web App
+2. Enter App name, select subscription and resource group
+3. Select or create App service plan and location
+4. Click 'Create' and wait for App provisioning to complete
+5. In Web Api appsettings.json under CorsSettings set allowed origins URLs (URL can be found in Azure portal in web app/web site overview)
+6. In Web Api appsettings.json under MongoDbConfiguration set MongoDB connection string (see MongoDb configuration section) and database name
+7. Right-click on Ceres.WebApi project -> Publish
+8. Select 'Microsoft Azure App Service'
+9. Sign in to your Microsoft account
+10. Click 'Change Type' and select 'API App'
+11. Select subscription.
+12. Select existing resource group or click 'New' and enter resource group name.
+13. Select existing App service plan or click 'New' and create new plan.
+14. Publish application
+15. Verify application deployed correctly
+16. Publish profile will be created under project Properties -> PublishProfiles and can be used for future deployments
 
 #### Ceres.Landing configuration and deployment
 TODO
