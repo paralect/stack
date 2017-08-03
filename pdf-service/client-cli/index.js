@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 // cli packages
 const chalk = require('chalk');
 const clear = require('clear');
@@ -20,8 +22,8 @@ const { getAbsolutePath, getAbsoluteDirPath } = require('./lib/utils');
 
 const greetings = () => {
   clear();
-  console.log(chalk.yellow(
-    figlet.textSync('HTML => PDF', { horizontalLayout: 'full' }),
+  console.log(chalk.red(
+    figlet.textSync('PotS', { horizontalLayout: 'full' }),
   ));
 };
 

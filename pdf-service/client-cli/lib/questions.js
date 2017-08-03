@@ -4,6 +4,9 @@ const fs = require('./promiseFs');
 const enums = require('./enums');
 const { getAbsoluteDirPath } = require('./utils');
 
+const { PathPrompt } = require('inquirer-path');
+inquirer.prompt.registerPrompt('path', PathPrompt);
+
 module.exports.askSourcesFolder = () => {
   const questions = [
     {
