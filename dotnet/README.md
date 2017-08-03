@@ -34,6 +34,9 @@ To make collaboration simpler and more efficient we will focus around very speci
 |Ceres.WebApi| .NET Core Web Api. Issues and validates JWT tokens for authentication. Current implementation uses MongoDb user manager (and user store), and will be updated to support DocumentDb user manager and user store.|
 |Ceres.Services| Will contain implementations of data services.|
 
+### Build and develop
+[Visual Studio 2017 download](https://www.visualstudio.com/downloads/)
+
 ### Configuration and deployment
 
 #### MongoDb
@@ -67,8 +70,22 @@ To make collaboration simpler and more efficient we will focus around very speci
 15. Verify application deployed correctly
 16. Publish profile will be created under project Properties -> PublishProfiles and can be used for future deployments
 
-#### Ceres.Landing configuration and deployment
-TODO
+#### Landing
+1. 1. In Azure portal add new service -> Web + Mobile -> Web App
+2. Enter App name, select subscription and resource group
+3. Select or create App service plan and location
+4. Click 'Create' and wait for App provisioning to complete
+5. In Landing -> wwwroot -> js -> api -> base.js set Web Api address (in form like [http://localhost:34290/api/](http://localhost:34290/api/))
+6. Right-click on Ceres.WebApi project -> Publish
+7. Select 'Microsoft Azure App Service'
+8. Sign in to your Microsoft account
+9. Click 'Change Type' and select 'Web App'
+10. Select subscription.
+11. Select existing resource group or click 'New' and enter resource group name.
+12. Select existing App service plan or click 'New' and create new plan.
+13. Publish application
+14. Verify application deployed correctly
+15. Publish profile will be created under project Properties -> PublishProfiles and can be used for future deployments
 
 #### Ceres.Data: Entities and document repositories implementation
 TODO
