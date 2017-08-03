@@ -8,7 +8,7 @@ const merge = require('merge-stream');
 const change = require('gulp-change');
 const inline = require('gulp-inline');
 const cheerio = require('cheerio');
-const { getAbsolutePath } = require('./utils');
+const path = require('path');
 
 function addBundleStylesheet(file, path) {
   const $ = cheerio.load(file);
@@ -18,21 +18,20 @@ function addBundleStylesheet(file, path) {
 
 module.exports = ({ htmlFolder, stylesFolder }) => {
   const outPath = `html_to_pdf_out_${Date.now()}`;
-
   gulp.task('concat-css', () => {
     if (!stylesFolder) {
       return null;
     }
 
-    const lessStream = gulp.src(`${stylesFolder}*.less`)
+    const lessStream = gulp.src(path.join(stylesFolder, '*.less'))
       .pipe(less())
       .pipe(concat('less-files.less'));
 
-    const scssStream = gulp.src(`${stylesFolder}*.scss`)
+    const scssStream = gulp.src(path.join(stylesFolder, '*.scss'))
       .pipe(sass())
       .pipe(concat('scss-files.scss'));
 
-    const cssStream = gulp.src(`${stylesFolder}*.css`)
+    const cssStream = gulp.src(path.join(stylesFolder, '*.css'))
       .pipe(concat('css-files.css'));
 
     return merge([lessStream, scssStream, cssStream])
@@ -45,10 +44,10 @@ module.exports = ({ htmlFolder, stylesFolder }) => {
   });
 
   gulp.task('inline-css', ['concat-css'], () => {
-    return gulp.src(`${htmlFolder}*.html`)
+    return gulp.src(path.join(htmlFolder, '*.html'))
       .pipe(change((file) => {
         if (stylesFolder) {
-          return addBundleStylesheet(file, getAbsolutePath(`${outPath}/styles/bundle.css`));
+          return addBundleStylesheet(file, path.resolve(`${outPath}/styles/bundle.css`));
         }
         return file;
       }))

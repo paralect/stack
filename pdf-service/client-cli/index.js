@@ -18,7 +18,6 @@ const fetchService = require('./lib/fetchService');
 const path = require('path');
 
 const mapValues = require('lodash.mapvalues');
-const { getAbsolutePath, getAbsoluteDirPath } = require('./lib/utils');
 
 const greetings = () => {
   clear();
@@ -30,7 +29,7 @@ const greetings = () => {
 const readFiles = (fileNames, outPath) => {
   const promises = fileNames.map(async (name) => {
     try {
-      const filePath = getAbsolutePath(path.join(outPath, name));
+      const filePath = path.resolve(outPath, name);
 
       return {
         name,
@@ -72,11 +71,11 @@ const getPdfs = (files) => {
 const writePdfs = (targetDir, fetchedPdfs) => {
   const promises = fetchedPdfs.map(async (file) => {
     try {
-      const absolueDirPath = getAbsoluteDirPath(targetDir);
+      const absolueDirPath = path.resolve(targetDir);
 
       await fs.mkdir(absolueDirPath);
 
-      const filePath = getAbsolutePath(path.join(absolueDirPath, `${file.name}.pdf`));
+      const filePath = path.resolve(absolueDirPath, `${path.basename(file.name, '.html')}.pdf`);
 
       return fs.writeFile(filePath, file.text, { encoding: 'binary' });
     } catch (err) {
@@ -98,8 +97,8 @@ const main = async () => {
     const paths = await questions.askSourcesFolder();
     const {
       outHtml,
-      outPdf } = await gulp(mapValues(paths, fp => (fp ? getAbsoluteDirPath(fp) : fp)));
-    const fileNames = await fs.readDir(getAbsoluteDirPath(outHtml));
+      outPdf } = await gulp(mapValues(paths, fp => (fp ? path.resolve(fp) : fp)));
+    const fileNames = await fs.readDir(path.resolve(outHtml));
     const files = await readFiles(fileNames, outHtml);
 
     spinner.message('Fetching pdf files');

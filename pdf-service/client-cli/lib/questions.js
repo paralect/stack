@@ -2,16 +2,16 @@ const inquirer = require('inquirer');
 
 const fs = require('./promiseFs');
 const enums = require('./enums');
-const { getAbsoluteDirPath } = require('./utils');
-
+const path = require('path');
 const { PathPrompt } = require('inquirer-path');
+
 inquirer.prompt.registerPrompt('path', PathPrompt);
 
 module.exports.askSourcesFolder = () => {
   const questions = [
     {
       name: 'htmlFolder',
-      type: 'input',
+      type: 'path',
       message: 'Enter path to your html folder (you can use absolute or relative path):',
       validate(value) {
         const done = this.async();
@@ -19,7 +19,7 @@ module.exports.askSourcesFolder = () => {
         if (!value.length) {
           return done('Please path to enter your html folder');
         }
-        const htmlPath = getAbsoluteDirPath(value);
+        const htmlPath = path.resolve(value);
 
         return fs.stat(htmlPath)
           .then((stats) => {
@@ -35,13 +35,13 @@ module.exports.askSourcesFolder = () => {
     },
     {
       name: 'stylesFolder',
-      type: 'input',
+      type: 'path',
       message: 'Enter path to your styles folder (optional):',
       validate(value) {
         const done = this.async();
 
         if (value.length) {
-          const stylesPath = getAbsoluteDirPath(value);
+          const stylesPath = path.resolve(value);
           return fs.stat(stylesPath)
             .then((stats) => {
               if (!stats.isDirectory()) {
