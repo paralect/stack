@@ -7,31 +7,38 @@ const concat = require('gulp-concat');
 const merge = require('merge-stream');
 const change = require('gulp-change');
 const inline = require('gulp-inline');
+const inlineAssets = require('./gulp-inline-assets');
 const cheerio = require('cheerio');
 const path = require('path');
 
-function addBundleStylesheet(file, path) {
+function addBundleStylesheet(file, stylesheetPath) {
   const $ = cheerio.load(file);
-  $('head').append(`<link rel="stylesheet" href="${path}" />`);
+  $('head').append(`<link rel="stylesheet" href="${stylesheetPath}" />`);
   return $.html();
 }
 
 module.exports = ({ htmlFolder, stylesFolder }) => {
   const outPath = `html_to_pdf_out_${Date.now()}`;
-  gulp.task('concat-css', () => {
-    if (!stylesFolder) {
-      return null;
-    }
 
-    const lessStream = gulp.src(path.join(stylesFolder, '*.less'))
+  gulp.task('concat-css', () => {
+    const lessStream = gulp.src(path.join(stylesFolder, '/**/*.less'))
       .pipe(less())
+      .pipe(inlineAssets({
+        extensions: ['woff', 'woff2'],
+      }))
       .pipe(concat('less-files.less'));
 
-    const scssStream = gulp.src(path.join(stylesFolder, '*.scss'))
+    const scssStream = gulp.src(path.join(stylesFolder, '/**/*.scss'))
       .pipe(sass())
+      .pipe(inlineAssets({
+        extensions: ['woff', 'woff2'],
+      }))
       .pipe(concat('scss-files.scss'));
 
-    const cssStream = gulp.src(path.join(stylesFolder, '*.css'))
+    const cssStream = gulp.src(path.join(stylesFolder, '/**/*.css'))
+      .pipe(inlineAssets({
+        extensions: ['woff', 'woff2'],
+      }))
       .pipe(concat('css-files.css'));
 
     return merge([lessStream, scssStream, cssStream])
@@ -52,7 +59,7 @@ module.exports = ({ htmlFolder, stylesFolder }) => {
         return file;
       }))
       .pipe(inline({
-        disabledTypes: ['svg', 'img', 'js'],
+        disabledTypes: ['svg', 'js'],
       }))
       .pipe(gulp.dest(`${outPath}/pages`));
   });

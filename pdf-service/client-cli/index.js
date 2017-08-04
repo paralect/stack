@@ -108,6 +108,7 @@ const main = async () => {
 
     await writePdfs(outPdf, fetchedPdfs);
   } catch (err) {
+    console.log(err);
     console.error(chalk.red('Fatal error happened => exit'));
   }
 };
