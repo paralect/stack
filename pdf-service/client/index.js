@@ -74,7 +74,7 @@ const writePdfs = (targetDir, fetchedPdfs) => {
     });
 };
 
-module.exports = async ({ htmlFolder, stylesFolder, outFolder = __dirname, wkhtmltopdfOptions = {} }) => {
+module.exports = async ({ htmlFolder, stylesFolder, outFolder = process.cwd(), wkhtmltopdfOptions = {} }) => {
   try {
     const paths = await validate({ htmlFolder, stylesFolder, outFolder });
     const { outHtml, outPdf } = await gulp(paths);
