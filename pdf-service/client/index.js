@@ -31,10 +31,10 @@ const readFiles = (fileNames, outPath) => {
     });
 };
 
-const getPdfs = (files) => {
+const getPdfs = (files, wkhtmltopdfOptions) => {
   const promises = files.map(async (file) => {
     try {
-      const response = await fetchService.fetchPdf(file.html);
+      const response = await fetchService.fetchPdf(file.html, wkhtmltopdfOptions);
 
       return {
         name: file.name,
@@ -74,13 +74,13 @@ const writePdfs = (targetDir, fetchedPdfs) => {
     });
 };
 
-module.exports = async ({ htmlFolder, stylesFolder, outFolder = __dirname }) => {
+module.exports = async ({ htmlFolder, stylesFolder, outFolder = __dirname, wkhtmltopdfOptions = {} }) => {
   try {
     const paths = await validate({ htmlFolder, stylesFolder, outFolder });
     const { outHtml, outPdf } = await gulp(paths);
     const fileNames = await fs.readDir(path.resolve(outHtml));
     const files = await readFiles(fileNames, outHtml);
-    const fetchedPdfs = await getPdfs(files);
+    const fetchedPdfs = await getPdfs(files, wkhtmltopdfOptions);
     await writePdfs(outPdf, fetchedPdfs);
   } catch (err) {
     console.log(err);

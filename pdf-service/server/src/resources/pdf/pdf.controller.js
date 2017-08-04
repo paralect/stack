@@ -17,6 +17,12 @@ module.exports.generateByUrl = async (ctx) => {
 module.exports.generateByHtml = async (ctx) => {
   ctx.type = 'application/pdf';
   ctx.attachment('out.pdf');
-  console.log(ctx.request.body.html);
-  ctx.body = wkhtmltopdf(ctx.request.body.html);
+  const {
+    html,
+    wkhtmltopdfOptions = {},
+  } = ctx.request.body;
+
+  console.log(wkhtmltopdfOptions);
+
+  ctx.body = wkhtmltopdf(html, wkhtmltopdfOptions);
 };
