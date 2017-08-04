@@ -36,7 +36,7 @@ module.exports.askSourcesFolder = () => {
     {
       name: 'stylesFolder',
       type: 'path',
-      message: 'Enter path to your styles folder (optional):',
+      message: 'Enter path to your styles folder:',
       validate(value) {
         const done = this.async();
 
@@ -56,6 +56,11 @@ module.exports.askSourcesFolder = () => {
 
         return done(null, true);
       },
+    },
+    {
+      name: 'outFolder',
+      type: 'path',
+      message: 'Enter the path where we should save results:',
     },
   ];
 

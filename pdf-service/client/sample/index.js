@@ -1,3 +1,7 @@
 const getPdfs = require('./../index');
 
-getPdfs({ htmlFolder: __dirname, stylesFolder: `${__dirname}/styles` });
+getPdfs({
+  htmlFolder: __dirname,
+  stylesFolder: `${__dirname}/styles`,
+  outFolder: `${__dirname}/out`,
+});

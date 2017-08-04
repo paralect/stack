@@ -10,8 +10,6 @@ const fetchService = require('./lib/fetchService');
 
 const path = require('path');
 
-const mapValues = require('lodash.mapvalues');
-
 const readFiles = (fileNames, outPath) => {
   const promises = fileNames.map(async (name) => {
     try {
@@ -76,17 +74,16 @@ const writePdfs = (targetDir, fetchedPdfs) => {
     });
 };
 
-module.exports = async ({htmlFolder, stylesFolder}) => {
+module.exports = async ({ htmlFolder, stylesFolder, outFolder = __dirname }) => {
   try {
-    const paths = await validate({htmlFolder, stylesFolder});
-    const {
-      outHtml,
-      outPdf } = await gulp(mapValues(paths, fp => (fp ? path.resolve(fp) : fp)));
+    const paths = await validate({ htmlFolder, stylesFolder, outFolder });
+    const { outHtml, outPdf } = await gulp(paths);
     const fileNames = await fs.readDir(path.resolve(outHtml));
     const files = await readFiles(fileNames, outHtml);
     const fetchedPdfs = await getPdfs(files);
     await writePdfs(outPdf, fetchedPdfs);
   } catch (err) {
+    console.log(err);
     console.error(chalk.red('Fatal error happened => exit'));
   }
 };

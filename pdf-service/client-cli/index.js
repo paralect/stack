@@ -97,7 +97,7 @@ const main = async () => {
     const paths = await questions.askSourcesFolder();
     const {
       outHtml,
-      outPdf } = await gulp(mapValues(paths, fp => (fp ? path.resolve(fp) : fp)));
+      outPdf } = await gulp(paths);
     const fileNames = await fs.readDir(path.resolve(outHtml));
     const files = await readFiles(fileNames, outHtml);
 

@@ -17,8 +17,8 @@ function addBundleStylesheet(file, stylesheetPath) {
   return $.html();
 }
 
-module.exports = ({ htmlFolder, stylesFolder }) => {
-  const outPath = `html_to_pdf_out_${Date.now()}`;
+module.exports = ({ htmlFolder, stylesFolder, outFolder = __dirname }) => {
+  const outPath = path.join(outFolder, `html_to_pdf_out_${Date.now()}`);
 
   gulp.task('concat-css', () => {
     const lessStream = gulp.src(path.join(stylesFolder, '/**/*.less'))
