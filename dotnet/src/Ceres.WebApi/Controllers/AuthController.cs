@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Ceres.Data;
 using Ceres.Data.Entities;
 using Ceres.Data.Entities.Auth;
+using Ceres.Services.Mail;
 using Ceres.WebApi.Configuration;
 using Ceres.WebApi.Models;
 using Microsoft.AspNetCore.Identity;
@@ -29,12 +30,14 @@ namespace Ceres.WebApi.Controllers
         private readonly JwtSettings _jwtSettings;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IPasswordHasher<IdentityUser> _passwordHasher;
+        private readonly IMailService _mailService;
 
-        public AuthController(IOptions<JwtSettings> jwtOptions, UserManager<IdentityUser> userManager, IPasswordHasher<IdentityUser> passwordHasher)
+        public AuthController(IOptions<JwtSettings> jwtOptions, UserManager<IdentityUser> userManager, IPasswordHasher<IdentityUser> passwordHasher, IMailService mailService)
         {
             _jwtSettings = jwtOptions.Value;
             _userManager = userManager;
             _passwordHasher = passwordHasher;
+            _mailService = mailService;
         }
 
         [HttpPost("register")]

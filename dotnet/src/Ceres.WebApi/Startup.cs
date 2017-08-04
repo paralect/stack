@@ -1,5 +1,7 @@
-﻿using System.Security.Authentication;
+﻿using System.IO;
+using System.Security.Authentication;
 using System.Text;
+using Ceres.Services.Mail;
 using Ceres.WebApi.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -42,23 +44,7 @@ namespace Ceres.WebApi
                 options.AddPolicy("AllowSpecificOrigin",
                     builder => builder.WithOrigins(corsSettings.AllowedOrigins).AllowAnyHeader().AllowAnyMethod().AllowCredentials());
             });
-
-            services.AddSingleton<IUserStore<IdentityUser>>(provider =>
-            {
-                var connectionString = Configuration["MongoDbConfiguration:ConnectionString"];
-                var settings = MongoClientSettings.FromUrl(new MongoUrl(connectionString));
-                settings.SslSettings = new SslSettings
-                {
-                    EnabledSslProtocols = SslProtocols.Tls12
-                };
-
-                var client = new MongoClient(settings);
-                var database = client.GetDatabase(Configuration["MongoDbConfiguration:DatabaseName"]);
-                var collection = database.GetCollection<IdentityUser>("users");
-
-                return new UserStore<IdentityUser>(collection);
-            });
-            
+           
             services.AddIdentity<IdentityUser, IdentityRole>();
             
             RegisterComponents(services);
@@ -97,6 +83,9 @@ namespace Ceres.WebApi
 
         private void RegisterComponents(IServiceCollection services)
         {
+            var serviceProvider = services.BuildServiceProvider();
+            var env = serviceProvider.GetService<IHostingEnvironment>();
+
             services.AddSingleton<IMongoDatabase>((_) =>
             {
                 var connectionString = Configuration["MongoDbConfiguration:ConnectionString"];
@@ -109,6 +98,31 @@ namespace Ceres.WebApi
                 var client = new MongoClient(settings);
                 var database = client.GetDatabase(Configuration["MongoDbConfiguration:DatabaseName"]);
                 return database;
+            });
+
+            services.AddSingleton<IMailService>((_) =>
+            {
+                var domain = Configuration["MailgunSettings:Domain"];
+                var apiKey = Configuration["MailGunSettings:ApiKey"];
+                var templatesFolder = Path.Combine(env.ContentRootPath, "Templates");
+
+                return new MailgunMailService(apiKey, domain, templatesFolder);
+            });
+
+            services.AddSingleton<IUserStore<IdentityUser>>(provider =>
+            {
+                var connectionString = Configuration["MongoDbConfiguration:ConnectionString"];
+                var settings = MongoClientSettings.FromUrl(new MongoUrl(connectionString));
+                settings.SslSettings = new SslSettings
+                {
+                    EnabledSslProtocols = SslProtocols.Tls12
+                };
+
+                var client = new MongoClient(settings);
+                var database = client.GetDatabase(Configuration["MongoDbConfiguration:DatabaseName"]);
+                var collection = database.GetCollection<IdentityUser>("users");
+
+                return new UserStore<IdentityUser>(collection);
             });
         }
     }
