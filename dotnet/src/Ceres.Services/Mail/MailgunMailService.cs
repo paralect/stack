@@ -12,23 +12,26 @@ namespace Ceres.Services.Mail
     {
         private readonly RestClient _client;
         private readonly string _templatesFolder;
+        private readonly string _from;
 
         private const string BaseUri = "https://api.mailgun.net/v3";
 
-        public MailgunMailService(string apiKey, string domain, string templatesFolder)
+        public MailgunMailService(string from, string apiKey, string domain, string templatesFolder)
         {
+            if (string.IsNullOrEmpty(from)) throw new ArgumentException(nameof(from));
             if (string.IsNullOrEmpty(apiKey)) throw new ArgumentException(nameof(apiKey));
             if (string.IsNullOrEmpty(domain)) throw new ArgumentException(nameof(domain));
             if (string.IsNullOrEmpty(templatesFolder)) throw new ArgumentException(nameof(templatesFolder));
 
             _templatesFolder = templatesFolder;
+            _from = from;
             _client = new RestClient(Path.Combine(BaseUri, domain)) {Authenticator = new HttpBasicAuthenticator("api", apiKey)};
         }
 
-        public Task Send(string from, string to, string subject, string body)
+        public Task Send(string to, string subject, string body)
         {
             var request = new RestRequest("messages");
-            request.AddParameter("from", from);
+            request.AddParameter("from", _from);
             request.AddParameter("to", to);
             request.AddParameter("subject", subject);
             request.AddParameter("html", body);
@@ -39,10 +42,10 @@ namespace Ceres.Services.Mail
             return taskCompletion.Task;
         }
         
-        public Task Send(string from, string to, string subject, string templateName, Dictionary<string, object> values)
+        public Task Send(string to, string subject, string templateName, Dictionary<string, object> values)
         {
             var request = new RestRequest("messages");
-            request.AddParameter("from", from);
+            request.AddParameter("from", _from);
             request.AddParameter("to", to);
             request.AddParameter("subject", subject);
 

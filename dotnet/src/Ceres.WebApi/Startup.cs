@@ -102,11 +102,12 @@ namespace Ceres.WebApi
 
             services.AddSingleton<IMailService>((_) =>
             {
+                var from = Configuration["MailgunSettings:SendFrom"];
                 var domain = Configuration["MailgunSettings:Domain"];
                 var apiKey = Configuration["MailGunSettings:ApiKey"];
                 var templatesFolder = Path.Combine(env.ContentRootPath, "Templates");
 
-                return new MailgunMailService(apiKey, domain, templatesFolder);
+                return new MailgunMailService(from, apiKey, domain, templatesFolder);
             });
 
             services.AddSingleton<IUserStore<IdentityUser>>(provider =>
