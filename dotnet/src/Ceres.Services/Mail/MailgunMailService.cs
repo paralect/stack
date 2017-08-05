@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -16,6 +17,10 @@ namespace Ceres.Services.Mail
 
         public MailgunMailService(string apiKey, string domain, string templatesFolder)
         {
+            if (string.IsNullOrEmpty(apiKey)) throw new ArgumentException(nameof(apiKey));
+            if (string.IsNullOrEmpty(domain)) throw new ArgumentException(nameof(domain));
+            if (string.IsNullOrEmpty(templatesFolder)) throw new ArgumentException(nameof(templatesFolder));
+
             _templatesFolder = templatesFolder;
             _client = new RestClient(Path.Combine(BaseUri, domain)) {Authenticator = new HttpBasicAuthenticator("api", apiKey)};
         }
@@ -30,15 +35,10 @@ namespace Ceres.Services.Mail
             request.Method = Method.POST;
 
             var taskCompletion = new TaskCompletionSource<IRestResponse>();
-            var handle = _client.ExecuteAsync(request, (Callback));
+            var handle = _client.ExecuteAsync(request, response => { taskCompletion.SetResult(response); });
             return taskCompletion.Task;
         }
-
-        private void Callback(IRestResponse restResponse)
-        {
-            var status = restResponse.ResponseStatus;
-        }
-
+        
         public Task Send(string from, string to, string subject, string templateName, Dictionary<string, object> values)
         {
             var request = new RestRequest("messages");
