@@ -45,7 +45,7 @@ namespace Ceres.WebApi
                     builder => builder.WithOrigins(corsSettings.AllowedOrigins).AllowAnyHeader().AllowAnyMethod().AllowCredentials());
             });
            
-            services.AddIdentity<IdentityUser, IdentityRole>();
+            services.AddIdentity<IdentityUser, IdentityRole>().AddDefaultTokenProviders();
             
             RegisterComponents(services);
         }

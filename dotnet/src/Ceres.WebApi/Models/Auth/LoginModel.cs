@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Ceres.WebApi.Models
+namespace Ceres.WebApi.Models.Auth
 {
     public class LoginModel
     {

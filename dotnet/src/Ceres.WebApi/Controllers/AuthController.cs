@@ -13,6 +13,7 @@ using Ceres.Data.Entities.Auth;
 using Ceres.Services.Mail;
 using Ceres.WebApi.Configuration;
 using Ceres.WebApi.Models;
+using Ceres.WebApi.Models.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.MongoDB;
 using Microsoft.AspNetCore.Mvc;
@@ -101,30 +102,40 @@ namespace Ceres.WebApi.Controllers
         }
 
         [HttpPost("forgotpassword")]
-        public async Task<IActionResult> ForgotPassword([FromBody] string email)
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordModel model)
         {
-            var identityUser = await _userManager.FindByEmailAsync(email);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage));
+            }
+
+            var identityUser = await _userManager.FindByEmailAsync(model.Email);
             if (identityUser != null)
             {
                 var token = await _userManager.GeneratePasswordResetTokenAsync(identityUser);
-                await _mailService.Send(email, "Reset password", "forgotpassword", new Dictionary<string, object> {{"ticket", token}});
+                await _mailService.Send(model.Email, "Reset password", "forgotpassword", new Dictionary<string, object> {{"ticket", token}});
                 return Ok("Reset password ticekt send to your email.");
 
             }
-            return NotFound($"User with email {email} not found.");
+            return NotFound($"User with email {model.Email} not found.");
         }
 
         [HttpPost("updatepassword")]
-        public async Task<IActionResult> UpdatePassword([FromBody] string email, [FromBody] string newPassword, [FromBody] string token)
+        public async Task<IActionResult> UpdatePassword([FromBody] UpdatePasswordModel model)
         {
-            var identityUser = await _userManager.FindByEmailAsync(email);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage));
+            }
+
+            var identityUser = await _userManager.FindByEmailAsync(model.Email);
             if (identityUser != null)
             {
-                await _userManager.ResetPasswordAsync(identityUser, token, newPassword);
+                await _userManager.ResetPasswordAsync(identityUser, model.Token, model.NewPassword);
                 return Ok("Password reset successfully.");
 
             }
-            return NotFound($"User with email {email} not found.");
+            return NotFound($"User with email {model.Email} not found.");
         }
 
 
