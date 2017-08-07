@@ -100,6 +100,35 @@ namespace Ceres.WebApi.Controllers
             return BadRequest(new[] { "Invalid email or password." });
         }
 
+        [HttpPost("forgotpassword")]
+        public async Task<IActionResult> ForgotPassword([FromBody] string email)
+        {
+            var identityUser = await _userManager.FindByEmailAsync(email);
+            if (identityUser != null)
+            {
+                var token = await _userManager.GeneratePasswordResetTokenAsync(identityUser);
+                await _mailService.Send(email, "Reset password", "forgotpassword", new Dictionary<string, object> {{"ticket", token}});
+                return Ok("Reset password ticekt send to your email.");
+
+            }
+            return NotFound($"User with email {email} not found.");
+        }
+
+        [HttpPost("updatepassword")]
+        public async Task<IActionResult> UpdatePassword([FromBody] string email, [FromBody] string newPassword, [FromBody] string token)
+        {
+            var identityUser = await _userManager.FindByEmailAsync(email);
+            if (identityUser != null)
+            {
+                await _userManager.ResetPasswordAsync(identityUser, token, newPassword);
+                return Ok("Password reset successfully.");
+
+            }
+            return NotFound($"User with email {email} not found.");
+        }
+
+
+
         private JwtSecurityToken GetToken(IdentityUser user)
         {
             return new JwtSecurityToken(
