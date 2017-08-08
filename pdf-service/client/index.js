@@ -21,9 +21,9 @@ const readFile = async (filePath) => {
   }
 };
 
-const getPdf = async (file, wkhtmltopdfOptions) => {
+const getPdf = async (file, wkhtmltopdfOptions, serverUrl) => {
   try {
-    const response = await fetchService.fetchPdf(file.html, wkhtmltopdfOptions);
+    const response = await fetchService.fetchPdf(file.html, wkhtmltopdfOptions, serverUrl);
 
     return {
       text: await response.buffer(),
@@ -44,12 +44,18 @@ const writePdf = async (outPdf, fetchedPdf) => {
   }
 };
 
-module.exports = async ({ workingDir, pagePath, resultOutput, wkhtmltopdfOptions = {} }) => {
+module.exports = async ({
+  workingDir,
+  pagePath,
+  resultOutput,
+  serverUrl = 'http://localhost:3000',
+  wkhtmltopdfOptions = {},
+}) => {
   try {
     const paths = await validate({ workingDir, pagePath, resultOutput });
     const { outHtml, outPdf } = await webpackTask(paths);
     const file = await readFile(outHtml);
-    const fetchedPdf = await getPdf(file, wkhtmltopdfOptions);
+    const fetchedPdf = await getPdf(file, wkhtmltopdfOptions, serverUrl);
     await writePdf(outPdf, fetchedPdf);
   } catch (err) {
     console.error(chalk.red(err.message, err.stack));

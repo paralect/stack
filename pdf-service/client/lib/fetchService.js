@@ -1,7 +1,7 @@
 const fetch = require('isomorphic-fetch');
 
-module.exports.fetchPdf = (html, wkhtmltopdfOptions) => {
-  return fetch('http://localhost:3000/pdf/html', {
+module.exports.fetchPdf = (html, wkhtmltopdfOptions, serverUrl) => {
+  return fetch(`${serverUrl}/pdf/html`, {
     method: 'POST',
     body: JSON.stringify({
       wkhtmltopdfOptions,
