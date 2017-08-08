@@ -11,7 +11,10 @@ module.exports = (app) => {
   app.use(cors());
   app.use(helmet());
   app.use(requestLogger());
-  app.use(bodyParser({ enableTypes: ['json', 'text'] }));
+  app.use(bodyParser({
+    enableTypes: ['json', 'text'],
+    jsonLimit: '2GB' },
+  ));
 
   validate(app);
 

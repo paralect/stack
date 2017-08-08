@@ -22,7 +22,8 @@ module.exports.generateByHtml = async (ctx) => {
     wkhtmltopdfOptions = {},
   } = ctx.request.body;
 
-  console.log(wkhtmltopdfOptions);
-
-  ctx.body = wkhtmltopdf(html, wkhtmltopdfOptions);
+  ctx.body = wkhtmltopdf(
+    html,
+    Object.assign(wkhtmltopdfOptions, { debug: true, debugJavascript: true }),
+  );
 };
