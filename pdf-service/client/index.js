@@ -3,87 +3,57 @@ const fs = require('./lib/promiseFs');
 const chalk = require('chalk');
 
 // dynamic gulp task
-const gulp = require('./lib/gulpTask');
+const webpackTask = require('./lib/webpackTask');
 
 const validate = require('./lib/validate');
 const fetchService = require('./lib/fetchService');
 
 const path = require('path');
 
-const readFiles = (fileNames, outPath) => {
-  const promises = fileNames.map(async (name) => {
-    try {
-      const filePath = path.resolve(outPath, name);
-
-      return {
-        name,
-        html: (await fs.readFile(filePath)).toString('binary'),
-      };
-    } catch (err) {
-      throw err;
-    }
-  });
-
-  return Promise.all(promises)
-    .catch((err) => {
-      console.error(chalk.red('Something irreparable happened !!!\n', 'When read files', err.message, err.stack));
-      throw err;
-    });
-};
-
-const getPdfs = (files, wkhtmltopdfOptions) => {
-  const promises = files.map(async (file) => {
-    try {
-      const response = await fetchService.fetchPdf(file.html, wkhtmltopdfOptions);
-
-      return {
-        name: file.name,
-        text: await response.buffer(),
-      };
-    } catch (err) {
-      throw err;
-    }
-  });
-
-  return Promise.all(promises)
-    .catch((err) => {
-      console.error(chalk.red('Something irreparable happened !!!\n', 'When get pdf files', err.message, err.stack));
-      throw err;
-    });
-};
-
-const writePdfs = (targetDir, fetchedPdfs) => {
-  const promises = fetchedPdfs.map(async (file) => {
-    try {
-      const absolueDirPath = path.resolve(targetDir);
-
-      await fs.mkdir(absolueDirPath);
-
-      const filePath = path.resolve(absolueDirPath, `${path.basename(file.name, '.html')}.pdf`);
-
-      return fs.writeFile(filePath, file.text, { encoding: 'binary' });
-    } catch (err) {
-      throw err;
-    }
-  });
-
-  return Promise.all(promises)
-    .catch((err) => {
-      console.error(chalk.red('Something irreparable happened !!!\n', 'When write pdf to file', err.message, err.stack));
-      throw err;
-    });
-};
-
-module.exports = async ({ htmlFolder, stylesFolder, outFolder = process.cwd(), wkhtmltopdfOptions = {} }) => {
+const readFile = async (filePath) => {
   try {
-    const paths = await validate({ htmlFolder, stylesFolder, outFolder });
-    const { outHtml, outPdf } = await gulp(paths);
-    const fileNames = await fs.readDir(path.resolve(outHtml));
-    const files = await readFiles(fileNames, outHtml);
-    const fetchedPdfs = await getPdfs(files, wkhtmltopdfOptions);
-    await writePdfs(outPdf, fetchedPdfs);
+    return {
+      html: (await fs.readFile(filePath)).toString('binary'),
+    };
   } catch (err) {
-    console.log(err);
+    console.error(chalk.red('Something irreparable happened !!!\n', 'When read files'));
+    throw err;
+  }
+};
+
+const getPdf = async (file, wkhtmltopdfOptions) => {
+  try {
+    const response = await fetchService.fetchPdf(file.html, wkhtmltopdfOptions);
+
+    return {
+      text: await response.buffer(),
+    };
+  } catch (err) {
+    console.error(chalk.red('Something irreparable happened !!!\n', 'When get pdf files'));
+    throw err;
+  }
+};
+
+const writePdf = async (outPdf, fetchedPdf) => {
+  try {
+    const absolueFilePath = path.resolve(outPdf);
+    console.log(outPdf);
+    return fs.writeFile(absolueFilePath, fetchedPdf.text, { encoding: 'binary' });
+  } catch (err) {
+    console.error(chalk.red('Something irreparable happened !!!\n', 'When write pdf to file'));
+    throw err;
+  }
+};
+
+module.exports = async ({ workingDir, pagePath, resultOutput, wkhtmltopdfOptions = {} }) => {
+  try {
+    const paths = await validate({ workingDir, pagePath, resultOutput });
+    const { outHtml, outPdf } = await webpackTask(paths);
+    const file = await readFile(outHtml);
+    const fetchedPdf = await getPdf(file, wkhtmltopdfOptions);
+    await writePdf(outPdf, fetchedPdf);
+  } catch (err) {
+    console.error(chalk.red(err.message, err.stack));
     console.error(chalk.red('Fatal error happened => exit'));
   }
 };

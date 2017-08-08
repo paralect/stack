@@ -3,54 +3,57 @@ const enums = require('./enums');
 const path = require('path');
 const chalk = require('chalk');
 
-function validateHtmlFolder(value) {
+function validateWorkingDir(value) {
   if (!value.length) {
     return Promise.reject('Please path to enter your html folder');
   }
-  const htmlPath = path.resolve(value);
+  const workingDir = path.resolve(value);
 
-  return fs.stat(htmlPath)
+  return fs.stat(workingDir)
     .then((stats) => {
       if (!stats.isDirectory()) {
-        return Promise.reject(`Please enter a folder. Your path is ${htmlPath}`);
+        return Promise.reject(`Please enter a folder. Your path is ${workingDir}`);
       }
 
       return Promise.resolve(value);
     }).catch((err) => {
-      Promise.reject(`${enums.SYSTEM_ERRORS[err.code] || err.message}. Your path is ${htmlPath}`);
+      Promise.reject(`${enums.SYSTEM_ERRORS[err.code] || err.message}. Your path is ${workingDir}`);
     });
 }
 
-function validateStylesFolder(value) {
+function validatePagePath(value) {
   if (value.length) {
-    const stylesPath = path.resolve(value);
-    return fs.stat(stylesPath)
+    const pagePath = path.resolve(value);
+    return fs.stat(pagePath)
       .then((stats) => {
-        if (!stats.isDirectory()) {
-          return Promise.reject(`Please enter a folder. Your path is ${stylesPath}`);
+        if (!stats.isFile()) {
+          return Promise.reject(`Please enter a valid page path. Your path is ${pagePath}`);
         }
 
         return Promise.resolve(value);
       }).catch((err) => {
-        Promise.reject(`${enums.SYSTEM_ERRORS[err.code] || err.message}. Your path is ${stylesPath}`);
+        Promise.reject(`${enums.SYSTEM_ERRORS[err.code] || err.message}. Your path is ${pagePath}`);
       });
   }
 
   return Promise.resolve(value);
 }
 
-module.exports = ({ htmlFolder, stylesFolder, outFolder }) => {
+module.exports = ({ workingDir, pagePath, resultOutput }) => {
   return Promise.all([
-    validateHtmlFolder(htmlFolder),
-    validateStylesFolder(stylesFolder),
+    validateWorkingDir(workingDir),
+    validatePagePath(pagePath),
   ])
     .catch((err) => {
       console.error(chalk.red('Invalid arguments', err.message, err.stack));
       throw err;
     })
     .then(() => ({
-      htmlFolder: path.resolve(htmlFolder),
-      stylesFolder: path.resolve(stylesFolder),
-      outFolder: path.resolve(outFolder),
+      workingDir: path.resolve(workingDir),
+      pagePath: path.resolve(pagePath),
+      resultOutput: {
+        path: path.resolve(resultOutput.path || `${process.cwd()}/out`),
+        filename: resultOutput.filename || 'index.pdf',
+      },
     }));
 };

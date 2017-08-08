@@ -1,9 +1,9 @@
 const getPdfs = require('./../index');
 
 getPdfs({
-  htmlFolder: __dirname,
-  stylesFolder: `${__dirname}/styles`,
-  outFolder: `${__dirname}/out`,
+  workingDir: `${__dirname}/src`,
+  pagePath: `${__dirname}/src/index.html`,
+  resultOutput: { path: `${__dirname}/out`, filename: 'index.pdf' },
   wkhtmltopdfOptions: {
     pageSize: 'letter',
   },
