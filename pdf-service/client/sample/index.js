@@ -8,4 +8,8 @@ getPdfs({
   wkhtmltopdfOptions: {
     pageSize: 'letter',
   },
+  customWebpack: {
+    override: false,
+    config: {},
+  },
 });

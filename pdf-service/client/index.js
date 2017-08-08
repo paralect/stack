@@ -49,11 +49,12 @@ module.exports = async ({
   pagePath,
   resultOutput,
   serverUrl = 'http://localhost:3000',
+  customWebpack,
   wkhtmltopdfOptions = {},
 }) => {
   try {
     const paths = await validate({ workingDir, pagePath, resultOutput });
-    const { outHtml, outPdf } = await webpackTask(paths);
+    const { outHtml, outPdf } = await webpackTask(paths, customWebpack);
     const file = await readFile(outHtml);
     const fetchedPdf = await getPdf(file, wkhtmltopdfOptions, serverUrl);
     await writePdf(outPdf, fetchedPdf);

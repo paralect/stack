@@ -4,9 +4,18 @@ const autoprefixer = require('autoprefixer');
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 const webpack = require('webpack');
 const path = require('path');
+const mergeWith = require('lodash.mergewith');
 
-const getConfig = ({ workingDir, pagePath, resultOutput }) => {
-  return {
+function customizer(objValue, srcValue) {
+  if (Array.isArray(objValue)) {
+    return objValue.concat(srcValue);
+  }
+
+  return undefined;
+}
+
+const getConfig = ({ workingDir, pagePath, resultOutput }, customWebpack) => {
+  const defaultConfig = {
     entry: `${__dirname}/buildByWebpack.js`,
     output: { path: resultOutput.path, filename: 'bundle.js' },
     module: {
@@ -40,7 +49,7 @@ const getConfig = ({ workingDir, pagePath, resultOutput }) => {
         { test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico|otf)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
           use: ['url-loader?name=[name].[hash].[ext]&prefix=true?'] },
       ],
-      noParse: /\.min\.js/,
+      noParse: [/\.min\.js/],
     },
 
     plugins: [
@@ -58,11 +67,20 @@ const getConfig = ({ workingDir, pagePath, resultOutput }) => {
       },
     },
   };
+
+  if (!customWebpack) {
+    return defaultConfig;
+  }
+
+  if (customWebpack.override) {
+    return customWebpack.config;
+  }
+
+  return mergeWith(defaultConfig, customWebpack.config, customizer);
 };
 
-module.exports = ({ workingDir, pagePath, resultOutput }) => {
-  const config = getConfig({ workingDir, pagePath, resultOutput });
-
+module.exports = ({ workingDir, pagePath, resultOutput }, customWebpack) => {
+  const config = getConfig({ workingDir, pagePath, resultOutput }, customWebpack);
   return new Promise((resolve, reject) => {
     return webpack(config, (err, stats) => {
       if (err || stats.hasErrors()) {
