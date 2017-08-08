@@ -57,7 +57,7 @@ const getConfig = ({ paths, customWebpack, templateParams }) => {
       new ExtractTextPlugin({ filename: '[name].css', allChunks: true }),
       new HtmlWebpackPlugin({
         template: pagePath,
-        inlineSource: '.css$',
+        inlineSource: '.(css|js)$',
       }),
       new HtmlWebpackInlineSourcePlugin(),
     ],

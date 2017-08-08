@@ -55,7 +55,7 @@ As the result several files will be generated in the **resultOutput** folder:
   If you didn't find some inlined asset please create an [issue](https://github.com/startupsummer/service-stack/issues)
  2. **css file** - this file contains bundle of all collected styles.
  3. **pdf file** - it is the result pdf file.
- 4. **js file** - it the **webpack** bundle.js file.
+ 4. **js file** - it is the **webpack** bundle.js file.
 
 Webpack Config
 ===========
@@ -115,10 +115,51 @@ Here is the webpack config which is used for bundle building:
   }
 ```
 
+If you want to add additional loader or plugin to this configurations but doesn't
+want override all config file you can specify **customWebpack** option in this way
+``` javascript
+{
+// other options
+  customWebpack: {
+    override: false,
+    config: {
+    plugins: [new MyMegaPlugin()],
+    },
+  },
+// other options
+}
+```
+The result webpack config should look like this:
+``` javascript
+{
+// other webpack config options
+   plugins: [
+       new ExtractTextPlugin({ filename: '[name].css', allChunks: true }),
+       new HtmlWebpackPlugin({
+         template: pagePath,
+         inlineSource: '.css$',
+       }),
+       new HtmlWebpackInlineSourcePlugin(),
+       new MyMegaPlugin(),
+     ],
+// other webpack config options
+}
+```
+
 Example
 ===========
-You can find the sample in [here](./sample). To run the sample just write sample directory:
+You can find the sample in [here](./sample). To run the sample just write in sample directory:
 ```
  docker-compose up -d
  node index.js
 ```
+The first command should start pdf server which listen on **4444** port.
+You can specify another port in docker-compose.yml file.
+All works in this way:
+ 1. All assets from **workingDir** are bundled and inlined recursively in the html file by **pagePath**.
+ In sample **workingDir** is _sample/src_ directory. And **pagePath** is _sample/src/index.hbs_
+ 2. Result of bundling is html file is sent to [pdf server](../server/README.md) to **serverUrl**.
+ 3. Server creates pdf and sent it back to the client.
+
+ That's all folks!
+
