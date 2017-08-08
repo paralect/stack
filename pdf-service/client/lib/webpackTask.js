@@ -14,7 +14,8 @@ function customizer(objValue, srcValue) {
   return undefined;
 }
 
-const getConfig = ({ workingDir, pagePath, resultOutput }, customWebpack, templateParams) => {
+const getConfig = ({ paths, customWebpack, templateParams }) => {
+  const { workingDir, pagePath, resultOutput } = paths;
   const defaultConfig = {
     entry: `${__dirname}/buildByWebpack.js`,
     output: { path: resultOutput.path, filename: 'bundle.js' },
@@ -79,14 +80,16 @@ const getConfig = ({ workingDir, pagePath, resultOutput }, customWebpack, templa
   return mergeWith(defaultConfig, customWebpack.config, customizer);
 };
 
-module.exports = ({ workingDir, pagePath, resultOutput }, customWebpack, templateParams) => {
-  const config = getConfig({ workingDir, pagePath, resultOutput }, customWebpack, templateParams);
+module.exports = ({ paths, customWebpack, templateParams }) => {
+  const config = getConfig({ paths, customWebpack, templateParams });
   return new Promise((resolve, reject) => {
     return webpack(config, (err, stats) => {
       if (err || stats.hasErrors()) {
         console.log(err, stats);
         return reject(err);
       }
+
+      const { resultOutput } = paths;
       return resolve({
         outHtml: `${resultOutput.path}/index.html`,
         outPdf: `${resultOutput.path}/${resultOutput.filename}`,
