@@ -37,7 +37,6 @@ const getPdf = async (file, wkhtmltopdfOptions) => {
 const writePdf = async (outPdf, fetchedPdf) => {
   try {
     const absolueFilePath = path.resolve(outPdf);
-    console.log(outPdf);
     return fs.writeFile(absolueFilePath, fetchedPdf.text, { encoding: 'binary' });
   } catch (err) {
     console.error(chalk.red('Something irreparable happened !!!\n', 'When write pdf to file'));

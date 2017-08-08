@@ -6,7 +6,6 @@ const webpack = require('webpack');
 const path = require('path');
 
 const getConfig = ({ workingDir, pagePath, resultOutput }) => {
-  console.log(workingDir, pagePath, resultOutput);
   return {
     entry: `${__dirname}/buildByWebpack.js`,
     output: { path: resultOutput.path, filename: 'bundle.js' },
