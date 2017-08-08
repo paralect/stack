@@ -29,6 +29,27 @@ There are two possible NODE_ENV:
 
 Also image exposes only 3000 port, so you should use this port when you map ports.
 
+Download from Docker Hub
+===========
+Image can be loaded from Docker Hub (docker pull paralect/pdf-service).
+The reference to this image [here](https://hub.docker.com/r/paralect/pdf-service/).
+Here is the sample of using with docker-compose
+``` YAML
+version: '2'
+
+services:
+  pdf-service:
+    image: paralect/pdf-service
+    environment:
+      - NODE_ENV=development
+    ports:
+      - "4444:3000"
+```
+If you place this code to **docker-compose.yml** file then you are able to run it by command:
+``` YAML
+docker-compose up -d
+```
+
 GET  /pdf/url
 ===========
 This request need to have a url query param. If this query param was provided the html will be generated.
@@ -56,6 +77,7 @@ fetch('http://localhost:3000/pdf/html', {
     responseType: 'blob',
   });
 ```
+
 Known issues
 ===========
 If you provide output option the empty html will be generated (also it is related to other options).

@@ -36,6 +36,3 @@ Example
 ===========
 ![alt text](https://github.com/startupsummer/service-stack/blob/pdf-service/pdf-service/client-cli/sample/video.gif "Example")
 
-Known issues
-===========
-Font awesome works not properly after inline scss files.
