@@ -14,7 +14,7 @@ function customizer(objValue, srcValue) {
   return undefined;
 }
 
-const getConfig = ({ workingDir, pagePath, resultOutput }, customWebpack) => {
+const getConfig = ({ workingDir, pagePath, resultOutput }, customWebpack, templateParams) => {
   const defaultConfig = {
     entry: `${__dirname}/buildByWebpack.js`,
     output: { path: resultOutput.path, filename: 'bundle.js' },
@@ -43,7 +43,7 @@ const getConfig = ({ workingDir, pagePath, resultOutput }, customWebpack) => {
         { test: /\.(html|hbs)$/,
           use: [
             { loader: 'html-loader', options: { interpolate: true } },
-            { loader: 'handlebars-render-loader', options: { data: { hello: 'Hello!' } } },
+            { loader: 'handlebars-render-loader', options: { data: templateParams } },
           ],
         },
         { test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico|otf)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -79,8 +79,8 @@ const getConfig = ({ workingDir, pagePath, resultOutput }, customWebpack) => {
   return mergeWith(defaultConfig, customWebpack.config, customizer);
 };
 
-module.exports = ({ workingDir, pagePath, resultOutput }, customWebpack) => {
-  const config = getConfig({ workingDir, pagePath, resultOutput }, customWebpack);
+module.exports = ({ workingDir, pagePath, resultOutput }, customWebpack, templateParams) => {
+  const config = getConfig({ workingDir, pagePath, resultOutput }, customWebpack, templateParams);
   return new Promise((resolve, reject) => {
     return webpack(config, (err, stats) => {
       if (err || stats.hasErrors()) {
