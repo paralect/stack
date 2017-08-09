@@ -3,15 +3,25 @@
   "version": "0.1.0",
   "description": "Pdf service client for https://hub.docker.com/r/paralect/pdf-service/",
   "main": "index.js",
+  "bin": {
+    "pdf-service-watch": "./watch.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "pdf",
+    "wkhtmltopdf"
+  ],
+  "engines": {
+    "node": ">=7.6.0"
+  },
+  "author": "Paralect",
   "license": "ISC",
   "dependencies": {
     "autoprefixer": "7.1.2",
     "chalk": "2.0.1",
+    "command-line-args": "^4.0.7",
     "css-loader": "0.28.4",
     "extract-text-webpack-plugin": "3.0.0",
     "file-loader": "0.11.2",
@@ -23,6 +33,7 @@
     "isomorphic-fetch": "2.2.1",
     "lodash.mergewith": "4.6.0",
     "node-sass": "4.5.3",
+    "opn": "^5.1.0",
     "postcss-loader": "2.0.6",
     "resolve-url-loader": "2.1.0",
     "sass-loader": "6.0.6",

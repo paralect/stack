@@ -1,66 +1,85 @@
-// promisified fs methods
-const fs = require('./lib/promiseFs');
 const chalk = require('chalk');
-
-// dynamic gulp task
 const webpackTask = require('./lib/webpackTask');
 
 const validate = require('./lib/validate');
-const fetchService = require('./lib/fetchService');
+const { readFile, getPdf, writePdf } = require('./lib/api');
 
-const path = require('path');
+const opn = require('opn');
 
-const readFile = async (filePath) => {
-  try {
-    return {
-      html: (await fs.readFile(filePath)).toString('binary'),
-    };
-  } catch (err) {
-    console.error(chalk.red('Something irreparable happened !!!\n', 'When read files'));
-    throw err;
+module.exports = class PdfService {
+  constructor({ serverUrl = 'http://localhost:3000', mode }) {
+    this.serverUrl = serverUrl;
+    this.mode = mode === 'production' ? 'production' : 'development';
+
+    this.cache = {};
+
+    this.buildPdfFromHtml = this.buildPdfFromHtml.bind(this);
   }
-};
 
-const getPdf = async (file, wkhtmltopdfOptions, serverUrl) => {
-  try {
-    const response = await fetchService.fetchPdf(file.html, wkhtmltopdfOptions, serverUrl);
+  async buildPdf(params) {
+    const {
+      workingDir,
+      pagePath,
+      resultOutput = {},
+      wkhtmltopdfOptions = {},
+      templateParams = {},
+      customWebpack,
+    } = params;
 
-    return {
-      text: await response.buffer(),
-    };
-  } catch (err) {
-    console.error(chalk.red('Something irreparable happened !!!\n', 'When get pdf files'));
-    throw err;
+    try {
+      const paths = await validate({ workingDir, pagePath, resultOutput });
+
+      if (this.mode === 'development') {
+        const watchParams = {
+          paths,
+          customWebpack,
+          templateParams,
+          buildPdf: this.buildPdfFromHtml,
+        };
+        const { htmlPath } = await webpackTask.watch(watchParams);
+
+        opn(htmlPath);
+      } else {
+        const buildParams = { paths, customWebpack, templateParams };
+        const { htmlPath, pdfPath } = await webpackTask.build(buildParams);
+
+        await this.buildPdfFromHtml({ htmlPath, pdfPath, wkhtmltopdfOptions });
+      }
+    } catch (err) {
+      console.error(chalk.red(err.message, err.stack));
+      console.error(chalk.red('Fatal error happened => exit'));
+    }
   }
-};
 
-const writePdf = async (outPdf, fetchedPdf) => {
-  try {
-    const absolueFilePath = path.resolve(outPdf);
-    return fs.writeFile(absolueFilePath, fetchedPdf.text, { encoding: 'binary' });
-  } catch (err) {
-    console.error(chalk.red('Something irreparable happened !!!\n', 'When write pdf to file'));
-    throw err;
+  async buildPdfFromHtml({ htmlPath, pdfPath, wkhtmltopdfOptions }) {
+    const file = await readFile(htmlPath);
+    const fetchedPdf = await getPdf(file, wkhtmltopdfOptions, this.serverUrl);
+    await writePdf(pdfPath, fetchedPdf);
   }
-};
 
-module.exports = async ({
-  workingDir,
-  pagePath,
-  resultOutput = {},
-  serverUrl = 'http://localhost:3000',
-  customWebpack,
-  wkhtmltopdfOptions = {},
-  templateParams = {},
-}) => {
-  try {
-    const paths = await validate({ workingDir, pagePath, resultOutput });
-    const { outHtml, outPdf } = await webpackTask({ paths, customWebpack, templateParams });
-    const file = await readFile(outHtml);
-    const fetchedPdf = await getPdf(file, wkhtmltopdfOptions, serverUrl);
-    await writePdf(outPdf, fetchedPdf);
-  } catch (err) {
-    console.error(chalk.red(err.message, err.stack));
-    console.error(chalk.red('Fatal error happened => exit'));
+  async watch(params) {
+    const {
+      workingDir,
+      pagePath,
+      resultOutput = {},
+      templateParams = {},
+      customWebpack,
+    } = params;
+
+    try {
+      const paths = await validate({ workingDir, pagePath, resultOutput });
+      const watchParams = {
+        paths,
+        customWebpack,
+        templateParams,
+        buildPdf: this.buildPdfFromHtml,
+      };
+      const { htmlPath } = await webpackTask.watch(watchParams);
+
+      opn(htmlPath);
+    } catch (err) {
+      console.error(chalk.red(err.message, err.stack));
+      console.error(chalk.red('Fatal error happened => exit'));
+    }
   }
 };
