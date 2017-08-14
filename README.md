@@ -1,27 +1,28 @@
-# Paralect 🎉 Service 🎉 Stack.
+# Product 🎉 Stack 🎉
 
-The main intent of this repository is to improve following:
+Product Stack is a number of small solutions combined together in one repository with a goal to improve products quality and time to market.
 
-1. Sharing of most common technical solutions across the company
-2. Improve technical knowledge by participating in discussions about different technical subjects
-3. Improve time of delivering Most Viable Product to the market
+Main concepts:
+1. Every component has an owner who maintain and contribute to the component, keeping it up to date all the time and fixing any issues.
+2. Based on the current Product Stack components we build and support `Mainstream Product` - which is what we think best set of tools and technologies for starting product development. While we offer a `Mainstream Product boilerplate`, you can use individual components for your product development.
+3. Every Product Stack component has extensive documentation which allow to learn it quite quickly.  
 
 ## Technology Stack
 
 To make collaboration simpler and more efficient we will focus around very specific and concise technology stack, which includes following:
 
 1. Node.JS 8 / Koa.JS 2
-2. React.JS, POST CSS
+2. React.JS with Redux, POST CSS
 3. MongoDB, PostgreSQL
 
-### Contribute to Service Stack
+### Contribute to Product Stack
 
-We want contributing to Service Stack to be enjoyable, educational and fun for everyone. There are multiple ways to contribute:
+We want contributing to Product Stack to be enjoyable, educational and fun for everyone. There are multiple ways to contribute:
 
 1. Help with documentation. Great documentation is a key.
 2. Submitting bug fixes or grammar fixes.
 3. Adding unit or functional tests.
-4. Adding new ideas to include into Service Stack.  
+4. Adding new ideas to include into Product Stack.  
 5. Implementing new solutions, that will be used across many products.
 6. Helping answering questions in the github issues.
 
@@ -30,7 +31,7 @@ We want contributing to Service Stack to be enjoyable, educational and fun for e
 
 Eventually we want to group solutions into logical groups, but since there is high probability of mistake. As we just starting we will keep things simple in the beginning and come up with a structure later on. For the moment every solution should just lie in his own folder and contain README.md with comprehensive description.
 
-### Service Stack Solution Documentation
+### Product Stack Solution Documentation
 
 Every solution should include comprehensive documentation, which explains at least:
 
@@ -38,7 +39,7 @@ Every solution should include comprehensive documentation, which explains at lea
 2. How to use this solution. A couple of code samples.
 3. Is there any limitations now or in the future we need to know about before using it.
 
-### Service 👋 Stack 👋 Solutions ![](https://img.shields.io/badge/status-solution-green.svg)
+### Product 👋 Stack 👋 Solutions ![](https://img.shields.io/badge/status-solution-green.svg)
 
 #### Conventions
 
@@ -62,7 +63,7 @@ Every solution should include comprehensive documentation, which explains at lea
 |[React.JS starter app](./react-starter/README.md)|![](https://img.shields.io/badge/status-solution-green.svg)|A simplest way to start your React.JS based app.|source code|
 
 
-### Service 👋 Stack 👋 Ideas ![](https://img.shields.io/badge/status-idea-orange.svg)
+### Product 👋 Stack 👋 Ideas ![](https://img.shields.io/badge/status-idea-orange.svg)
 
 #### Standalone packages
 
@@ -95,6 +96,6 @@ Every solution should include comprehensive documentation, which explains at lea
 |MongoDB deployment|![](https://img.shields.io/badge/status-idea-orange.svg)|Standalone Ansible MongoDB Deploment|
 
 
-### Service Stack Node.JS Mainstream product
+### Product Stack Node.JS Mainstream product
 
-This is sample project built based on Service Stack components, which basically what we think an ideal solution to start new project at any given point of a time.
+This is sample project built based on Product Stack components, which basically what we think an ideal solution to start new project at any given point of a time.
