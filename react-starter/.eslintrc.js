@@ -20,7 +20,8 @@ module.exports = {
       "node": {
         "moduleDirectory": [
           "src",
-          "node_modules"
+          "node_modules",
+          "server"
         ]
       }
     }

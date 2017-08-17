@@ -2,13 +2,15 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Sample page goes here</title>
+    <title>Index HTML</title>
+    <style src={{{json mainCSS}}}></style>
   </head>
   <body>
-    <h1>{{{json config}}}</h1>
+    <div id="root"></div>
+
     <script>
       window.config = {{{json config}}};
     </script>
-    <script type="text/javascript" src="/static/main.js"></script>
+    <script src={{{json mainJS}}}></script>
   </body>
 </html>

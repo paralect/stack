@@ -5,5 +5,6 @@ module.exports = {
     require('postcss-css-reset'), // eslint-disable-line
     require('postcss-nested'), // eslint-disable-line
     require('postcss-custom-media'), // eslint-disable-line
+    require('autoprefixer'), // eslint-disable-line
   ],
 };

@@ -13,27 +13,30 @@ const { devMiddleware, hotMiddleware } = require('../koa-webpack-middleware/midd
 const webpackOptions = require('../../client/src/webpack.config');
 const routes = require('./routes');
 
-const pathToStatic = path.join(__dirname, './../../client/src');
+const pathToViews = path.join(__dirname, './../../client/src');
+const pathToStatic = path.join(__dirname, './../../client/src/static');
 handlebars.registerHelper('json', context => JSON.stringify(context));
 
 const configureWebpack = (app) => {
-  const webpackMiddlewareOptions = {
-    noInfo: false,
-    quiet: false,
-    hot: true,
-    publicPath: webpackOptions.output.publicPath,
-    stats: {
-      colors: true,
-    },
-  };
+  if (process.env.NODE_ENV === 'development') {
+    const webpackMiddlewareOptions = {
+      noInfo: false,
+      quiet: false,
+      hot: true,
+      publicPath: webpackOptions.output.publicPath,
+      stats: {
+        colors: true,
+      },
+    };
 
-  app.use(devMiddleware(webpack(webpackOptions), webpackMiddlewareOptions));
-  app.use(hotMiddleware(webpack(webpackOptions)));
+    app.use(devMiddleware(webpack(webpackOptions), webpackMiddlewareOptions));
+    app.use(hotMiddleware(webpack(webpackOptions)));
+  }
 };
 
 module.exports = (app) => {
   app.use(requestLogger());
-  app.use(views(pathToStatic, {
+  app.use(views(pathToViews, {
     default: 'html',
     map: { html: 'handlebars' },
     options: {
