@@ -2,84 +2,87 @@ const chalk = require('chalk');
 const webpackTask = require('./lib/webpackTask');
 
 const validate = require('./lib/validate');
-const { readFile, getPdf, writePdf } = require('./lib/api');
+const { getOutPaths, readFile, getPdf, writePdf } = require('./lib/api');
+const logger = require('./lib/logger');
+
+const fs = require('./lib/promiseFs');
 
 const opn = require('opn');
+
+process.on('unhandledRejection', (err) => {
+  logger.error(err);
+});
 
 module.exports = class PdfService {
   constructor({ serverUrl = 'http://localhost:3000', mode }) {
     this.serverUrl = serverUrl;
     this.mode = mode === 'production' ? 'production' : 'development';
 
-    this.cache = {};
-
-    this.buildPdfFromHtml = this.buildPdfFromHtml.bind(this);
+    this.getPdfFromHtml = this.getPdfFromHtml.bind(this);
   }
 
-  async buildPdf(params) {
+  async generatePdf(pagePath, params) {
     const {
-      workingDir,
-      pagePath,
-      resultOutput = {},
       wkhtmltopdfOptions = {},
       templateParams = {},
-      customWebpack,
     } = params;
 
     try {
-      const paths = await validate({ workingDir, pagePath, resultOutput });
+      const paths = await validate({ pagePath });
+
+      const { htmlPath, pdfPath } = getOutPaths(paths.resultOutput);
 
       if (this.mode === 'development') {
-        const watchParams = {
-          paths,
-          customWebpack,
-          templateParams,
-          buildPdf: this.buildPdfFromHtml,
-        };
-        const { htmlPath } = await webpackTask.watch(watchParams);
-
-        opn(htmlPath);
-      } else {
-        const buildParams = { paths, customWebpack, templateParams };
-        const { htmlPath, pdfPath } = await webpackTask.build(buildParams);
-
-        await this.buildPdfFromHtml({ htmlPath, pdfPath, wkhtmltopdfOptions });
+        await webpackTask.build({ paths });
       }
+
+      return this.getPdfFromHtml({
+        outPaths: { htmlPath, pdfPath },
+        wkhtmltopdfOptions,
+        templateParams,
+      });
     } catch (err) {
-      console.error(chalk.red(err.message, err.stack));
-      console.error(chalk.red('Fatal error happened => exit'));
+      logger.error(chalk.red(err.message, err.stack));
+      logger.error(chalk.red('Fatal error happened => exit'));
+
+      return null;
     }
   }
 
-  async buildPdfFromHtml({ htmlPath, pdfPath, wkhtmltopdfOptions }) {
-    const file = await readFile(htmlPath);
-    const fetchedPdf = await getPdf(file, wkhtmltopdfOptions, this.serverUrl);
-    await writePdf(pdfPath, fetchedPdf);
+  async getPdfFromHtml({ outPaths, wkhtmltopdfOptions, templateParams }) {
+    const { htmlPath, pdfPath } = outPaths;
+
+    const file = await readFile(htmlPath, templateParams);
+    const pdfStream = getPdf(file, wkhtmltopdfOptions, this.serverUrl);
+
+    if (this.mode === 'development') {
+      await writePdf(pdfPath, pdfStream);
+    }
+
+    return pdfStream;
   }
 
-  async watch(params) {
+  async watch(pagePath, params) {
     const {
-      workingDir,
-      pagePath,
-      resultOutput = {},
       templateParams = {},
-      customWebpack,
+      wkhtmltopdfOptions = {},
     } = params;
 
     try {
-      const paths = await validate({ workingDir, pagePath, resultOutput });
+      const paths = await validate({ pagePath });
       const watchParams = {
         paths,
-        customWebpack,
+        wkhtmltopdfOptions,
         templateParams,
-        buildPdf: this.buildPdfFromHtml,
+        buildPdf: this.getPdfFromHtml,
       };
+
       const { htmlPath } = await webpackTask.watch(watchParams);
 
       opn(htmlPath);
     } catch (err) {
-      console.error(chalk.red(err.message, err.stack));
-      console.error(chalk.red('Fatal error happened => exit'));
+      logger.error(chalk.red(err.message, err.stack));
+      logger.error(chalk.red('Fatal error happened => exit'));
     }
   }
 };

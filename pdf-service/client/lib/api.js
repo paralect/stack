@@ -2,39 +2,50 @@ const fs = require('./promiseFs');
 const chalk = require('chalk');
 const path = require('path');
 const fetchService = require('./fetchService');
+const logger = require('./logger');
+const Handlebars = require('handlebars');
 
-const readFile = async (filePath) => {
+const compileHtml = (html, templateParams) => {
+  const compiledHtml = Handlebars.compile(html);
+  return compiledHtml(templateParams);
+};
+
+const getOutPaths = (resultOutput) => {
+  return {
+    htmlPath: `${resultOutput.path}/index.html`,
+    pdfPath: `${resultOutput.path}/${resultOutput.filename}`,
+  };
+};
+
+const readFile = async (filePath, templateParams) => {
   try {
+    const html = (await fs.readFile(filePath)).toString('binary');
+
     return {
-      html: (await fs.readFile(filePath)).toString('binary'),
+      html: compileHtml(html, templateParams),
     };
   } catch (err) {
-    console.error(chalk.red('Something irreparable happened !!!\n', 'When read files'));
+    logger.error(chalk.red('Something irreparable happened !!!\n', 'When read file'));
     throw err;
   }
 };
 
-const getPdf = async (file, wkhtmltopdfOptions, serverUrl) => {
+const getPdf = (file, wkhtmltopdfOptions, serverUrl) => {
   try {
-    const response = await fetchService.fetchPdf(file.html, wkhtmltopdfOptions, serverUrl);
-
-    return {
-      text: await response.buffer(),
-    };
+    return fetchService.fetchPdf(file.html, wkhtmltopdfOptions, serverUrl);
   } catch (err) {
-    console.error(chalk.red('Something irreparable happened !!!\n', 'When get pdf files'));
+    logger.error(chalk.red('Something irreparable happened !!!\n', 'When get pdf file'));
     throw err;
   }
 };
 
-const writePdf = async (outPdf, fetchedPdf) => {
+const writePdf = async (outPdf, pdfStream) => {
   try {
-    const absolueFilePath = path.resolve(outPdf);
-    return fs.writeFile(absolueFilePath, fetchedPdf.text, { encoding: 'binary' });
+    return pdfStream.pipe(fs.__fs.createWriteStream(path.resolve(outPdf)));
   } catch (err) {
-    console.error(chalk.red('Something irreparable happened !!!\n', 'When write pdf to file'));
+    logger.error(chalk.red('Something irreparable happened !!!\n', 'When write pdf to file'));
     throw err;
   }
 };
 
-module.exports = { readFile, getPdf, writePdf };
+module.exports = { getOutPaths, readFile, getPdf, writePdf };

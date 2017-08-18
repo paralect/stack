@@ -3,34 +3,19 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 const webpack = require('webpack');
-const mergeWith = require('lodash.mergewith');
 const opn = require('opn');
+const { getOutPaths } = require('./api');
 
-function customizer(objValue, srcValue) {
-  if (Array.isArray(objValue)) {
-    return objValue.concat(srcValue);
-  }
-
-  return undefined;
-}
-
-const getConfig = ({ paths, customWebpack, templateParams }) => {
+const getConfig = ({ paths }) => {
   const { workingDir, pagePath, resultOutput } = paths;
-  const defaultConfig = {
+
+  return {
     entry: `${__dirname}/buildByWebpack.js`,
     output: { path: resultOutput.path, filename: 'bundle.js' },
     module: {
       rules: [
-        { test: /\.scss$/,
-          use: ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            use: [
-              { loader: 'css-loader' },
-              { loader: 'resolve-url-loader' },
-              { loader: 'sass-loader', query: { sourceMap: true } },
-            ],
-          }) },
-        { test: /\.css$/,
+        {
+          test: /\.(css|pcss)$/,
           use: ExtractTextPlugin.extract({
             fallback: 'style-loader',
             use: ['css-loader',
@@ -40,14 +25,18 @@ const getConfig = ({ paths, customWebpack, templateParams }) => {
                   plugins: () => [autoprefixer],
                 },
               }],
-          }) },
-        { test: /\.(html|hbs)$/,
+          }),
+        },
+        {
+          test: /\.(html|hbs)$/,
           use: [
             { loader: 'html-loader', options: { interpolate: true } },
           ],
         },
-        { test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico|otf)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-          use: ['url-loader?name=[name].[hash].[ext]&prefix=true?'] },
+        {
+          test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico|otf)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+          use: ['url-loader?name=[name].[hash].[ext]&prefix=true?'],
+        },
       ],
       noParse: [/\.min\.js/],
     },
@@ -67,37 +56,23 @@ const getConfig = ({ paths, customWebpack, templateParams }) => {
       },
     },
   };
-
-  if (!customWebpack) {
-    return defaultConfig;
-  }
-
-  if (customWebpack.override) {
-    return customWebpack.config;
-  }
-
-  return mergeWith(defaultConfig, customWebpack.config, customizer);
 };
 
-const build = ({ paths, customWebpack, templateParams }) => {
-  const config = getConfig({ paths, customWebpack, templateParams });
+const build = ({ paths }) => {
+  const config = getConfig({ paths });
   return new Promise((resolve, reject) => {
     return webpack(config, (err, stats) => {
       if (err || stats.hasErrors()) {
         return reject(err);
       }
 
-      const { resultOutput } = paths;
-      return resolve({
-        htmlPath: `${resultOutput.path}/index.html`,
-        pdfPath: `${resultOutput.path}/${resultOutput.filename}`,
-      });
+      return resolve();
     });
   });
 };
 
-const watch = ({ paths, customWebpack, templateParams, buildPdf }) => {
-  const config = getConfig({ paths, customWebpack, templateParams });
+const watch = ({ paths, templateParams, buildPdf }) => {
+  const config = getConfig({ paths });
   const compiler = webpack(config);
   return new Promise((resolve, reject) => {
     compiler.watch({}, async (err, stats) => {
@@ -106,16 +81,12 @@ const watch = ({ paths, customWebpack, templateParams, buildPdf }) => {
       }
 
       const { resultOutput } = paths;
-      const outPaths = {
-        htmlPath: `${resultOutput.path}/index.html`,
-        pdfPath: `${resultOutput.path}/${resultOutput.filename}`,
-      };
+      const { htmlPath, pdfPath } = getOutPaths(resultOutput);
 
-      await buildPdf(outPaths);
+      buildPdf({ outPaths: { htmlPath, pdfPath }, templateParams });
+      opn(pdfPath);
 
-      opn(outPaths.pdfPath);
-
-      return resolve(outPaths);
+      return resolve({ htmlPath, pdfPath });
     });
   });
 };

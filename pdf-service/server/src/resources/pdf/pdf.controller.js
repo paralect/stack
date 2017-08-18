@@ -1,8 +1,8 @@
-const generateByUrlValidator = require('./validator/genrateByUrlValidator');
+const generateValidator = require('./validator/generateValidator');
 const wkhtmltopdf = require('wkhtmltopdf');
 
-module.exports.generateByUrl = async (ctx) => {
-  const data = await generateByUrlValidator(ctx);
+module.exports.generatePdf = async (ctx) => {
+  const data = await generateValidator(ctx);
 
   if (!data.isValid) {
     return;
@@ -11,16 +11,12 @@ module.exports.generateByUrl = async (ctx) => {
   ctx.type = 'application/pdf';
   ctx.attachment('out.pdf');
 
-  ctx.body = wkhtmltopdf(data.url);
-};
+  const { url, html, wkhtmltopdfOptions } = data;
 
-module.exports.generateByHtml = async (ctx) => {
-  ctx.type = 'application/pdf';
-  ctx.attachment('out.pdf');
-  const {
-    html,
-    wkhtmltopdfOptions = {},
-  } = ctx.request.body;
+  if (url) {
+    ctx.body = wkhtmltopdf(url, wkhtmltopdfOptions);
+    return;
+  }
 
   ctx.body = wkhtmltopdf(
     html,

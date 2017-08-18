@@ -2,21 +2,12 @@ const PdfService = require('./../index');
 
 const pdfService = new PdfService({
   serverUrl: 'http://localhost:4444',
-  mode: 'dvelopment',
+  mode: 'development',
 });
 
-pdfService.buildPdf({
-  workingDir: `${__dirname}/src`,
-  pagePath: `${__dirname}/src/index.hbs`,
-  resultOutput: { path: `${__dirname}/out`, filename: 'index.pdf' },
-  serverUrl: 'http://localhost:4444',
-  development: true,
+pdfService.generatePdf(`${__dirname}/src/index.html`, {
   wkhtmltopdfOptions: {
     pageSize: 'letter',
-  },
-  customWebpack: {
-    override: false,
-    config: {},
   },
   templateParams: {
     tagline: 'Future is near!!!',

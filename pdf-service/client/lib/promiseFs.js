@@ -7,5 +7,6 @@ module.exports = {
   writeFile: promisify(fs.writeFile),
   stat: promisify(fs.stat),
   mkdir: promisify(fs.mkdir),
+  __fs: fs,
 };
 
