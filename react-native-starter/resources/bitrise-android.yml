@@ -1,0 +1,107 @@
+---
+format_version: '3'
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+trigger_map:
+- push_branch: android-staging
+  workflow: android-staging
+- push_branch: android-production
+  workflow: android-production
+workflows:
+  android-staging:
+    steps:
+    - activate-ssh-key@3.1.1:
+        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+    - git-clone@3.5.1: {}
+    - install-react-native@0.9.1:
+        inputs:
+        - version: 1.0.0
+    - script@1.1.4:
+        title: Install npm
+        inputs:
+        - content: |-
+            #!/bin/bash
+            cd mobile && npm install
+    - npm@0.9.0:
+        inputs:
+        - command: run release-staging-apk
+        - workdir: "$BITRISE_SOURCE_DIR/mobile"
+        title: Build and distribute APK
+        is_always_run: true
+    - sign-apk@1.2.0:
+        inputs:
+        - apk_path: "$BITRISE_SOURCE_DIR/mobile/android/app/build/outputs/apk/app-staging-unsigned.apk"
+    - deploy-to-bitrise-io@1.3.6:
+        inputs:
+        - deploy_path: "$BITRISE_SIGNED_APK_PATH"
+    before_run:
+    after_run:
+    - _slack_message
+  android-production:
+    steps:
+    - activate-ssh-key@3.1.1:
+        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+    - git-clone@3.5.1: {}
+    - install-react-native@0.9.1:
+        inputs:
+        - version: 1.0.0
+    - script@1.1.4:
+        title: Install npm
+        inputs:
+        - content: |-
+            #!/bin/bash
+            cd mobile && npm install
+    - script@1.1.4:
+        inputs:
+        - content: |-
+            #!/bin/bash
+            # fail if any commands fails
+            set -e
+            # debug log
+            set -x
+            echo $BITRISE_GIT_TAG
+            TAG=$BITRISE_GIT_TAG
+            arrTAG=(${TAG//// })
+            version=${arrTAG[1]}
+            envman add --key APP_VERSION --value "${version}"
+        title: Expose APP_VERSION from git tag
+    - build-number-adjust@1.0.0:
+        inputs:
+        - increase: '24'
+    - change-android-versioncode-and-versionname@0.9.0:
+        inputs:
+        - new_version_code: "$BITRISE_BUILD_NUMBER"
+        - build_gradle_path: "$BITRISE_SOURCE_DIR/mobile/android/app/build.gradle"
+        - new_version_name: "$APP_VERSION"
+    - npm@0.9.0:
+        inputs:
+        - command: run release-production-apk
+        - workdir: "$BITRISE_SOURCE_DIR/mobile"
+        title: Build and distribute APK
+        is_always_run: true
+    - sign-apk@1.2.0:
+        inputs:
+        - apk_path: "$BITRISE_SOURCE_DIR/mobile/android/app/build/outputs/apk/app-release-unsigned.apk"
+    - deploy-to-bitrise-io@1.3.6:
+        inputs:
+        - deploy_path: "$BITRISE_SIGNED_APK_PATH"
+    - google-play-deploy@1.2.3:
+        inputs:
+        - apk_path: "$BITRISE_SIGNED_APK_PATH"
+        - package_name: com.maqpie.messenger
+        - service_account_json_key_path: "$BITRISEIO_MAQPIE_GOOGLE_SERVICE_JSON_URL"
+    before_run:
+    after_run:
+    - _slack_message
+  _slack_message:
+    steps:
+    - slack@2.6.1:
+        inputs:
+        - webhook_url: https://hooks.slack.com/services/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
+        - channel: "#notifications"
+        - from_username: Bitrise CI - Android $ENVIRONMENT Deploy Succeeded
+        - from_username_on_error: Bitrise CI - Android $ENVIRONMENT Deploy Failed
+        - message: 'Test the changes on the latest $ENVIRONMENT build. Click here
+            to download the build: $BITRISE_PUBLIC_INSTALL_PAGE_URL'
+        - message_on_error: 'Click here to find out why the build failed: $BITRISE_PUBLIC_INSTALL_PAGE_URL'
+        - emoji: ":confetti_ball:"
+        - emoji_on_error: ":shrug:"
