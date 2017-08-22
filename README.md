@@ -12,7 +12,7 @@ Main concepts:
 To make collaboration simpler and more efficient we will focus around very specific and concise technology stack, which includes following:
 
 1. Node.JS 8, Koa.JS 2
-2. React.JS with Redux, POST CSS
+2. React.JS with Redux, POST CSS, Koa.JS 2
 3. MongoDB, PostgreSQL
 4. Ansible, Docker, Drone CI
 
