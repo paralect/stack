@@ -1,7 +1,6 @@
 const fs = require('./promiseFs');
 const enums = require('./enums');
 const path = require('path');
-const chalk = require('chalk');
 const logger = require('./logger');
 
 function validatePagePath(value) {
@@ -31,19 +30,20 @@ module.exports = ({ pagePath }) => {
     validatePagePath(pagePath),
   ])
     .catch((err) => {
-      logger.error(chalk.red('Invalid arguments', err.message || '', err.stack));
+      logger.error('Invalid arguments', err.message || '', err.stack);
       throw err;
     })
     .then(() => {
       const resolvedPagePath = path.resolve(pagePath);
       const workingDir = path.dirname(resolvedPagePath);
-
+      const outputDir = `${workingDir}-out`;
       return {
         workingDir,
         pagePath: resolvedPagePath,
         resultOutput: {
-          path: `${workingDir}-out`,
-          filename: 'index.pdf',
+          path: outputDir,
+          htmlPath: `${outputDir}/index.html`,
+          pdfPath: `${outputDir}/index.pdf`,
         },
       };
     });

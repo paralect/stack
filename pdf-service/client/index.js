@@ -1,11 +1,8 @@
-const chalk = require('chalk');
 const webpackTask = require('./lib/webpackTask');
 
 const validate = require('./lib/validate');
-const { getOutPaths, readFile, getPdf, writePdf } = require('./lib/api');
+const { readFile, getPdf, writePdf } = require('./lib/api');
 const logger = require('./lib/logger');
-
-const fs = require('./lib/promiseFs');
 
 const opn = require('opn');
 
@@ -30,20 +27,18 @@ module.exports = class PdfService {
     try {
       const paths = await validate({ pagePath });
 
-      const { htmlPath, pdfPath } = getOutPaths(paths.resultOutput);
-
       if (this.mode === 'development') {
         await webpackTask.build({ paths });
       }
 
       return this.getPdfFromHtml({
-        outPaths: { htmlPath, pdfPath },
+        outPaths: paths.resultOutput,
         wkhtmltopdfOptions,
         templateParams,
       });
     } catch (err) {
-      logger.error(chalk.red(err.message, err.stack));
-      logger.error(chalk.red('Fatal error happened => exit'));
+      logger.error(err.message, err.stack);
+      logger.error('Fatal error happened => exit');
 
       return null;
     }
@@ -81,8 +76,8 @@ module.exports = class PdfService {
 
       opn(htmlPath);
     } catch (err) {
-      logger.error(chalk.red(err.message, err.stack));
-      logger.error(chalk.red('Fatal error happened => exit'));
+      logger.error(err.message, err.stack);
+      logger.error('Fatal error happened => exit');
     }
   }
 };

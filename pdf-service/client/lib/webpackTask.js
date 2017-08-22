@@ -4,7 +4,6 @@ const autoprefixer = require('autoprefixer');
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 const webpack = require('webpack');
 const opn = require('opn');
-const { getOutPaths } = require('./api');
 
 const getConfig = ({ paths }) => {
   const { workingDir, pagePath, resultOutput } = paths;
@@ -79,15 +78,9 @@ const watch = ({ paths, templateParams, buildPdf }) => {
       if (err || stats.hasErrors()) {
         return reject(err);
       }
+      const { htmlPath, pdfPath } = paths.resultOutput;
 
-      const { resultOutput } = paths;
-      const { htmlPath, pdfPath } = getOutPaths(resultOutput);
-
-      const stream = await buildPdf({ outPaths: { htmlPath, pdfPath }, templateParams });
-
-      await new Promise((res) => {
-        stream.on('end', res);
-      });
+      await buildPdf({ outPaths: { htmlPath, pdfPath }, templateParams });
 
       opn(pdfPath);
 
