@@ -76,7 +76,7 @@ module.exports = class PdfService {
 
       opn(htmlPath);
     } catch (err) {
-      logger.error(err.message, err.stack);
+      logger.error(err);
       logger.error('Fatal error happened => exit');
     }
   }

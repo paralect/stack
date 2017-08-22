@@ -1,4 +1,4 @@
-const PdfService = require('./../index');
+const PdfService = require('./../../index');
 
 const pdfService = new PdfService({
   serverUrl: 'http://localhost:4444',

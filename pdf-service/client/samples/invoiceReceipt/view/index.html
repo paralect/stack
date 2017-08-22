@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Payment Receipt</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+</head>
+
+<body>
+<main>
+  <header class="header">
+    <div class="header__container">
+      <div class="header__company-container">
+        <div class="header__logo"></div>
+        <div class="header__wrap">
+          <div class="header__left-text">
+            <p class="header__title">Payment Receipt</p>
+            <p class="header__title-interval">{{invoice.paidOn}}</p>
+          </div>
+          <div class="header__right-text">
+            <p class="header__charge-title">Billed To</p>
+            <p class="header__charge">${{invoice.totalAmount}} Charged to {{invoice.creditCard.type}} ending with {{invoice.creditCard.last4}}</p>
+          </div>
+        </div>
+      </div>
+      <ul class="header__list">
+        <li class="header__item">
+          <div class="header__item-title">
+            Active users
+          </div>
+          <p class="header__item-result">{{invoice.activeUsers}}</p>
+        </li>
+        <li class="header__item">
+          <div class="header__item-title">
+            Amount Paid
+          </div>
+          <p class="header__item-result">${{invoice.transaction.amount}}</p>
+        </li>
+        <li class="header__item">
+          <div class="header__item-title">
+            Transaction ID
+          </div>
+          <p class="header__item-result">{{invoice.transaction._id}}</p>
+        </li>
+        <li class="header__item">
+          <div class="header__item-title">
+            App name
+          </div>
+          <p class="header__item-result">{{invoice.appName}}</p>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="main__page">
+      <div class="content container">
+        <div class="main__title">Billing period: {{invoice.from}} - {{invoice.to}}</div>
+        <div>
+          <ul class="main__items-list">
+            <li class="list__title">
+              <p>Description</p>
+              <p>Amount</p>
+            </li>
+            {{#each invoice.items}}
+            <li class="list__content">
+              <p>{{this.description}}</p>
+              <p>{{this.amount}}</p>
+            </li>
+            {{/each}}
+          </ul>
+          <section class="main__total">
+            <p class="total__title">Total</p>
+            <p class="total__number">${{invoice.totalAmount}}</p>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div class="main__paid"></div>
+  </div>
+</main>
+</body>
+</html>

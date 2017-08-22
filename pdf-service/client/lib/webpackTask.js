@@ -1,6 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const autoprefixer = require('autoprefixer');
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 const webpack = require('webpack');
 const opn = require('opn');
@@ -14,6 +13,11 @@ const getConfig = ({ paths }) => {
     module: {
       rules: [
         {
+          test: /\.jsx?$/,
+          loader: 'babel-loader',
+          options: { presets: ['react', 'es2015', 'stage-0'] },
+        },
+        {
           test: /\.(css|pcss)$/,
           use: ExtractTextPlugin.extract({
             fallback: 'style-loader',
@@ -21,7 +25,9 @@ const getConfig = ({ paths }) => {
               {
                 loader: 'postcss-loader',
                 options: {
-                  plugins: () => [autoprefixer],
+                  config: {
+                    path: `${__dirname}/postcss.config.js`,
+                  },
                 },
               }],
           }),
@@ -29,7 +35,7 @@ const getConfig = ({ paths }) => {
         {
           test: /\.(html|hbs)$/,
           use: [
-            { loader: 'html-loader', options: { interpolate: true } },
+            { loader: 'html-loader', options: { } },
           ],
         },
         {
@@ -62,7 +68,7 @@ const build = ({ paths }) => {
   return new Promise((resolve, reject) => {
     return webpack(config, (err, stats) => {
       if (err || stats.hasErrors()) {
-        return reject(err);
+        return reject({ err: { err, stats } });
       }
 
       return resolve();
@@ -76,7 +82,7 @@ const watch = ({ paths, templateParams, buildPdf }) => {
   return new Promise((resolve, reject) => {
     compiler.watch({}, async (err, stats) => {
       if (err || stats.hasErrors()) {
-        return reject(err);
+        return reject({ err: { err, stats } });
       }
       const { htmlPath, pdfPath } = paths.resultOutput;
 
