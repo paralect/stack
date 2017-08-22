@@ -83,7 +83,12 @@ const watch = ({ paths, templateParams, buildPdf }) => {
       const { resultOutput } = paths;
       const { htmlPath, pdfPath } = getOutPaths(resultOutput);
 
-      buildPdf({ outPaths: { htmlPath, pdfPath }, templateParams });
+      const stream = await buildPdf({ outPaths: { htmlPath, pdfPath }, templateParams });
+
+      await new Promise((res) => {
+        stream.on('end', res);
+      });
+
       opn(pdfPath);
 
       return resolve({ htmlPath, pdfPath });

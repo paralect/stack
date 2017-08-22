@@ -3,7 +3,5 @@ version: '2'
 services:
   pdf-service:
     image: paralect/pdf-service
-    environment:
-      - NODE_ENV=development
     ports:
       - "4444:3000"

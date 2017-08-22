@@ -8,48 +8,57 @@ Index
 ===========
   1. [Options](#options)
   2. [Output](#output)
-  3. [Webpack Config](#webpack-config)
+  3. [Commands](#commands)
   4. [Example](#example)
 
 Options
-===========
-Here is the sample of options which:
+=======
+Constructor options. When you initialize pdf service you can specify several options:
 ``` javascript
-{
-  workingDir: `${__dirname}/src`, // required
-  pagePath: `${__dirname}/src/index.hbs`, // required
-  resultOutput: { path: `${__dirname}/out`, filename: 'index.pdf' }, // optional
+const pdfService = new PdfService({
   serverUrl: 'http://localhost:4444', // optional
-  wkhtmltopdfOptions: { // optional
+  mode: 'development', // optional
+});
+```
+
+  1. **serverUrl** - you can provide url to [server](../server/README.md) (look options sections [here](https://www.npmjs.com/package/wkhtmltopdf)). **http://localhost:3000** will be used as default.
+  2. **mode** - mode can be **production** or **development**. In production mode you have to build assets before you invoke generatePdf method.
+
+Pdf service provide generatePdf method to generate pdf documents. This method can use several params:
+``` javascript
+// Definition
+pdfService.generatePdfpagePath(pagePath, options)
+
+// Example
+pdfService.generatePdf(`${__dirname}/src/index.html`,  // required
+{
+  wkhtmltopdfOptions: {  // optional
     pageSize: 'letter',
   },
-  customWebpack: { // optional
-    override: false,
-    config: {},
-  },
-  templateParams: { //optional
+  templateParams: {  // optional
     tagline: 'Future is near!!!',
   },
-}
+})
 ```
 
 Let's describe these options:
-  1. **workingDir** - it is the folder where all assets is placed.(**should be absolute**)
-  2. **pagePath** - it is the path to **html/hbs** file which will be transformed to pdf.(**should be absolute**)
-  3. **resultOutput** - consists of two properties (**path** **filename**).
-   **path** - it is the directory where all built files will be written(**should be absolute**).
-   **filename** - it is the name of pdf result.
-  If you don't provide this option then the [process.cwd()](https://nodejs.org/api/process.html#process_process_cwd) will be used as default instead of **path** and **index.pdf** instead of **filename**.
-  4. **serverUrl** - you can provide url to [server](../server/README.md) (look options sections [here](https://www.npmjs.com/package/wkhtmltopdf)). **http://localhost:3000** will be used as default.
+  2. **pagePath** - it is the path to **html** file which will be transformed to pdf.
   5. **wkhtmltopdfOptions** - you can provide wkhtmltopdf options (look options sections [here](https://www.npmjs.com/package/wkhtmltopdf)).
-  5. **customWebpack** - if you are :sunglasses: Webpack Maestro :sunglasses: you can try to provide custom config.
-  If **override** option is set to true then all default config will be overridden otherwise configs will be merged.
-  Merge configs is flexible because you can easily provide one or two additional loaders/plugins without overwriting all config.
-  5. **templateParams** - if you are using **hbs** entry then you can provide properties which wis used on template.
+  5. **templateParams** - if you are using handlebars template then you can provide properties which wis used on template.
+
+This method returns **stream** with your pdf file.
+
+**Note:** You page that was specified by **pagePath** should be placed with all assets in one directory.
+ This directory should be isolated from other codebase.
+ You have this restriction because build of all assets looks for all files that was placed in the same directory with your html source.
+ Look to [Example](#example) for more details.
 
 Output
 ===========
-As the result several files will be generated in the **resultOutput** folder:
+As the result several files will be generated in the **resultOutput** directory.
+**resultOutput** - is the name of directory where you html source is located + '-out' string.
+For example, if your source directory has got name src  **resultOutput** will be src-out.
+Let's describe what will be in  **resultOutput** directory:
  1. **html file** - it is the html that was sent to pdf [server](../server/README.md).
   The styles, images and fonts in these html files should be inlined.
   If you didn't find some inlined asset please create an [issue](https://github.com/startupsummer/service-stack/issues)
@@ -57,94 +66,44 @@ As the result several files will be generated in the **resultOutput** folder:
  3. **pdf file** - it is the result pdf file.
  4. **js file** - it is the **webpack** bundle.js file.
 
-Webpack Config
-===========
-Here is the webpack config which is used for bundle building:
+Commands
+========
+Pdf service provide several commands for developer.
+
+### pdf-service-watch
+
+This command is provide two update all changes that you made with your assets.
+This will be helpful for developer.
+You can start to create you html for pdf without any additional
+infrastructure and changes in assets automatically regenerate new pdf.
+
 ``` javascript
-{
-    entry: `${__dirname}/buildByWebpack.js`,
-    output: { path: resultOutput.path, filename: 'bundle.js' },
-    module: {
-      rules: [
-        { test: /\.scss$/,
-          use: ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            use: [
-              { loader: 'css-loader' },
-              { loader: 'resolve-url-loader' },
-              { loader: 'sass-loader', query: { sourceMap: true } },
-            ],
-          }) },
-        { test: /\.css$/,
-          use: ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            use: ['css-loader',
-              {
-                loader: 'postcss-loader',
-                options: {
-                  plugins: () => [autoprefixer],
-                },
-              }],
-          }) },
-        { test: /\.(html|hbs)$/,
-          use: [
-            { loader: 'html-loader', options: { interpolate: true } },
-            { loader: 'handlebars-render-loader', options: { data: templateParams } },
-          ],
-        },
-        { test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico|otf)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-          use: ['url-loader?name=[name].[hash].[ext]&prefix=true?'] },
-      ],
-      noParse: [/\.min\.js/],
-    },
+// Definition
+pdf-service-watch -u "serverUrl" -p "pagePath" -t "templateParams"
 
-    plugins: [
-      new ExtractTextPlugin({ filename: '[name].css', allChunks: true }),
-      new HtmlWebpackPlugin({
-        template: pagePath,
-        inlineSource: '.css$',
-      }),
-      new HtmlWebpackInlineSourcePlugin(),
-    ],
-
-    resolve: {
-      alias: {
-        'source-htmls': workingDir,
-      },
-    },
-  }
+// Example
+pdf-service-watch -u "http://localhost:4444" -p "./src/index.html" -t "./templateParams.json"
 ```
 
-If you want to add additional loader or plugin to this configurations but doesn't
-want override all config file you can specify **customWebpack** option in this way
+Let' describe all params:
+ 1. **-u or --serverUrl** - it is the url to pdf service server.
+ 2. **-p or --pagePath** - path to your html source.
+ 3. **-t or --templateParams** - json file that contains template params if you are using handlebars.
+
+### pdf-service-build
+
+This command is useful for building your html assets on production env.
+
 ``` javascript
-{
-// other options
-  customWebpack: {
-    override: false,
-    config: {
-    plugins: [new MyMegaPlugin()],
-    },
-  },
-// other options
-}
+// Definition
+pdf-service-build -p "pagePath" "pagePath" "pagePath" "pagePath"
+
+// Example
+pdf-service-build -p "./report/index.html" "./receipt/index.html"
 ```
-The result webpack config should look like this:
-``` javascript
-{
-// other webpack config options
-   plugins: [
-       new ExtractTextPlugin({ filename: '[name].css', allChunks: true }),
-       new HtmlWebpackPlugin({
-         template: pagePath,
-         inlineSource: '.css$',
-       }),
-       new HtmlWebpackInlineSourcePlugin(),
-       new MyMegaPlugin(),
-     ],
-// other webpack config options
-}
-```
+
+It has got one param **-p or --pagePaths** which can take multiple params.
+These params are source pages for building html result.
 
 Example
 ===========
@@ -156,10 +115,6 @@ You can find the sample in [here](./sample). To run the sample just write in sam
 The first command should start pdf server which listen on **4444** port.
 You can specify another port in docker-compose.yml file.
 All works in this way:
- 1. All assets from **workingDir** are bundled and inlined recursively in the html file by **pagePath**.
- In sample **workingDir** is _sample/src_ directory. And **pagePath** is _sample/src/index.hbs_
- 2. Result of bundling is html file is sent to [pdf server](../server/README.md) to **serverUrl**.
- 3. Server creates pdf and sent it back to the client.
 
- That's all folks!
+That's all folks!
 
