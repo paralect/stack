@@ -1,7 +1,7 @@
 const webpackTask = require('./lib/webpackTask');
 
 const validate = require('./lib/validate');
-const { readFile, getPdf, writePdf } = require('./lib/api');
+const { getPdfFromHtml, isProdHtmlExists } = require('./lib/api');
 const logger = require('./lib/logger');
 
 const opn = require('opn');
@@ -14,27 +14,30 @@ module.exports = class PdfService {
   constructor({ serverUrl = 'http://localhost:3000', mode }) {
     this.serverUrl = serverUrl;
     this.mode = mode === 'production' ? 'production' : 'development';
-
-    this.getPdfFromHtml = this.getPdfFromHtml.bind(this);
   }
 
   async generatePdf(pagePath, params) {
     const {
       wkhtmltopdfOptions = {},
       templateParams = {},
+      templateHelpers = {},
     } = params;
 
     try {
       const paths = await validate({ pagePath });
+      const { htmlPath, pdfPath } = paths.resultOutput;
 
-      if (this.mode === 'development') {
+      if (this.mode === 'development' || !(await isProdHtmlExists(htmlPath))) {
         await webpackTask.build({ paths });
       }
 
-      return this.getPdfFromHtml({
-        outPaths: paths.resultOutput,
+      return getPdfFromHtml({
+        outPaths: { htmlPath, pdfPath },
         wkhtmltopdfOptions,
         templateParams,
+        templateHelpers,
+        serverUrl: this.serverUrl,
+        mode: this.mode,
       });
     } catch (err) {
       logger.error(err.message, err.stack);
@@ -44,22 +47,10 @@ module.exports = class PdfService {
     }
   }
 
-  async getPdfFromHtml({ outPaths, wkhtmltopdfOptions, templateParams }) {
-    const { htmlPath, pdfPath } = outPaths;
-
-    const file = await readFile(htmlPath, templateParams);
-    const pdfStream = getPdf(file, wkhtmltopdfOptions, this.serverUrl);
-
-    if (this.mode === 'development') {
-      await writePdf(pdfPath, pdfStream);
-    }
-
-    return pdfStream;
-  }
-
   async watch(pagePath, params) {
     const {
       templateParams = {},
+      templateHelpers = {},
       wkhtmltopdfOptions = {},
     } = params;
 
@@ -69,7 +60,10 @@ module.exports = class PdfService {
         paths,
         wkhtmltopdfOptions,
         templateParams,
-        buildPdf: this.getPdfFromHtml,
+        templateHelpers,
+        serverUrl: this.serverUrl,
+        mode: this.mode,
+        buildPdf: getPdfFromHtml,
       };
 
       const { htmlPath } = await webpackTask.watch(watchParams);

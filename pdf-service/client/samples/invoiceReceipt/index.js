@@ -2,7 +2,7 @@ const PdfService = require('./../../index');
 
 const pdfService = new PdfService({
   serverUrl: 'http://localhost:4444',
-  mode: 'development',
+  mode: 'production',
 });
 
 pdfService.generatePdf(`${__dirname}/view/index.html`, {
