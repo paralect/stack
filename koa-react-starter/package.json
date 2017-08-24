@@ -6,12 +6,12 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "build-client": "webpack -p --config src/client/src/webpack.config.js",
+    "build-client": "webpack -p --config src/client/webpack.config.js",
     "start": "NODE_ENV=production node src/server/app.js",
     "test": "run-s test:**",
     "test:server": "eslint ./src/server",
-    "test:client": "eslint  --ext js --ext jsx ./src/client/src",
-    "development": "NODE_ENV=development nodemon --watch src/server --watch src/client/src/webpack.dev.config.js src/server/app.js"
+    "test:client": "eslint  --ext js --ext jsx ./src/client",
+    "development": "NODE_ENV=development nodemon --watch src/server --watch src/client/webpack.dev.config.js src/server/app.js"
   },
   "dependencies": {
     "@paralect/common-logger": "0.1.10",

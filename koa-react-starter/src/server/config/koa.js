@@ -10,12 +10,12 @@ const handlebars = require('handlebars');
 const logger = global.logger;
 
 // TODO: check koa-webpack-middleware for updates
-const { devMiddleware, hotMiddleware } = require('../koa-webpack-middleware/middleware');
-const webpackOptions = require('../../client/src/webpack.config');
+const { devMiddleware, hotMiddleware } = require('server/koa-webpack-middleware/middleware');
+const webpackOptions = require('client/webpack.config');
 const routes = require('./routes');
 
-const pathToViews = path.join(__dirname, './../../client/src');
-const pathToStatic = path.join(__dirname, './../../client/src/static');
+const pathToViews = path.join(__dirname, './../../client/views');
+const pathToStatic = path.join(__dirname, './../../client/static');
 handlebars.registerHelper('json', context => JSON.stringify(context));
 
 const configureWebpack = (app) => {

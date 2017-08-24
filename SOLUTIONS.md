@@ -28,6 +28,6 @@ Every solution should include comprehensive documentation, which explains at lea
 
 |Name|Status|Description |Distribution|
 |:--:|:----:|:----------:|:------|
-|[React.JS starter app](./react-starter/README.md)|![](https://img.shields.io/badge/status-solution-green.svg)|A simplest way to start your React.JS based app.|source code|
+|[Koa.JS React.JS starter app](./koa-react-starter/README.md)|![](https://img.shields.io/badge/status-solution-green.svg)|A simplest way to start your React.JS based app.|source code|
 |Koa.JS 2 web application starter|![](https://img.shields.io/badge/status-solution-green.svg)|Sample web application with Dockerfiles, empty main screen and nice progress bar while application loading|
 |Koa.JS 2 api application starter|![](https://img.shields.io/badge/status-solution-green.svg)|Simple API starter that already have logging, connection to MongoDB and sample resource implementation|source code|
