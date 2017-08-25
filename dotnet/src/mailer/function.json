@@ -1,0 +1,13 @@
+{
+  "bindings": [
+    {
+      "name": "queueItem",
+      "type": "serviceBusTrigger",
+      "direction": "in",
+      "queueName": "mailer-queue",
+      "connection": "ceres-integration-bus",
+      "accessRights": "Listen"
+    }
+  ],
+  "disabled": false
+}

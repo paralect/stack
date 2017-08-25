@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Handlebars.Core" Version="2.1.0" />
+    <PackageReference Include="Microsoft.Azure.ServiceBus" Version="1.0.0-RC1" />
+    <PackageReference Include="RestSharp.NetCore" Version="105.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ceres.Data\Ceres.Data.csproj" />
+  </ItemGroup>
+
+</Project>
