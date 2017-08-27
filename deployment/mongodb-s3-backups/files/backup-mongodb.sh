@@ -5,19 +5,17 @@
 export LC_ALL="C"
 
 MONGODUMP_PATH="mongodump"
-MONGO_HOST="localhost" #replace with your server ip
+MONGO_HOST="localhost"
 MONGO_PORT="27017"
 
-CHAT_DB=maqpie-chat-production
-ADMIN_DB=maqpie-production
+CHAT_DB=maqpie-chat-production # replace with your name of DB
 
 TIMESTAMP=`date +%F-%H%M`
 
-AWS_BUCKET="maqpie"
+AWS_BUCKET="your_aws_bucket"
 
 # Create backup
 $MONGODUMP_PATH -h $MONGO_HOST:$MONGO_PORT -d $CHAT_DB
-$MONGODUMP_PATH -h $MONGO_HOST:$MONGO_PORT -d $ADMIN_DB
 
 # Add timestamp to backup
 mv dump mongodb-$HOSTNAME-$TIMESTAMP
