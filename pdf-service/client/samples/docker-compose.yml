@@ -1,0 +1,7 @@
+version: '2'
+
+services:
+  pdf-service:
+    image: paralect/pdf-service
+    ports:
+      - "4444:3000"
