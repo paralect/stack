@@ -1,0 +1,6 @@
+---
+  src_backup_script: files/backup-mongodb.sh
+  dest_backup_script: /usr/bin/backup-mongodb.sh
+
+  src_remove_backup_script: files/remove-old-backups.sh
+  dest_remove_backup_script: /usr/bin/remove-old-backups.sh

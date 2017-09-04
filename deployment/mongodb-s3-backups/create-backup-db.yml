@@ -1,0 +1,28 @@
+---
+- name: Setup mongodb backup cron job
+  hosts: app-servers
+  vars_files:
+    - ["vars/{{env}}.yml"]
+    - ["vars/credentials.yml"]
+  vars:
+    - s3cmd_secret_key: "{{aws_secret_key}}"
+    - s3cmd_access_key: "{{aws_access_key}}"
+    - s3cmd_user: "root"
+  roles:
+    - leucos.s3cmd
+  tasks:
+    - name: copy mongodb backup script
+      sudo: yes
+      copy: src={{src_backup_script}} dest={{dest_backup_script}} owner=root mode=744
+
+    - name: copy remove mongodb backups script
+      sudo: yes
+      copy: src={{src_remove_backup_script}} dest={{dest_remove_backup_script}} owner=root mode=744
+
+    - name: create backup cron job
+      sudo: yes
+      cron: name="mongodb backup in {{env}}" minute="0" hour="0" day="*" month="*" weekday="*" job="{{dest_backup_script}}"
+
+    - name: remove old backups cron job
+      sudo: yes
+      cron: name="remove mongodb backups in {{env}}" minute="0" hour="0" day="1" month="*" weekday="*" job="{{dest_remove_backup_script}}"
