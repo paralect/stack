@@ -68,18 +68,14 @@ const getPdfFromHtml = async ({
     await fs.writeFile(htmlPath, html);
   }
 
-  const pdfStream = getPdf(html, wkhtmltopdfOptions, serverUrl);
-
-  const [devStream, resultStream] = [
-    pdfStream.pipe(new PassThrough()),
-    pdfStream.pipe(new PassThrough()),
-  ];
+  let pdfStream = getPdf(html, wkhtmltopdfOptions, serverUrl);
 
   if (mode === 'development') {
-    await writePdf(pdfPath, devStream);
+    await writePdf(pdfPath, pdfStream);
+    pdfStream = fs.__fs.createReadStream(pdfPath);
   }
 
-  return resultStream;
+  return pdfStream;
 };
 
 module.exports = { getPdfFromHtml, isProdHtmlExists };
