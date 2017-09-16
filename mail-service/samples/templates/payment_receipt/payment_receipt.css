@@ -1,0 +1,19 @@
+.paymentReceipt__container {
+  padding: 15px 30px 15px;
+  margin: 20px auto;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  max-width: 600px;
+  color: #646464;
+  background: #fff;
+  position: relative;
+}
+
+.paymentReceipt__header {
+  margin: 20px 0;
+  font-weight: normal;
+}
+
+.paymentReceipt__footer {
+  text-align: left;
+}
