@@ -42,9 +42,7 @@ Promise.all(promises).then((paths) => {
     const outputDir = path.resolve(path.dirname(workingDir), 'build');
     const stylesPath = path.join(outputDir, 'main.css');
     const bundlePath = path.join(outputDir, 'bundle.js');
-    try {
-      await fs.unlink(stylesPath);
-      await fs.unlink(bundlePath);
-    } catch (err) {}  // eslint-disable-line
+    await fs.remove(stylesPath);
+    await fs.remove(bundlePath);
   });
 });
