@@ -15,11 +15,11 @@ const optionDefinitions = [
 
 const options = commandLineArgs(optionDefinitions);
 
-if (!options.emailTamplates) {
+if (!options.emailTemplates) {
   throw (Error('Please specify email templates'));
 }
 
-const promises = options.emailTamplates.map((emailTemplate) => {
+const promises = options.emailTemplates.map((emailTemplate) => {
   const pagePath = path.resolve(emailTemplate);
   const workingDir = path.dirname(pagePath);
   const outputDir = path.resolve(path.dirname(workingDir), 'build');
