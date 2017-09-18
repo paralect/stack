@@ -3,7 +3,7 @@ const webpackTask = require('./lib/webpackTask');
 const commandLineArgs = require('command-line-args');
 const fs = require('./lib/promiseFs');
 const path = require('path');
-const builder = require('./lib/builder');
+const builder = require('./lib/renderer');
 const logger = require('./lib/logger');
 const opn = require('opn');
 
