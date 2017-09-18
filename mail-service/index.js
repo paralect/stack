@@ -9,7 +9,6 @@ module.exports = class MailService {
     const {
       mode,
       isSendEmail,
-      isTest,
       savedEmailHtmlPath,
       mailgun = {},
       renderConfigs = {},
@@ -18,7 +17,6 @@ module.exports = class MailService {
     this.mode = mode === 'production' ? 'production' : 'development';
 
     this.isSendEmail = !!isSendEmail;
-    this.isTest = !!isTest;
 
     this.savedEmailHtmlPath = savedEmailHtmlPath;
 
@@ -30,25 +28,10 @@ module.exports = class MailService {
   }
 
   async send(templateName, templateData, data = {}) {
-    const { emailLogo, supportEmail, subject } = data;
-
-    const emailData = Object.assign({}, data, {
-      subject: this.isTest ? `[TEST] ${subject}` : subject,
-    });
-
-    const defaultTemplateData = {
-      emailLogo,
-      supportEmail,
-      year: new Date().getFullYear(),
-    };
-
-    const fullTemplateData = Object.assign({}, templateData, defaultTemplateData);
-
-    const html = await MailerBuilder.render(templateName, fullTemplateData, this.renderConfigs);
+    const html = await MailerBuilder.render(templateName, templateData, this.renderConfigs);
 
     if (this.isSendEmail) {
-      emailData.html = html;
-      return this.mailer.send(emailData);
+      return this.mailer.send(Object.assign(data, { html }));
     }
 
     const tempPath = path.join(this.savedEmailHtmlPath, `./${templateName}.html`);
