@@ -12,7 +12,7 @@ process.on('unhandledRejection', (err) => {
 });
 
 const optionDefinitions = [
-  { name: 'pagePath', type: String, alias: 'p' },
+  { name: 'emailTemplate', type: String, alias: 'e' },
   { name: 'templateParams', alias: 't', type: String },
   { name: 'layoutsDir', alias: 'l', type: String },
   { name: 'root', alias: 'r', type: String, defaultOption: './' },

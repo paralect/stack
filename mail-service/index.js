@@ -34,12 +34,22 @@ module.exports = class MailService {
       return this.mailer.send(Object.assign(data, { html }));
     }
 
-    const tempPath = path.join(this.savedEmailHtmlPath, `./${templateName}.html`);
-    logger.debug(`
+    if (this.savedEmailHtmlPath) {
+      const tempPath = path.join(this.savedEmailHtmlPath, `./${templateName}.html`);
+
+      logger.debug(`
       Emails disabled. '${data.subject}' email html has been stored at: ${tempPath}.
+      The data is: ${JSON.stringify(templateData)}`,
+      );
+
+      return fs.writeFile(tempPath, html);
+    }
+
+    logger.debug(`
+      Emails disabled.
       The data is: ${JSON.stringify(templateData)}`,
     );
 
-    return fs.writeFile(tempPath, html);
+    return null;
   }
 };

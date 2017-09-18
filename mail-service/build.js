@@ -10,7 +10,7 @@ process.on('unhandledRejection', (err) => {
 });
 
 const optionDefinitions = [
-  { name: 'emailTamplates', type: String, alias: 'e', multiple: true },
+  { name: 'emailTemplates', type: String, alias: 'e', multiple: true },
 ];
 
 const options = commandLineArgs(optionDefinitions);
