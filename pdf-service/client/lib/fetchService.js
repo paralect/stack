@@ -1,11 +1,12 @@
 const request = require('request');
 
-module.exports.fetchPdf = (html, wkhtmltopdfOptions, serverUrl) => {
+module.exports.fetchPdf = (html, pdfOptions, headers, serverUrl) => {
   return request({
     uri: `${serverUrl}/pdf`,
     method: 'POST',
     body: JSON.stringify({
-      wkhtmltopdfOptions,
+      pdfOptions,
+      headers,
       html,
     }),
     headers: {

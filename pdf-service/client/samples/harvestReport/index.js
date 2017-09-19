@@ -6,8 +6,8 @@ const pdfService = new PdfService({
 });
 
 pdfService.generatePdf(`${__dirname}/src/index.html`, {
-  wkhtmltopdfOptions: {
-    pageSize: 'letter',
+  pdfOptions: {
+    format: 'Letter',
   },
   templateParams: {
     reportName: 'Where is my money?',

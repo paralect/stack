@@ -18,7 +18,8 @@ module.exports = class PdfService {
 
   async generatePdf(pagePath, params) {
     const {
-      wkhtmltopdfOptions = {},
+      pdfOptions = {},
+      headers = {},
       templateParams = {},
       templateHelpers = {},
     } = params;
@@ -33,7 +34,8 @@ module.exports = class PdfService {
 
       return getPdfFromHtml({
         outPaths: { htmlPath, pdfPath },
-        wkhtmltopdfOptions,
+        pdfOptions,
+        headers,
         templateParams,
         templateHelpers,
         serverUrl: this.serverUrl,
@@ -51,14 +53,14 @@ module.exports = class PdfService {
     const {
       templateParams = {},
       templateHelpers = {},
-      wkhtmltopdfOptions = {},
+      pdfOptions = {},
     } = params;
 
     try {
       const paths = await validate({ pagePath });
       const watchParams = {
         paths,
-        wkhtmltopdfOptions,
+        pdfOptions,
         templateParams,
         templateHelpers,
         serverUrl: this.serverUrl,

@@ -23,11 +23,11 @@ module.exports = (app) => {
       await next();
     } catch (err) {
       logger.error(err);
-      this.status = err.status || 500;
-      this.body = {
+      ctx.status = err.status || 500;
+      ctx.body = {
         errors: [{ _global: 'An error has occurred' }],
       };
-      this.app.emit('error', err, this);
+      ctx.app.emit('error', err, ctx);
     }
   });
 

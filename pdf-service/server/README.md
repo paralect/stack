@@ -51,14 +51,14 @@ docker-compose up -d
 
 POST /pdf
 =========
-This request can have a html text and special wkhtmltopdf options (look options sections [here](https://www.npmjs.com/package/wkhtmltopdf))in body.
+This request can have a html text and special pdf options (look options sections [here](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagepdfoptions))in body. Also this request can have headers which will be used on the page, for examle you can add authorization header (look [here](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagesetextrahttpheadersheaders))
 The sample of request to localhost with Fetch API:
 
 ``` javascript
 fetch('http://localhost:3000/pdf', {
     method: 'POST',
     body: JSON.stringify({
-      wkhtmltopdfOptions,
+      pdfOptions,
       html,
     }),
     headers: {
@@ -74,7 +74,7 @@ Or if you want to generate pdf by url.
 fetch('http://localhost:3000/pdf', {
     method: 'POST',
     body: JSON.stringify({
-      wkhtmltopdfOptions,
+      pdfOptions,
       "url": "https://google.com",
     }),
     headers: {

@@ -6,12 +6,14 @@ const pdfService = new PdfService({
 });
 
 pdfService.generatePdf(`${__dirname}/view/index.html`, {
-  wkhtmltopdfOptions: {
-    pageSize: 'letter',
-    T: '0mm',
-    L: '0mm',
-    R: '0mm',
-    B: '0mm',
+  pdfOptions: {
+    format: 'Letter',
+    margin: {
+      top: '0mm',
+      left: '0mm',
+      right: '0mm',
+      bottom: '0mm'
+    }
   },
   templateParams: {
     invoice: {

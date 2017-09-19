@@ -1,4 +1,4 @@
-# Product 🎉 Stack 🎉
+# Product 🎉 Stack 🎉 [![Build Status](http://product-stack-ci.paralect.com/api/badges/startupsummer/product-stack/status.svg)](http://product-stack-ci.paralect.com/startupsummer/product-stack)
 
 Product Stack is a number of small solutions combined together in one repository with a goal to improve products quality and time to market.
 
@@ -6,6 +6,16 @@ Main concepts:
 1. Every component has an owner who maintain and contribute to the component, keeping it up to date all the time and fixing any issues.
 2. Based on the current Product Stack components we build and support `Mainstream Product` - which is what we think best set of tools and technologies for starting product development. While we offer a `Mainstream Product boilerplate`, you can use individual components for your product development.
 3. Every Product Stack component has extensive documentation which allow to learn it quite quickly.  
+
+## Tools
+
+Get in touch for invitations with Andrew Orsich.
+
+1. [Slack](https://product-stack.slack.com)
+2. [Drone CI](http://product-stack-ci.paralect.com)
+3. [Internal Trello Board](https://trello.com/b/ZmxYFqWa/product-stack-development)
+4. [NPM Organization](https://www.npmjs.com/org/paralect)
+5. [Docker Hub](https://hub.docker.com/u/paralect/dashboard/)
 
 ## Technology Stack
 
@@ -35,6 +45,20 @@ We want contributing to Product Stack to be enjoyable, educational and fun for e
 4. Adding new ideas to include into Product Stack.  
 5. Implementing new solutions, that will be used across many products.
 6. Helping answering questions in the github issues.
+
+Read more at the [contributor guide](./CONTRIBUTOR_GUIDE.md).
+
+#### Contributors
+
+1. Artem Kukharenko
+2. Evgeny Givitsa
+3. Nikita Nesterenko
+4. Igor Krasnik
+5. Andrew Orsich
+6. Ulad Mitskevich
+7. Evgeny Leschev
+
+TODO: find a nice way to display all contributors, their activity, packages they contribute to and their stats
 
 ### Structure of the repository
 

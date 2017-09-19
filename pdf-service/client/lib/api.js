@@ -25,9 +25,9 @@ const readFile = async (filePath, templateParams, templateHelpers) => {
   }
 };
 
-const getPdf = (html, wkhtmltopdfOptions, serverUrl) => {
+const getPdf = (html, pdfOptions, headers, serverUrl) => {
   try {
-    return fetchService.fetchPdf(html, wkhtmltopdfOptions, serverUrl);
+    return fetchService.fetchPdf(html, pdfOptions, headers, serverUrl);
   } catch (err) {
     logger.error('Something irreparable happened !!!\n', 'When get pdf file');
     throw err;
@@ -54,7 +54,8 @@ const isProdHtmlExists = (htmlPath) => {
 
 const getPdfFromHtml = async ({
   outPaths,
-  wkhtmltopdfOptions,
+  pdfOptions,
+  headers,
   templateHelpers,
   templateParams,
   serverUrl,
@@ -68,7 +69,7 @@ const getPdfFromHtml = async ({
     await fs.writeFile(htmlPath, html);
   }
 
-  let pdfStream = getPdf(html, wkhtmltopdfOptions, serverUrl);
+  let pdfStream = getPdf(html, pdfOptions, headers, serverUrl);
 
   if (mode === 'development') {
     await writePdf(pdfPath, pdfStream);
