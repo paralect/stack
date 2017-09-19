@@ -23,7 +23,7 @@
     "koa-router": "7.2.1",
     "koa-validate": "1.0.7",
     "nodemon": "1.11.0",
-    "wkhtmltopdf": "0.3.4"
+    "puppeteer": "0.10.2"
   },
   "devDependencies": {
     "eslint": "4.3.0",

@@ -32,8 +32,11 @@ pdfService.generatePdfpagePath(pagePath, options)
 // Example
 pdfService.generatePdf(`${__dirname}/src/index.html`,  // required
 {
-  wkhtmltopdfOptions: {  // optional
-    pageSize: 'letter',
+  pdfOptions: {  // optional
+    format: 'Letter',
+  },
+  headers: {  // optional
+    Authorization: 'Bearer ...'
   },
   templateParams: {  // optional
     tagline: 'Future is near!!!',
@@ -42,9 +45,10 @@ pdfService.generatePdf(`${__dirname}/src/index.html`,  // required
 ```
 
 Let's describe these options:
-  2. **pagePath** - it is the path to **html** file which will be transformed to pdf.
-  5. **wkhtmltopdfOptions** - you can provide wkhtmltopdf options (look options sections [here](https://www.npmjs.com/package/wkhtmltopdf)).
-  5. **templateParams** - if you are using handlebars template then you can provide properties which wis used on template.
+  1. **pagePath** - it is the path to **html** file which will be transformed to pdf.
+  2. **pdfOptions** - you can provide pdf options (look options sections [here](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagepdfoptions)).
+  3. **headers** - you can provide headers which will be used on the page, for examle you can add authorization header (look [here](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagesetextrahttpheadersheaders))
+  4. **templateParams** - if you are using handlebars template then you can provide properties which wis used on template.
 
 This method returns **stream** with your pdf file.
 
