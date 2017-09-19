@@ -7,6 +7,16 @@ Main concepts:
 2. Based on the current Product Stack components we build and support `Mainstream Product` - which is what we think best set of tools and technologies for starting product development. While we offer a `Mainstream Product boilerplate`, you can use individual components for your product development.
 3. Every Product Stack component has extensive documentation which allow to learn it quite quickly.  
 
+## Tools
+
+Get in touch for invitations with Andrew Orsich.
+
+1. [Slack](https://product-stack.slack.com)
+2. [Drone CI](http://product-stack-ci.paralect.com)
+3. [Internal Trello Board](https://trello.com/b/ZmxYFqWa/product-stack-development)
+4. [NPM Organization](https://www.npmjs.com/org/paralect)
+5. [Docker Hub](https://hub.docker.com/u/paralect/dashboard/)
+
 ## Technology Stack
 
 To make collaboration simpler and more efficient we will focus around very specific and concise technology stack, which includes following:
