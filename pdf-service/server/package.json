@@ -4,7 +4,7 @@
   "description": "Service to create pdf files from html pages",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "eslint ./",
     "development": "NODE_ENV=development nodemon --watch src src/app.js",
     "start": "node src/app.js"
   },

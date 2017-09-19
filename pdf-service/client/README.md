@@ -1,6 +1,6 @@
 Pdf service client side
 ===========
-This is the client side of **Pdf service by Paralect service-stack** description.
+This is the client side of **Pdf service** description.
 The main aim of this part is to build html file with inline css, font and images.
 To use it you should [start the server](../server/README.md) first.
 
@@ -121,4 +121,3 @@ You can specify another port in docker-compose.yml file.
 All works in this way:
 
 That's all folks!
-
