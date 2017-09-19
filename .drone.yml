@@ -11,7 +11,7 @@ pipeline:
   run-logger-tests:
     image: node:8.2
     commands:
-      - cd logger && ./bin/run.sh && cd ../
+      - cd common-logger && ./bin/run.sh && cd ../
     when:
       status: [ failure, success ]
       event: [ pull_request ]
