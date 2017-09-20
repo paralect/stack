@@ -5,8 +5,8 @@ const logger = global.logger;
 
 class Mailer {
   constructor(config) {
-   assert.ok(config.apiKey);
-   assert.ok(config.domain);
+    assert.ok(config.apiKey);
+    assert.ok(config.domain);
 
     this._mailgun = mailgun(config);
   }

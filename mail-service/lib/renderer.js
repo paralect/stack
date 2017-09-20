@@ -1,15 +1,9 @@
-const Renderer = require('koa-handlebars').Renderer;
+const Handlebars = require('handlebars');
+const fs = require('./promiseFs');
 
-module.exports = class MailBuilder {
-  static render(name, data, options = {}) {
-    const {
-      layoutsDir = 'templates/build',
-      root = 'templates/build',
-      viewsDir = __dirname,
-      defaultLayout = '_email_layout' } = options;
+module.exports = async (templatePath, templateParams) => {
+  const template = await fs.readFile(templatePath);
 
-    const renderer = new Renderer({ layoutsDir, viewsDir, root, defaultLayout });
-
-    return renderer.render(name, data);
-  }
+  const compiledHtml = Handlebars.compile(template.toString());
+  return compiledHtml(templateParams);
 };
