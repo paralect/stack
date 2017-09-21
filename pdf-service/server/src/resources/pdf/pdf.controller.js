@@ -34,6 +34,7 @@ module.exports.generatePdf = async (ctx) => {
     }
   } else if (html) {
     await page.setContent(html)
+    await new Promise((resolve) => page.on('load', resolve));
   }
   
   ctx.body = await page.pdf(

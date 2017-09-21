@@ -1,6 +1,6 @@
 {
   "name": "@paralect/pdf-service-client",
-  "version": "0.2.1",
+  "version": "0.2.3",
   "description": "Pdf service client for https://hub.docker.com/r/paralect/pdf-service/",
   "main": "index.js",
   "bin": {
