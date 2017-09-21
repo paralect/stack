@@ -13,7 +13,7 @@ module.exports.generatePdf = async (ctx) => {
   ctx.attachment('out.pdf');
 
   const { url, html, pdfOptions, headers } = data;
-  
+
   const browser = await getBrowser();
   const page = await browser.newPage();
 
@@ -25,18 +25,18 @@ module.exports.generatePdf = async (ctx) => {
     try {
       await page.goto(url, {
         waitUntil: 'networkidle',
-        timeout: 100000
+        timeout: 100000,
       });
       await page.emulateMedia('screen');
     } catch (e) {
       await closeBrowser(browser);
-      throw e
+      throw e;
     }
   } else if (html) {
-    await page.setContent(html)
-    await new Promise((resolve) => page.on('load', resolve));
+    await page.setContent(html);
+    await new Promise(resolve => page.on('load', resolve));
   }
-  
+
   ctx.body = await page.pdf(
     Object.assign({
       printBackground: true,
@@ -44,9 +44,9 @@ module.exports.generatePdf = async (ctx) => {
         top: '0.4in',
         right: '0.4in',
         bottom: '0.4in',
-        left: '0.4in'
-      }
-    }, pdfOptions)
+        left: '0.4in',
+      },
+    }, pdfOptions),
   );
   await page.close();
 };

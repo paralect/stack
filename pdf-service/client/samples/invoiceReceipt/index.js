@@ -12,8 +12,8 @@ pdfService.generatePdf(`${__dirname}/view/index.html`, {
       top: '0mm',
       left: '0mm',
       right: '0mm',
-      bottom: '0mm'
-    }
+      bottom: '0mm',
+    },
   },
   templateParams: {
     invoice: {
