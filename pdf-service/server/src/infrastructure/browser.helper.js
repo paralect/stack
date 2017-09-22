@@ -8,21 +8,21 @@ exports.getBrowser = () => {
   }
 
   browserPromise = puppeteer.launch({
-    ignoreHTTPSErrors : true,
+    ignoreHTTPSErrors: true,
     args: [
       '--no-sandbox',
-      '--disable-setuid-sandbox'
-    ]
+      '--disable-setuid-sandbox',
+    ],
   });
 
   return browserPromise;
-}
+};
 
 exports.closeBrowser = (browser) => {
   if (!browser || !browserPromise) {
-    return;
+    return Promise.resolve();
   }
 
   browserPromise = null;
   return browser.close();
-}
+};

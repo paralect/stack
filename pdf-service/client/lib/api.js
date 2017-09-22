@@ -1,6 +1,5 @@
 const fs = require('./promiseFs');
 const path = require('path');
-const { PassThrough } = require('stream');
 const fetchService = require('./fetchService');
 const logger = require('./logger');
 const Handlebars = require('handlebars');

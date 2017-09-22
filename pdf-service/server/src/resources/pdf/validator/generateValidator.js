@@ -11,5 +11,6 @@ module.exports = ctx => baseValidator(ctx, async () => {
     url,
     html,
     pdfOptions,
+    headers,
   };
 });
