@@ -1,24 +1,24 @@
 const baseValidator = require('resources/base.validator');
+const schema = require('./resetPassword.updateSchema');
+
 const userService = require('resources/user/user.service');
 
-module.exports = ctx => baseValidator(ctx, async () => {
-  ctx.checkBody('password').isLength(6, 20, 'Password must be 6-20 characters')
-    .notEmpty()
-    .trim();
-
-  if (ctx.errors.length > 0) {
-    return false;
+exports.validate = ctx => baseValidator(ctx, async () => {
+  const result = schema.apply(ctx, ctx.request.schema);
+  if (result.error) {
+    return result;
   }
 
   const user = await userService.findOne({ resetPasswordToken: ctx.request.body.token });
-
   if (!user) {
     ctx.errors.push({ token: 'Token is invalid' });
     return false;
   }
 
   return {
-    userId: user._id,
-    password: ctx.request.body.password,
+    value: {
+      userId: user._id,
+      password: ctx.request.body.password,
+    },
   };
 });

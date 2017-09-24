@@ -1,11 +1,12 @@
 const userService = require('resources/user/user.service');
+
 const baseValidator = require('resources/base.validator');
+const schema = require('./verifyEmail.updateSchema');
 
-module.exports = ctx => baseValidator(ctx, async () => {
-  ctx.checkParams('token').notEmpty('Token is required');
-
-  if (ctx.errors.length > 0) {
-    return false;
+exports.validate = ctx => baseValidator(ctx, async () => {
+  const result = schema.apply(ctx, ctx.request.body);
+  if (result.error) {
+    return result;
   }
 
   const user = await userService.findOne({ signupToken: ctx.params.token });
@@ -16,6 +17,8 @@ module.exports = ctx => baseValidator(ctx, async () => {
   }
 
   return {
-    userId: user._id,
+    value: {
+      userId: user._id,
+    },
   };
 });

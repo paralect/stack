@@ -13,7 +13,11 @@ module.exports = {
     "import/no-unresolved": 0,
     "import/prefer-default-export": 0,
     "no-unused-vars": ["error", { "args": "none" }],
-    "react/prefer-stateless-function": 0
+    "react/prefer-stateless-function": 0,
+    "linebreak-style": 0,
+    'import/no-extraneous-dependencies': ['error', {
+      devDependencies: [ 'src/tests/**' ],
+    }],
   },
   "settings": {
     "import/resolver": {
@@ -33,5 +37,5 @@ module.exports = {
   },
   "globals": {
     "window": true,
-  },
+  }
 };
