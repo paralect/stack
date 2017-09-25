@@ -1,14 +1,18 @@
+const Joi = require('joi');
+
 const userService = require('resources/user/user.service');
-
 const baseValidator = require('resources/base.validator');
-const schema = require('./verifyEmail.updateSchema');
 
-exports.validate = ctx => baseValidator(ctx, async () => {
-  const result = schema.apply(ctx, ctx.request.body);
-  if (result.error) {
-    return result;
-  }
+const schema = {
+  token: Joi.string()
+    .options({
+      language: {
+        any: { empty: '!!Token is required' },
+      },
+    }),
+};
 
+exports.validate = ctx => baseValidator(ctx, async (data) => {
   const user = await userService.findOne({ signupToken: ctx.params.token });
 
   if (!user) {
@@ -17,8 +21,6 @@ exports.validate = ctx => baseValidator(ctx, async () => {
   }
 
   return {
-    value: {
-      userId: user._id,
-    },
+    userId: user._id,
   };
 });

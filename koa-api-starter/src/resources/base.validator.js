@@ -1,19 +1,22 @@
-/**
- *  Validate request and send 400(bad request), when request is not valid
- * @param {object} ctx
- * @param {Function} validateFn
- * @return {object}
- */
-module.exports = async (ctx, validateFn) => {
-  ctx.errors = [];
-  const data = await validateFn(ctx);
-  const result = {
-    errors: null,
-    value: {},
-  };
+const Joi = require('joi');
 
-  if (data.error && data.error.details instanceof Array) {
-    result.errors = data.error.details.map((error) => {
+const joiOptions = {
+  abortEarly: false,
+  allowUnknown: true,
+  stripUnknown: {
+    objects: true,
+  },
+};
+
+/**
+ * Parse and return list of errors
+ * @param {object} joiError
+ * @return {object[]} 
+ */
+const parseJoiErrors = (joiError) => {
+  let resultErrors = [];
+  if (joiError && joiError.details instanceof Array) {
+    resultErrors = joiError.details.map((error) => {
       const pathLastPart = error.path.slice(error.path.length - error.context.key.length);
 
       if (pathLastPart === error.context.key) {
@@ -24,21 +27,51 @@ module.exports = async (ctx, validateFn) => {
     });
   }
 
-  if (typeof data === 'object' && data.value) {
-    result.value = data.value;
+  return resultErrors;
+};
+
+/**
+ *  Validate request and send 400(bad request), when request is not valid
+ * @param {object} ctx
+ * @param {object|Function} schema - Joi validation schema or validation function
+ * @param {Function} validateFn
+ * @return {object}
+ */
+module.exports = async (ctx, schema, validateFn) => {
+  let validateFunc = validateFn;
+  let joiSchema = schema;
+
+  if (typeof schema === 'function') {
+    validateFunc = schema;
+    joiSchema = null;
   }
 
-  if (ctx.errors instanceof Array) {
-    if (ctx.errors.length) {
-      result.errors = result.errors || [];
-      result.errors.push(...ctx.errors);
+  let joiResult;
+  if (joiSchema) {
+    joiResult = Joi.validate(ctx.require.body, joiSchema, joiOptions);
+    if (joiResult.error) {
+      ctx.errors = parseJoiErrors(joiResult.error);
+
+      ctx.status = 400;
+      ctx.body = { errors: ctx.errors };
+      return { errors: ctx.errors };
     }
-  } else {
+  }
+
+  ctx.errors = [];
+  const data = await validateFunc(joiResult.value);
+  const result = {
+    errors: null,
+    value: data,
+  };
+
+  if (ctx.errors.length) {
     result.errors = ctx.errors;
   }
+
   if (result.errors) {
     ctx.status = 400;
-    ctx.body = { errors: result.errors };
+    ctx.body = { errors: ctx.errors };
   }
 
   return result;

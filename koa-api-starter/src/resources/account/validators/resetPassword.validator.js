@@ -1,14 +1,25 @@
-const baseValidator = require('resources/base.validator');
-const schema = require('./resetPassword.updateSchema');
+const Joi = require('joi');
 
+const baseValidator = require('resources/base.validator');
 const userService = require('resources/user/user.service');
 
-exports.validate = ctx => baseValidator(ctx, async () => {
-  const result = schema.apply(ctx, ctx.request.schema);
-  if (result.error) {
-    return result;
-  }
+const schema = {
+  password: Joi.string()
+    .trim()
+    .min(6)
+    .max(20)
+    .options({
+      language: {
+        string: {
+          min: '!!Password must be 6-20 characters',
+          max: '!!Password must be 6-20 characters',
+        },
+        any: { empty: '!!Password is required' },
+      },
+    }),
+};
 
+exports.validate = ctx => baseValidator(ctx, schema, async (data) => {
   const user = await userService.findOne({ resetPasswordToken: ctx.request.body.token });
   if (!user) {
     ctx.errors.push({ token: 'Token is invalid' });
@@ -16,9 +27,7 @@ exports.validate = ctx => baseValidator(ctx, async () => {
   }
 
   return {
-    value: {
-      userId: user._id,
-      password: ctx.request.body.password,
-    },
+    userId: user._id,
+    password: ctx.request.body.password,
   };
 });
