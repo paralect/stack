@@ -1,0 +1,30 @@
+{
+  "name": "@paralect/mail-service-client",
+  "version": "0.0.3",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "email service"
+  ],
+  "author": "Paralect",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "eslint": "4.3.0",
+    "eslint-config-airbnb": "15.1.0",
+    "eslint-plugin-import": "2.7.0",
+    "eslint-plugin-jsx-a11y": "5.0.1",
+    "eslint-plugin-react": "7.1.0"
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {
+    "@paralect/common-logger": "^0.1.10",
+    "handlebars": "^4.0.10",
+    "mailgun-js": "^0.13.1"
+  }
+}
