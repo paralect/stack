@@ -12,7 +12,7 @@ const schema = {
     }),
 };
 
-exports.validate = ctx => baseValidator(ctx, async (data) => {
+exports.validate = ctx => baseValidator(ctx, schema, async (data) => {
   const user = await userService.findOne({ signupToken: ctx.params.token });
 
   if (!user) {

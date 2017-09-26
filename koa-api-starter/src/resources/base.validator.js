@@ -48,7 +48,14 @@ module.exports = async (ctx, schema, validateFn) => {
 
   let joiResult;
   if (joiSchema) {
-    joiResult = Joi.validate(ctx.require.body, joiSchema, joiOptions);
+    let body;
+    if (ctx.method === 'GET') {
+      body = ctx.params;
+    } else {
+      body = ctx.request.body;
+    }
+
+    joiResult = Joi.validate(body, joiSchema, joiOptions);
     if (joiResult.error) {
       ctx.errors = parseJoiErrors(joiResult.error);
 

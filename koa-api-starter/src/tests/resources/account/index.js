@@ -34,5 +34,15 @@ module.exports = (request) => {
         })
         .end(done);
     });
+
+    it('should return an error that token is invalid', (done) => {
+      request.get('/account/verifyEmail/111')
+        .expect(400)
+        .expect((res) => {
+          const errors = res.body.errors;
+          errors[0].token.should.be.equal('Token is invalid');
+        })
+        .end(done);
+    });
   });
 };

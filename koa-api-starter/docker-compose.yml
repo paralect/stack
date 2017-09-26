@@ -4,7 +4,7 @@ services:
     command: mongod
     image: mongo:3.4
     ports:
-      - "27100:27017" # map port to none standard port, to avoid conflicts with locally installed mongodb. 
+      - "27017:27017" # map port to none standard port, to avoid conflicts with locally installed mongodb. 
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
   api:
