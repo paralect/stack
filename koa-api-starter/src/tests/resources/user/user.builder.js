@@ -13,7 +13,7 @@ class UserBuilder extends BaseBuilder {
     this.data.firstName = faker.name.firstName();
     this.data.lastName = faker.name.lastName();
     this.data.signupToken = null;
-    this.data.resetPasswordToken = null;
+    this.data.resetPasswordToken = `${this.data._id}_reset_password_token`;
     this.data.isEmailVerified = true;
   }
 
@@ -35,6 +35,11 @@ class UserBuilder extends BaseBuilder {
 
   notVerifiedEmail() {
     this.data.isEmailVerified = false;
+    return this;
+  }
+
+  signupToken(token) {
+    this.data.signupToken = token;
     return this;
   }
 }

@@ -9,3 +9,14 @@ exports.rootUser = async () => {
 
   return user;
 };
+
+exports.unverifiedUser = async (signupToken = '123') => {
+	const builder = new Builder();
+	const user = await builder
+    .email()
+    .password()
+    .signupToken(signupToken)
+    .build();
+
+  return user;
+};

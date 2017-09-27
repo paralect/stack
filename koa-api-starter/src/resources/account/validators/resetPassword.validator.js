@@ -4,6 +4,7 @@ const baseValidator = require('resources/base.validator');
 const userService = require('resources/user/user.service');
 
 const schema = {
+  token: Joi.string(),
   password: Joi.string()
     .trim()
     .min(6)
@@ -28,6 +29,6 @@ exports.validate = ctx => baseValidator(ctx, schema, async (data) => {
 
   return {
     userId: user._id,
-    password: ctx.request.body.password,
+    password: data.password,
   };
 });
