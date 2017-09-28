@@ -10,6 +10,7 @@ let base = {
   isDev: env === 'development',
   isTest: env === 'test',
   webUrl: 'http://localhost:5000',
+  jwtSecret: 'jwt_secret',
 };
 
 const envConfig = require(`./${env}.js`); // eslint-disable-line

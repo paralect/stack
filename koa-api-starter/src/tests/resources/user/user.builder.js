@@ -1,13 +1,14 @@
 const faker = require('faker');
 
 const BaseBuilder = require('tests/resources/base.builder');
+const userService = require('resources/user/user.service');
 
 const salt = 'salt';
 const qwertyHash = '$2a$10$8Z0s/vCE09wIN.piv7qCEuBmV8oIfafV.j7IOCXUTPZOUOpaLPa9K';
 
 class UserBuilder extends BaseBuilder {
   constructor() {
-    super();
+    super(userService);
 
     this.data.createdOn = new Date();
     this.data.firstName = faker.name.firstName();

@@ -130,5 +130,5 @@ exports.resendVerification = async (ctx, next) => {
     await emailService.sendSignupWelcome({ email, signupToken: user.signupToken });
   }
 
-  this.body = {};
+  ctx.body = {};
 };

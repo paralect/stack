@@ -61,7 +61,7 @@ module.exports = (request) => {
       request.post('/account/signin')
         .send({
           email: 'test@test.com1',
-          password: '1234'
+          password: '1234',
         })
         .expect(400)
         .expect((res) => {
@@ -75,7 +75,7 @@ module.exports = (request) => {
       request.post('/account/signin')
         .send({
           email: 'test@test.test',
-          password: 'qwerty'
+          password: 'qwerty',
         })
         .expect(200)
         .end(done);
@@ -84,7 +84,7 @@ module.exports = (request) => {
     it('should return an error that the email address is incorrect', (done) => {
       request.post('/account/forgotPassword')
         .send({
-          email: 'test@test'
+          email: 'test@test',
         })
         .expect(400)
         .expect((res) => {
@@ -97,17 +97,17 @@ module.exports = (request) => {
     it('should successfully send forgot password link', (done) => {
       request.post('/account/forgotPassword')
         .send({
-          user: user.email
+          user: user.email,
         })
         .expect(200)
         .end(done);
     });
 
     it('should return an error that reset password token is invalid', (done) => {
-      request.post('/account/resetPassword')
+      request.put('/account/resetPassword')
         .send({
           password: 'qwerty123',
-          token: '234'
+          token: '234',
         })
         .expect(400)
         .expect((res) => {
@@ -118,10 +118,10 @@ module.exports = (request) => {
     });
 
     it('should successfully reset old password', (done) => {
-      request.post('/account/resetPassword')
+      request.put('/account/resetPassword')
         .send({
           password: 'new_password',
-          token: ${user._id}_reset_password_token
+          token: `${user._id}_reset_password_token`,
         })
         .expect(200)
         .end(done);
@@ -130,7 +130,7 @@ module.exports = (request) => {
     it('should successfully resend verification email', (done) => {
       request.post('/account/resend')
         .send({
-          email: 'test@test.test'
+          email: 'test@test.test',
         })
         .expect(200)
         .end(done);

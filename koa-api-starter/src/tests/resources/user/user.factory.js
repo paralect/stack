@@ -1,4 +1,4 @@
-const Builder = require('./staff.builder');
+const Builder = require('./user.builder');
 
 exports.rootUser = async () => {
   const builder = new Builder();
@@ -11,8 +11,8 @@ exports.rootUser = async () => {
 };
 
 exports.unverifiedUser = async (signupToken = '123') => {
-	const builder = new Builder();
-	const user = await builder
+  const builder = new Builder();
+  const user = await builder
     .email()
     .password()
     .signupToken(signupToken)

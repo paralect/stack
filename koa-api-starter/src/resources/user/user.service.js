@@ -17,7 +17,7 @@ service.markEmailAsVerified = (_id) => {
 };
 
 service.updateResetPasswordToken = (_id, token) => {
-  return service.update({ _id }, {
+  return service.findOneAndUpdate({ _id }, {
     $set: {
       resetPasswordToken: token,
     },

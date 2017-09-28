@@ -15,7 +15,7 @@ class BaseBuilder {
    * @return {Promise}
    */
   build() {
-    return this.service.create(this.data);
+    return this._service.create(this.data);
   }
 }
 
