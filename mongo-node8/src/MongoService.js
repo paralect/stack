@@ -171,12 +171,12 @@ class MongoService extends MongoQueryService {
       })
       .then((doc) => {
         if (originalDoc) {
-          this.emit('updated', {
+          this._bus.emit('updated', {
             doc,
             prevDoc: originalDoc,
           });
         } else {
-          this.emit('created', {
+          this._bus.emit('created', {
             doc,
           });
         }
