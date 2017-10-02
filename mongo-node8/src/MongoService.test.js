@@ -165,5 +165,17 @@ module.exports = () => {
       const changed = MongoService.deepCompare(data, initialData, { 'user.firstName': 'Bob' });
       changed.should.be.equal(true);
     });
+
+    it('should update document using atomic modifiers', async () => {
+      const _id = 'find_one_and_update';
+      await userService.create({ _id, name: 'Bob' });
+      await userService.findOneAndUpdate({ _id }, {
+        $set: {
+          name: 'Alice',
+        },
+      });
+      const userDoc = await userService.findOne({ _id });
+      userDoc.name.should.be.equal('Alice');
+    });
   });
 };
