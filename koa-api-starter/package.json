@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@paralect/common-logger": "0.1.10",
-    "@paralect/mongo-node8": "0.1.12",
+    "@paralect/mongo-node8": "0.1.13",
     "app-module-path": "^2.2.0",
     "bcrypt": "1.0.3",
     "joi": "11.0.3",
@@ -31,11 +31,11 @@
   "devDependencies": {
     "babel-eslint": "8.0.0",
     "chai": "4.1.2",
-    "eslint": "4.7.2",
+    "eslint": "4.5.0",
     "eslint-config-airbnb": "15.1.0",
     "eslint-plugin-import": "2.7.0",
     "eslint-plugin-jsx-a11y": "5.1.1",
-    "eslint-plugin-react": "7.3.0",
+    "eslint-plugin-react": "7.1.0",
     "faker": "4.1.0",
     "mocha": "3.5.3",
     "supertest": "3.0.0"
