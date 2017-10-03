@@ -5,7 +5,7 @@ import './input.styles';
 
 
 export default class Input extends React.Component {
-  static propsTypes = {
+  static propTypes = {
     onChange: PropTypes.func.isRequired,
 
     defaultText: PropTypes.string.isRequired,
@@ -19,7 +19,7 @@ export default class Input extends React.Component {
     this.setState({ text: this.props.defaultText });
   }
 
-  onChange = e => {
+  onChange = (e) => {
     this.setState({ text: e.target.value });
     this.props.onChange(e.target.value);
   }

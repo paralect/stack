@@ -13,7 +13,10 @@ class Profile extends React.Component {
   static propTypes = {
     updateUser: PropTypes.func.isRequired,
 
-    user: PropTypes.object.isRequired,
+    user: PropTypes.shape({
+      username: PropTypes.string,
+      info: PropTypes.string,
+    }).isRequired,
   }
 
   state = {
@@ -21,16 +24,16 @@ class Profile extends React.Component {
     info: '',
   }
 
-  updateUser = () => {
-    this.props.updateUser(this.state);
+  onInfoChange(info) {
+    this.setState({ info });
   }
 
-  onUsernameChange = username => {
+  onUsernameChange(username) {
     this.setState({ username });
   }
 
-  onInfoChange = info => {
-    this.setState({ info });
+  updateUser() {
+    this.props.updateUser(this.state);
   }
 
   render() {

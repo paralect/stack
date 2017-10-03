@@ -8,7 +8,7 @@ import './header.styles';
 
 
 class Header extends React.Component {
-  static propsTypes = {
+  static propTypes = {
     username: PropTypes.string.isRequired,
   }
 
