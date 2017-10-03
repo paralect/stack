@@ -1,22 +1,22 @@
 {
   "name": "koa-api-starter",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/app.js",
   "author": "",
   "license": "ISC",
   "scripts": {
-    "test": "eslint ./src",
+    "test": "eslint ./src && NODE_ENV=test mocha --timeout 20000 --harmony --recursive -c -R spec src/tests/app.spec.js",
     "development": "NODE_ENV=development nodemon --watch src src/app.js"
   },
   "dependencies": {
     "@paralect/common-logger": "0.1.10",
-    "@paralect/mongo-node8": "0.1.10",
+    "@paralect/mongo-node8": "0.1.13",
     "app-module-path": "^2.2.0",
-    "bcrypt": "1.0.2",
-    "bluebird": "3.5.0",
-    "jsonschema": "1.1.1",
-    "jsonwebtoken": "7.4.1",
+    "bcrypt": "1.0.3",
+    "joi": "11.0.3",
+    "jsonschema": "1.2.0",
+    "jsonwebtoken": "8.0.1",
     "kcors": "2.2.1",
     "koa": "2.3.0",
     "koa-bodyparser": "4.2.0",
@@ -26,14 +26,18 @@
     "koa-router": "7.2.1",
     "koa-validate": "1.0.7",
     "lodash": "4.17.4",
-    "nodemon": "1.11.0"
+    "nodemon": "1.12.1"
   },
   "devDependencies": {
-    "eslint": "4.3.0",
-    "babel-eslint": "7.2.3",
+    "babel-eslint": "8.0.0",
+    "chai": "4.1.2",
+    "eslint": "4.5.0",
     "eslint-config-airbnb": "15.1.0",
     "eslint-plugin-import": "2.7.0",
-    "eslint-plugin-jsx-a11y": "5.0.1",
-    "eslint-plugin-react": "7.1.0"
+    "eslint-plugin-jsx-a11y": "5.1.1",
+    "eslint-plugin-react": "7.1.0",
+    "faker": "4.1.0",
+    "mocha": "3.5.3",
+    "supertest": "3.0.0"
   }
 }

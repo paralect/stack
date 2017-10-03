@@ -1,16 +1,17 @@
+const Joi = require('joi');
 const baseValidator = require('resources/base.validator');
 
-module.exports = ctx => baseValidator(ctx, async () => {
-  ctx.checkBody('email').isEmail('Please enter a valid email address')
+const schema = {
+  email: Joi.string()
+    .email({ minDomainAtoms: 2 })
     .trim()
-    .toLow();
+    .lowercase()
+    .options({
+      language: {
+        any: { empty: '!!Email is required' },
+        string: { email: '!!Please enter a valid email address' },
+      },
+    }),
+};
 
-  // If errors alredy exists - return early, to avoid unnesessary db calls
-  if (ctx.errors.length > 0) {
-    return false;
-  }
-
-  return {
-    email: ctx.request.body.email,
-  };
-});
+exports.validate = ctx => baseValidator(ctx, schema, data => data);

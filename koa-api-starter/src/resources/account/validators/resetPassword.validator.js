@@ -1,17 +1,27 @@
+const Joi = require('joi');
+
 const baseValidator = require('resources/base.validator');
 const userService = require('resources/user/user.service');
 
-module.exports = ctx => baseValidator(ctx, async () => {
-  ctx.checkBody('password').isLength(6, 20, 'Password must be 6-20 characters')
-    .notEmpty()
-    .trim();
+const schema = {
+  token: Joi.string(),
+  password: Joi.string()
+    .trim()
+    .min(6)
+    .max(20)
+    .options({
+      language: {
+        string: {
+          min: '!!Password must be 6-20 characters',
+          max: '!!Password must be 6-20 characters',
+        },
+        any: { empty: '!!Password is required' },
+      },
+    }),
+};
 
-  if (ctx.errors.length > 0) {
-    return false;
-  }
-
-  const user = await userService.findOne({ resetPasswordToken: ctx.request.body.token });
-
+exports.validate = ctx => baseValidator(ctx, schema, async (data) => {
+  const user = await userService.findOne({ resetPasswordToken: data.token });
   if (!user) {
     ctx.errors.push({ token: 'Token is invalid' });
     return false;
@@ -19,6 +29,6 @@ module.exports = ctx => baseValidator(ctx, async () => {
 
   return {
     userId: user._id,
-    password: ctx.request.body.password,
+    password: data.password,
   };
 });

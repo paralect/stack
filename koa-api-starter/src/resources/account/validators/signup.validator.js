@@ -1,32 +1,54 @@
+const Joi = require('joi');
+
 const userService = require('resources/user/user.service');
 const baseValidator = require('resources/base.validator');
 
-module.exports = ctx => baseValidator(ctx, async () => {
-  ctx.checkBody('firstName').isLength(1, 'Your first name must be longer then 1 letter')
-    .trim();
-  ctx.checkBody('lastName').isLength(1, 'Your last name must be longer then 1 letter')
-    .trim();
-  ctx.checkBody('email').isEmail('Please enter a valid email address')
+const schema = {
+  firstName: Joi.string()
     .trim()
-    .toLow();
-  ctx.checkBody('password')
-    .isLength(6, 20, 'Password must be 6-20 characters')
-    .trim();
+    .options({
+      language: {
+        any: { empty: '!!Your first name must be longer then 1 letter' },
+      },
+    }),
+  lastName: Joi.string()
+    .trim()
+    .options({
+      language: {
+        any: { empty: '!!Your last name must be longer then 1 letter' },
+      },
+    }),
+  email: Joi.string()
+    .email({ minDomainAtoms: 2 })
+    .trim()
+    .lowercase()
+    .options({
+      language: {
+        string: { email: '!!Please enter a valid email address' },
+        any: { empty: '!!Email is required' },
+      },
+    }),
+  password: Joi.string()
+    .trim()
+    .min(6)
+    .max(20)
+    .options({
+      language: {
+        string: {
+          min: '!!Password must be 6-20 characters',
+          max: '!!Password must be 6-20 characters',
+        },
+        any: { empty: '!!Password is required' },
+      },
+    }),
+};
 
-  // If errors alredy exists - return early, to avoid unnesessary db calls
-  if (ctx.errors.length > 0) {
-    return false;
-  }
-
+exports.validate = ctx => baseValidator(ctx, schema, async (data) => {
   const userExists = await userService.exists({ email: ctx.request.body.email });
   if (userExists) {
     ctx.errors.push({ email: 'User with this email is already registered.' });
+    return false;
   }
 
-  return {
-    firstName: ctx.request.body.firstName,
-    lastName: ctx.request.body.lastName,
-    email: ctx.request.body.email,
-    password: ctx.request.body.password,
-  };
+  return data;
 });

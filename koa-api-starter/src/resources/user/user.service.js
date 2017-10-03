@@ -1,7 +1,9 @@
 const db = require('db');
 const schema = require('./user.schema');
 
-const service = db.createService('user', schema);
+const constants = require('app.constants');
+
+const service = db.createService(constants.DATABASE_DOCUMENTS.USERS, schema);
 const securityUtil = require('security.util');
 
 
@@ -15,7 +17,7 @@ service.markEmailAsVerified = (_id) => {
 };
 
 service.updateResetPasswordToken = (_id, token) => {
-  return service.update({ _id }, {
+  return service.findOneAndUpdate({ _id }, {
     $set: {
       resetPasswordToken: token,
     },

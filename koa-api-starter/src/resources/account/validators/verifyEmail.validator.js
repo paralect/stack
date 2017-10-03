@@ -1,13 +1,18 @@
+const Joi = require('joi');
+
 const userService = require('resources/user/user.service');
 const baseValidator = require('resources/base.validator');
 
-module.exports = ctx => baseValidator(ctx, async () => {
-  ctx.checkParams('token').notEmpty('Token is required');
+const schema = {
+  token: Joi.string()
+    .options({
+      language: {
+        any: { empty: '!!Token is required' },
+      },
+    }),
+};
 
-  if (ctx.errors.length > 0) {
-    return false;
-  }
-
+exports.validate = ctx => baseValidator(ctx, schema, async (data) => {
   const user = await userService.findOne({ signupToken: ctx.params.token });
 
   if (!user) {

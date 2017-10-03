@@ -1,38 +1,58 @@
-const userService = require('resources/user/user.service');
+const Joi = require('joi');
+
 const baseValidator = require('resources/base.validator');
+
+const userService = require('resources/user/user.service');
 const securityUtil = require('security.util');
 
-module.exports = ctx => baseValidator(ctx, async () => {
-  let isPasswordMatch;
-
-  ctx.checkBody('email').isEmail('Please enter a valid email address')
+const schema = {
+  email: Joi.string()
+    .email({ minDomainAtoms: 2 })
     .trim()
-    .toLow();
-  ctx.checkBody('password').isLength(5, 20, 'Password must be 6-20 characters')
-    .notEmpty()
-    .trim();
+    .lowercase()
+    .options({
+      language: {
+        string: { email: '!!Please enter a valid email address' },
+        any: { empty: '!!Email is required' },
+      },
+    }),
+  password: Joi.string()
+    .trim()
+    .min(6)
+    .max(20)
+    .options({
+      language: {
+        string: {
+          min: '!!Password must be 6-20 characters',
+          max: '!!Password must be 6-20 characters',
+        },
+        any: { empty: '!!Password is required' },
+      },
+    }),
+};
 
-  // If errors alredy exists - return early, to avoid unnesessary db calls
-  if (ctx.errors.length > 0) {
+exports.validate = ctx => baseValidator(ctx, schema, async (signinData) => {
+  const user = await userService.findOne({ email: signinData.email });
+
+  if (!user) {
+    ctx.errors.push({ email: "User with such email doesn't exist" });
     return false;
   }
 
-  const user = await userService.findOne({ email: ctx.request.body.email });
-
-  if (user) {
-    isPasswordMatch = await securityUtil
-      .compareTextWithHash(ctx.request.body.password, user.passwordHash, user.passwordSalt);
-  } else {
-    ctx.errors.push({ email: 'User with such email doesn\'t exist' });
-  }
+  const isPasswordMatch = await securityUtil.compareTextWithHash(
+    signinData.password,
+    user.passwordHash,
+    user.passwordSalt,
+  );
 
   if (!isPasswordMatch) {
     ctx.errors.push({ password: 'Invalid password' });
+    return false;
   }
 
   return {
-    userId: user ? user._id : null,
-    email: user ? user.email : null,
-    isEmailVerified: user ? user.isEmailVerified : null,
+    userId: user._id,
+    email: user.email,
+    isEmailVerified: user.isEmailVerified,
   };
 });
