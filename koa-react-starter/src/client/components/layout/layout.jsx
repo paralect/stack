@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import { fetchUser } from 'resources/user/user.actions';
 import Routes from 'components/routes';
 import Header from './components/header';
-import './layout.styles';
+import styles from './layout.styles';
 
 
 class Layout extends React.Component {
@@ -23,7 +23,7 @@ class Layout extends React.Component {
       <div>
         <Header />
 
-        <div className="page">
+        <div className={styles.page}>
           <Routes />
         </div>
       </div>

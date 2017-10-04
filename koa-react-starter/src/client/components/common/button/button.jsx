@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import './button.styles';
+import styles from './button.styles';
 
 const noop = () => {};
 
 const Button = ({ to, text, onClick, tabIndex }) => (
   <Link to={to}>
     <div
-      className="button"
+      className={styles.button}
       role="button"
       onClick={onClick}
       tabIndex={tabIndex}

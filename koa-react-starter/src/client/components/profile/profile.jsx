@@ -6,8 +6,6 @@ import * as fromUser from 'resources/user/user.selectors';
 import { updateUser } from 'resources/user/user.actions';
 import Input from 'components/common/input';
 import Button from 'components/common/button';
-import './profile.styles';
-
 
 class Profile extends React.Component {
   static propTypes = {
@@ -44,8 +42,8 @@ class Profile extends React.Component {
         <h1>Profile</h1>
         <Input defaultText={user.username} onChange={this.onUsernameChange} />
         <Input defaultText={user.info} onChange={this.onInfoChange} />
-        <Button to="/" text="Edit" onClick={this.updateUser} />
-        <Button to="/" text="Cancel" />
+        <Button to="/" text="Edit" onClick={this.updateUser} tabIndex="0" />
+        <Button to="/" text="Cancel" tabIndex="-1" />
       </div>
     );
   }

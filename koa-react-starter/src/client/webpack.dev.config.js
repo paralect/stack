@@ -19,14 +19,29 @@ module.exports = {
   context: path.resolve(__dirname, './'),
 
   module: {
-    rules: [{
-      test: /\.jsx?$/,
-      loader: 'babel-loader',
-      options: { presets: ['react', 'es2015', 'stage-0', 'react-hmre'] },
-    }, {
-      test: /\.pcss$/,
-      loaders: ['style-loader', 'css-loader', 'postcss-loader'],
-    }],
+    rules: [
+      {
+        test: /\.jsx?$/,
+        loader: 'babel-loader',
+        options: { presets: ['react', 'es2015', 'stage-0', 'react-hmre'] },
+      },
+      {
+        test: /\.pcss$/,
+        use: [
+          { loader: 'style-loader' },
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              importLoaders: 2,
+              camelCase: true,
+              localIdentName: '[local]_[hash:base64:5]',
+            },
+          },
+          { loader: 'postcss-loader' },
+        ],
+      },
+    ],
   },
 
   devtool: 'source-map',

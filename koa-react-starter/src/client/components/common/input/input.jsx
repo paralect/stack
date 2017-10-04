@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './input.styles';
+import styles from './input.styles';
 
 
 export default class Input extends React.Component {
@@ -27,7 +27,7 @@ export default class Input extends React.Component {
   render() {
     return (
       <textarea
-        className="input"
+        className={styles.input}
         onChange={this.onChange}
         value={this.state.text}
       />
