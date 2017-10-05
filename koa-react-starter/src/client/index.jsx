@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import Layout from './components/layout';
 import store from './resources/store';
 
+import './styles.pcss';
 
 ReactDOM.render((
   <Provider store={store}>

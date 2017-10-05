@@ -30,7 +30,7 @@ class Profile extends React.Component {
     this.setState({ username });
   }
 
-  updateUser() {
+  updateUser = () => {
     this.props.updateUser(this.state);
   }
 
@@ -42,8 +42,8 @@ class Profile extends React.Component {
         <h1>Profile</h1>
         <Input defaultText={user.username} onChange={this.onUsernameChange} />
         <Input defaultText={user.info} onChange={this.onInfoChange} />
-        <Button to="/" text="Edit" onClick={this.updateUser} tabIndex="0" />
-        <Button to="/" text="Cancel" tabIndex="-1" />
+        <Button to="/" text="Edit" onClick={this.updateUser} tabIndex={0} />
+        <Button to="/" text="Cancel" tabIndex={-1} />
       </div>
     );
   }

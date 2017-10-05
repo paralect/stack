@@ -1,6 +1,7 @@
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -27,7 +28,21 @@ module.exports = {
       test: /\.pcss$/,
       use: ExtractTextPlugin.extract({
         fallback: 'style-loader',
-        use: ['css-loader', 'postcss-loader'],
+        use: [
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              importLoaders: 1,
+              camelCase: true,
+              localIdentName: '[local]_[hash:base64:5]',
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: { sourceMap: true },
+          },
+        ],
       }),
     }, {
       test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -50,6 +65,11 @@ module.exports = {
         NODE_ENV: JSON.stringify('production'),
         BABEL_ENV: JSON.stringify('production'),
       },
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, 'views/index.html'),
+      filename: 'index.html',
+      inject: 'body',
     }),
   ],
 };

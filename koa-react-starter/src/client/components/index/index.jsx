@@ -7,7 +7,7 @@ export default class Index extends React.Component {
     return (
       <div>
         <h1>Index</h1>
-        <Button to="/profile" text="Edit Profile" tabIndex="0" />
+        <Button to="/profile" text="Edit Profile" tabIndex={0} />
       </div>
     );
   }

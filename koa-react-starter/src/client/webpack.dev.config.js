@@ -33,7 +33,7 @@ module.exports = {
             loader: 'css-loader',
             options: {
               modules: true,
-              importLoaders: 2,
+              importLoaders: 1,
               camelCase: true,
               localIdentName: '[local]_[hash:base64:5]',
             },
@@ -44,7 +44,7 @@ module.exports = {
     ],
   },
 
-  devtool: 'source-map',
+  devtool: 'eval',
 
   resolve: {
     modules: ['./', 'node_modules'],
