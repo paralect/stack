@@ -2,6 +2,42 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const incstr = require('incstr');
+const CssoWebpackPlugin = require('csso-webpack-plugin').default;
+
+const createUniqueIdGenerator = () => {
+  const index = {};
+
+  const generateNextId = incstr.idGenerator({
+    // Removed "d" letter to avoid accidental "ad" construct.
+    // @see https://medium.com/@mbrevda/just-make-sure-ad-isnt-being-used-as-a-class-name-prefix-or-you-might-suffer-the-wrath-of-the-558d65502793
+    alphabet: 'abcefghijklmnopqrstuvwxyz0123456789',
+  });
+
+  return (name) => {
+    if (index[name]) {
+      return index[name];
+    }
+
+    let nextId;
+
+    do {
+      // Class name cannot start with a number.
+      nextId = generateNextId();
+    } while (/^[0-9]/.test(nextId));
+
+    index[name] = nextId;
+
+    return index[name];
+  };
+};
+
+const uniqueIdGenerator = createUniqueIdGenerator();
+
+const generateScopedName = (localName, resourcePath) => {
+  const componentName = resourcePath.split('/').slice(-5, -1).join('/');
+  return `${uniqueIdGenerator(componentName)}_${uniqueIdGenerator(localName)}`;
+};
 
 module.exports = {
   entry: {
@@ -23,7 +59,18 @@ module.exports = {
     rules: [{
       test: /\.jsx?$/,
       loader: 'babel-loader',
-      options: { presets: ['react', 'es2015', 'stage-0'] },
+      options: {
+        presets: ['react', 'es2015', 'stage-0'],
+        plugins: [
+          [
+            'react-css-modules',
+            {
+              generateScopedName,
+              webpackHotModuleReloading: false,
+            },
+          ],
+        ],
+      },
     }, {
       test: /\.pcss$/,
       use: ExtractTextPlugin.extract({
@@ -32,10 +79,13 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
-              modules: true,
               importLoaders: 1,
               camelCase: true,
-              localIdentName: '[local]_[hash:base64:5]',
+              getLocalIdent: (context, localIdentName, localName) => {
+                return generateScopedName(localName, context.resourcePath);
+              },
+              minimize: true,
+              modules: true,
             },
           },
           {
@@ -59,6 +109,7 @@ module.exports = {
 
   plugins: [
     new ExtractTextPlugin({ filename: '[name].[hash].css' }),
+    new CssoWebpackPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {

@@ -7,6 +7,8 @@ const bodyParser = require('koa-bodyparser');
 const views = require('koa-views');
 const handlebars = require('handlebars');
 
+const config = require('config');
+
 const logger = global.logger;
 
 // TODO: check koa-webpack-middleware for updates
@@ -37,7 +39,7 @@ const configureWebpack = (app) => {
 
 module.exports = (app) => {
   app.use(requestLogger());
-  app.use(views(pathToViews, {
+  app.use(views(config.isDev ? pathToViews : pathToStatic, {
     default: 'html',
     map: { html: 'handlebars' },
     options: {
