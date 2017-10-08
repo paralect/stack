@@ -34,8 +34,8 @@ module.exports = (request) => {
           password: 'qwerty',
         })
         .expect(400)
-        .expect((res) => {
-          const errors = res.body.errors;
+        .expect(({ body }) => {
+          const { errors } = body;
           errors[0].email.should.be.equal('User with this email is already registered.');
         })
         .end(done);
@@ -44,8 +44,8 @@ module.exports = (request) => {
     it('should return an error that token is invalid', (done) => {
       request.get('/account/verifyEmail/111')
         .expect(400)
-        .expect((res) => {
-          const errors = res.body.errors;
+        .expect(({ body }) => {
+          const { errors } = body;
           errors[0].token.should.be.equal('Token is invalid');
         })
         .end(done);
@@ -64,8 +64,8 @@ module.exports = (request) => {
           password: '1234',
         })
         .expect(400)
-        .expect((res) => {
-          const errors = res.body.errors;
+        .expect(({ body }) => {
+          const { errors } = body;
           errors[0].password.should.be.equal('Password must be 6-20 characters');
         })
         .end(done);
@@ -87,8 +87,8 @@ module.exports = (request) => {
           email: 'test@test',
         })
         .expect(400)
-        .expect((res) => {
-          const errors = res.body.errors;
+        .expect(({ body }) => {
+          const { errors } = body;
           errors[0].email.should.be.equal('Please enter a valid email address');
         })
         .end(done);
@@ -110,8 +110,8 @@ module.exports = (request) => {
           token: '234',
         })
         .expect(400)
-        .expect((res) => {
-          const errors = res.body.errors;
+        .expect(({ body }) => {
+          const { errors } = body;
           errors[0].token.should.be.equal('Token is invalid');
         })
         .end(done);

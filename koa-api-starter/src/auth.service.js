@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const config = require('config');
 
-const logger = global.logger;
+const { logger } = global;
 
 module.exports.createAuthToken = ({ userId }) => {
   const payload = {

@@ -1,3 +1,7 @@
+## v1.2.0 (2017-10-08)
+
+* Update modules
+
 ## v1.1.0 (2017-09-28)
 
 * Add validation of the schema in the validator using [Joi](https://github.com/hapijs/joi).
