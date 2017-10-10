@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './input.styles';
+import styles from './input.styles';
 
 
 export default class Input extends React.Component {
-  static propsTypes = {
+  static propTypes = {
     onChange: PropTypes.func.isRequired,
 
     defaultText: PropTypes.string.isRequired,
@@ -19,7 +19,7 @@ export default class Input extends React.Component {
     this.setState({ text: this.props.defaultText });
   }
 
-  onChange = e => {
+  onChange = (e) => {
     this.setState({ text: e.target.value });
     this.props.onChange(e.target.value);
   }
@@ -27,7 +27,7 @@ export default class Input extends React.Component {
   render() {
     return (
       <textarea
-        className="input"
+        className={styles.input}
         onChange={this.onChange}
         value={this.state.text}
       />
