@@ -12,7 +12,7 @@ Every solution should include comprehensive documentation, which explains at lea
 
 |Name|Status|Description|
 |:--:|:----:|:----------|
-|[JS Style](./conventions/js-style/README.md)|![](https://img.shields.io/badge/status-solution-green.svg)|Javascript style conventions|
+|[JS Style](https://github.com/paralect/eslint-config)|![](https://img.shields.io/badge/status-solution-green.svg)|Javascript style conventions|
 |[Node.JS conventions](./conventions/node-js/README.md)|![](https://img.shields.io/badge/status-solution-green.svg)|Node.JS, package.json conventions|
 |[PDF generation service](./pdf-service/README.md)|![](https://img.shields.io/badge/status-solution-green.svg)|Service that allow generate PDF documents from html files|
 
@@ -21,7 +21,7 @@ Every solution should include comprehensive documentation, which explains at lea
 
 |Name|Status|Description |Distribution|
 |:--:|:----:|:----------:|:------|
-|[Handy MongoDB layer](./mongo-node8/README.md)|![](https://img.shields.io/badge/status-solution-green.svg)|Handy MongoDB layer with database transaction log capabilities|npm package: `@paralect/mongo-node8`|
+|[Handy MongoDB layer](https://github.com/paralect/node-mongo)|![](https://img.shields.io/badge/status-solution-green.svg)|Handy MongoDB layer with database transaction log capabilities|npm package: `@paralect/mongo-node8`|
 |[Config management](./config-management/README.md)|![](https://img.shields.io/badge/status-solution-green.svg)|Describe a common way and show example of managing configs for different environments|source code|
 |Common logger|![](https://img.shields.io/badge/status-solution-green.svg)| Should support logging to the File, Logstash, Loggly|npm package: `@paralect/common-logger`|
 
