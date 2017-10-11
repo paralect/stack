@@ -1,17 +1,16 @@
-# Product 🎉 Stack 🎉 [![Build Status](http://product-stack-ci.paralect.com/api/badges/startupsummer/product-stack/status.svg)](http://product-stack-ci.paralect.com/startupsummer/product-stack)
+# Stack 🎉 [![Build Status](http://product-stack-ci.paralect.com/api/badges/startupsummer/product-stack/status.svg)](http://product-stack-ci.paralect.com/startupsummer/product-stack)
 
-Product Stack is a number of small solutions combined together in one repository with a goal to improve products quality and time to market.
+Stack is a number of small components combined together in one repository with a goal to improve products quality and time to market.
 
 Main concepts:
 1. Every component has an owner who maintain and contribute to the component, keeping it up to date all the time and fixing any issues.
-2. Based on the current Product Stack components we build and support `Mainstream Product` - which is what we think best set of tools and technologies for starting product development. While we offer a `Mainstream Product boilerplate`, you can use individual components for your product development.
-3. Every Product Stack component has extensive documentation which allow to learn it quite quickly.  
+2. Every Product Stack component has extensive documentation which allow to learn it quite quickly.  
 
 ## Tools
 
 Get in touch for invitations with Andrew Orsich.
 
-1. [Slack](https://product-stack.slack.com)
+1. [Slack](https://paralect-stack.slack.com/messages)
 2. [Drone CI](http://product-stack-ci.paralect.com)
 3. [Internal Trello Board](https://trello.com/b/ZmxYFqWa/product-stack-development)
 4. [NPM Organization](https://www.npmjs.com/org/paralect)
@@ -48,6 +47,8 @@ We want contributing to Product Stack to be enjoyable, educational and fun for e
 
 Read more at the [contributor guide](./CONTRIBUTOR_GUIDE.md).
 
+Do you enjoy build great products just like we are? Join us!
+
 #### Contributors
 
 1. Artem Kukharenko
@@ -57,6 +58,7 @@ Read more at the [contributor guide](./CONTRIBUTOR_GUIDE.md).
 5. Andrew Orsich
 6. Ulad Mitskevich
 7. Evgeny Leschev
+8. Nastya Kostukova
 
 TODO: find a nice way to display all contributors, their activity, packages they contribute to and their stats
 
@@ -67,42 +69,9 @@ Eventually we want to group solutions into logical groups, but since there is hi
 1. [Product Stack Ideas](./IDEAS.md)
 1. [Product Stack Solutions](./SOLUTIONS.md)
 
-### Product Stack Node.JS Mainstream product
+### Ship is based on Stack
 
-This is sample project built based on Product Stack components, which basically what we think an ideal solution to start new project at any given point of a time.
-
-In the mainstream product we try to solve all common challenges you run into when starting new product development. In many cases we've seen that after fast shipping of the MVP version the codebase remains in the very bad state. One of our goals is to keep shipping MVP even faster, while keeping code quality high. While we make a lot of trade offs in the mainstream product we make sure that common things, which are typically left out of the scope (logging, monitoring, CI, deployment, etc) handled properly.
-
-Mainstream product consist following high level parts:
-
-1. Landing site based on lovely, React based [next.js](https://github.com/zeit/next.js/). Landing site is fully integrate with api and consist following pages:
-  - Main landing page
-  - Signup
-  - Signup success
-  - Signin
-  - Forgot password
-  - Reset password
-  - Accept invitation
-  - Privacy policy
-  - Terms of service
-2. [Restful API](./koa-api-starter/README.md), connected to the MongoDB that implements landing site functionality.
-3. Koa, React.JS based Single Page Application which shows after you login on landing site. Have configuration for development and production environments.
-4. Application deployment using Ansible
-5. Continuous integration server using Drone CI
-6. MongoDB backups to S3
-7. Monitoring using [Grafana](https://grafana.com/)
-8. Common application stats tracking using [Telegraf](https://github.com/influxdata/telegraf)
-9. Configured development environment with hot reloading for the web part using webpack and server auto restart using nodemon.
-
-Some common problems which already solved in the mainstream product:
-
-1. [Error/info logging](./common-logger/README.md)
-2. [MongoDB connections/reconnections](./mongo-node8/README.md).
-3. Requests validation
-4. [Common code styles](./conventions/js-style/README.md)
-5. Running tests locally
-6. Running tests in CI
-
+👉 [Ship](https://github.com/paralect/ship) better products faster
 
 Unstructured notes:
 
