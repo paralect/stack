@@ -4,7 +4,7 @@ const helmet = require('koa-helmet');
 const validate = require('koa-validate');
 const requestLogger = require('koa-logger');
 
-const logger = global.logger;
+const { logger } = global;
 const routes = require('./routes');
 
 const getArray = (obj) => {
@@ -33,7 +33,7 @@ const routeErrorHandler = async (ctx, next) => {
     } else {
       const errors = getArray(ctx.errors);
 
-      const message = err.message;
+      const { message } = err;
       const messages = Object.keys(err).map(key => ({ [key]: err[key] }));
 
       if (!ctx.body) {

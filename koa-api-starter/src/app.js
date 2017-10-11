@@ -6,7 +6,7 @@ global.logger = require('logger');
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-const logger = global.logger;
+const { logger } = global;
 const config = require('config');
 const Koa = require('koa');
 

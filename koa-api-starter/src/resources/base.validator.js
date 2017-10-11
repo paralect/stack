@@ -11,7 +11,7 @@ const joiOptions = {
 /**
  * Parse and return list of errors
  * @param {object} joiError
- * @return {object[]} 
+ * @return {object[]}
  */
 const parseJoiErrors = (joiError) => {
   let resultErrors = [];

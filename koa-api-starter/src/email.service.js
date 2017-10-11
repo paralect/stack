@@ -1,4 +1,4 @@
-const logger = global.logger;
+const { logger } = global;
 
 const _sendEmail = (template, data) => {
   logger.debug(`Sending email [${template}]. The data is: ${JSON.stringify(data)}`);
