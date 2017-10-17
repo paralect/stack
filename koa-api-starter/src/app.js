@@ -10,6 +10,11 @@ const { logger } = global;
 const config = require('config');
 const Koa = require('koa');
 
+process.on('unhandledRejection', (reason, p) => {
+  logger.log('Possibly Unhandled Rejection at: Promise ', p, ' reason: ', reason);
+  // application specific logging here
+});
+
 const app = new Koa();
 require('./config/koa')(app);
 
