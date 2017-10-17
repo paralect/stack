@@ -1,6 +1,6 @@
 {
   "name": "koa-api-starter",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "",
   "main": "src/app.js",
   "author": "",
@@ -11,12 +11,11 @@
   },
   "dependencies": {
     "@paralect/common-logger": "0.1.10",
-    "@paralect/node-mongo": "0.1.13",
+    "@paralect/node-mongo": "0.2.0",
     "app-module-path": "^2.2.0",
     "bcrypt": "1.0.3",
-    "joi": "11.2.0",
-    "jsonschema": "1.2.0",
-    "jsonwebtoken": "8.0.1",
+    "joi": "13.0.0",
+    "jsonwebtoken": "8.1.0",
     "kcors": "2.2.1",
     "koa": "2.3.0",
     "koa-bodyparser": "4.2.0",

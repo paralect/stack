@@ -1,6 +1,6 @@
 const faker = require('faker');
 
-const BaseBuilder = require('tests/resources/base.builder');
+const BaseBuilder = require('tests/base.builder');
 const userService = require('resources/user/user.service');
 
 const salt = 'salt';
