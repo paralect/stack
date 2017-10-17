@@ -1,3 +1,7 @@
+## v1.2.1 (2017-10-17)
+
+* Add promise unhandled rejection listener
+
 ## v1.2.0 (2017-10-08)
 
 * Update modules
