@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="13" height="10" viewBox="0 0 13 10" style="
+    stroke: white;
+">
+  <defs>
+    <style>
+      .cls-arrow-next-1 {
+        fill: none;
+        stroke-width: 1px;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <path class="cls-arrow-next-1" d="M1,5H12"></path>
+  <path class="cls-arrow-next-1" d="M7.72,1.006L11.992,5,7.72,8.993"></path>
+</svg>
