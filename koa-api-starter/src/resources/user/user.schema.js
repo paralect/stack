@@ -13,4 +13,4 @@ const userSchema = {
   isEmailVerified: Joi.boolean().default(false),
 };
 
-module.exports = obj => Joi.validate(obj, userSchema);
+module.exports = obj => Joi.validate(obj, userSchema, { allowUnknown: true });

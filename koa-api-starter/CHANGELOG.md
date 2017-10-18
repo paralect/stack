@@ -1,6 +1,6 @@
-## v1.3.0 (2017-10-17)
+## v1.3.0 (2017-10-18)
 
-* Update modules
+* Update dependenciew
 * Replace `jsonshema` with `joi`
 * Change location of the tests
 
