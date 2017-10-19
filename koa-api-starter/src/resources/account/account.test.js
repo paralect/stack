@@ -1,7 +1,7 @@
 const db = require('db');
 const constants = require('app.constants');
 
-const userFactory = require('tests/resources/user/user.factory');
+const userFactory = require('resources/user/user.factory');
 
 module.exports = (request) => {
   let user;

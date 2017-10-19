@@ -1,24 +1,16 @@
-const { Validator } = require('jsonschema');
-
-const validator = new Validator();
+const Joi = require('joi');
 
 const userSchema = {
-  id: '/User',
-  type: 'object',
-  properties: {
-    _id: { type: 'string' },
-    createdOn: { type: 'Date' },
-    firstName: { type: 'string' },
-    lastName: { type: 'string' },
-    email: { type: 'string' },
-    passwordHash: { type: 'string' },
-    passwordSalt: { type: 'string' },
-    signupToken: { type: 'string' },
-    resetPasswordToken: { type: 'string' },
-    isEmailVerified: { type: 'Boolean' },
-  },
-  required: ['_id', 'createdOn', 'email', 'passwordHash', 'passwordSalt',
-    'isEmailVerified'],
+  _id: Joi.string(),
+  createdOn: Joi.date(),
+  firstName: Joi.string().allow(''),
+  lastName: Joi.string(),
+  email: Joi.string().email({ minDomainAtoms: 2 }),
+  passwordHash: Joi.string(),
+  passwordSalt: Joi.string(),
+  signupToken: Joi.string(),
+  resetPasswordToken: Joi.string().allow(null).default(null),
+  isEmailVerified: Joi.boolean().default(false),
 };
 
-module.exports = obj => validator.validate(obj, userSchema);
+module.exports = obj => Joi.validate(obj, userSchema, { allowUnknown: true });

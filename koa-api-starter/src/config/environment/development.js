@@ -1,6 +1,6 @@
 module.exports = {
   mongo: {
-    connection: 'mongodb://localhost:27017/api-development',
+    connection: 'mongodb://mongo:27017/api-development',
   },
   jwtSecret: 'the_secret',
   authCookieName: 'auth',

@@ -5,4 +5,4 @@ const request = require('supertest').agent(server.listen());
 
 chai.should();
 
-require('./resources/account')(request);
+require('../resources/account/account.test')(request);

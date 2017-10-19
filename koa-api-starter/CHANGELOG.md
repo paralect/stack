@@ -1,3 +1,13 @@
+## v1.3.0 (2017-10-18)
+
+* Update dependencies
+* Replace `jsonshema` with `joi`
+* Change location of the tests
+
+**Bug fixes**
+
+* Fix mongo connection string
+
 ## v1.2.1 (2017-10-17)
 
 * Add promise unhandled rejection listener
