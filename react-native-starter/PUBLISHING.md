@@ -23,17 +23,23 @@ once created keystore you can use it to sign both staging and production builds.
 ![](view/start.png)
 8. That is your trip to publishing app
 
-# App Store publishing
+# App Store/Testflight publishing
 
-**Prerequisites: Apple account participating in Apple Developer Program and itunes connect account.**
-Before publishing to App Store make sure that you have ios provisioning profile created and installed in keychain.
-![](view/iOS_Certificates_-_Apple_Developer.png)
+**Prerequisites: Apple account participating in Apple Developer Program and iTunes Connect account.**
+ 1. At first you have to create an AppId on [Apple Developer Portal](https://developer.apple.com/account/ios/certificate/)
+ ![](view/iOS_App_IDs_-_Apple_Developer.png)
+ 2. Then create an app on [iTunes Connect](https://itunesconnect.apple.com/). Select *Bundle ID* that you've created on previous step (it should be the same as you used in XCode project).
+ ![](view/iTunes_create.png)
+ 3. Create (or import if it's already created for your team) iOS Distribution certificate (click on `plus` and then select `App Store and Ad Hoc`)
+ ![](view/iOS_Certificates_-_Apple_Developer.png)
+ 4. Select your team in XCode (if it's not available try Download All Profiles in Xcode/Preferences/Accounts)
+ ![](view/select_team.png)
+ 5. In Xcode select `Generic iOS Device` and press Product/Archive.
+ 6. Once your binary is ready you will see it in organizer. Press `Upload To App Store`.
+ 7. Check entitlements of your build and click Next.
+ 8. After uploading your build will be processed. You will receive an email when it's ready.
+ 9. You may see Missing Compliance warning on Testflight build page. The build is still not available for testing, just click an answer on pop-up dialog to share it with testers. It can be fixed if set `ITSAppUsesNonExemptEncryption` to `NO` in your `Info.plist` file.
 
-Without review you can add only itunes connect users as testers. To start external testing you have to submit build for Beta App Review (requires demo account if sign-in is required for app).
-
- 1. Select your team in Xcode (if it's not available try Download All Profiles in Xcode/Preferences/Accounts)
- 2. In Xcode select `Generic iOS Device` and press Product/Archive.
- 3. Once your binary is ready you will see it in organizer. Press `Upload To App Store`.
- 4. Check entitlements of your build and click Next.
- 5. After uploading your build will be processed. You will receive an email when it's ready.
- 6. You may see Missing Compliance warning. The build still isn't available for testing, just click an answer on pop-up dialog to share it with testers.
+**NOTES:**
+ - **Without review you can add only iTunes Connect users as testers. To start external testing you have to submit build for Beta App Review (requires demo account if sign-in is required for app).**
+ - **You can't upload build to iTunes without app icons. Make sure you've added [all needed icons](https://developer.apple.com/ios/human-interface-guidelines/icons-and-images/app-icon/). Also you can see a warning if marketing icon (1024pt) is missing - in this case build can be processed by Apple and you can start internal testing but you won't be able to submit it to review.**
