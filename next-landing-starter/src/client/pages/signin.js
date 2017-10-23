@@ -28,12 +28,6 @@ export default class Signin extends PureComponent {
       isLoading: true,
     });
 
-    await new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve();
-      }, 500);
-    });
-
     try {
       await signin({
         email: this.state.email,
