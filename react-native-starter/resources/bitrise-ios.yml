@@ -1,0 +1,47 @@
+---
+format_version: '4'
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+project_type: react-native
+trigger_map:
+- push_branch: "*"
+  workflow: build-ios
+- pull_request_source_branch: "*"
+  workflow: build-ios
+workflows:
+  build-ios:
+    steps:
+    - activate-ssh-key@3.1.1:
+        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+    - git-clone@3.5.2: {}
+    - npm@0.9.0:
+        inputs:
+        - workdir: mobile
+        - command: install
+    - certificate-and-profile-installer@1.9.1: {}
+    - set-xcode-build-number@1.0.5:
+        inputs:
+        - plist_path: "$BITRISE_SOURCE_DIR/$INFO_PLIST_FILE"
+        - build_version_offset: '1'
+    - xcode-archive@2.3.5:
+        inputs:
+        - team_id: "$APPLE_TEAM_ID"
+    - deploy-to-itunesconnect-deliver@2.10.0:
+        inputs:
+        - itunescon_user: "$ITUNES_USER"
+        - password: "$ITUNES_PASSWORD"
+        - app_id: "$ITUNES_APP_ID"
+app:
+  envs:
+  - opts:
+      is_expand: false
+    GRADLE_BUILD_FILE_PATH: mobile/android/build.gradle
+  - opts:
+      is_expand: false
+    GRADLEW_PATH: mobile/android/gradlew
+  - opts:
+      is_expand: false
+    BITRISE_PROJECT_PATH: mobile/ios/mobile.xcodeproj
+  - opts:
+      is_expand: false
+    BITRISE_SCHEME: mobile
+  - INFO_PLIST_FILE: mobile/ios/mobile/Info.plist
