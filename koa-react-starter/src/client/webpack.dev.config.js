@@ -5,6 +5,7 @@ module.exports = {
   entry: {
     main: [
       'babel-polyfill',
+      'react-hot-loader/patch',
       'webpack-hot-middleware/client?reload=true&path=/__webpack_hmr&timeout=20000',
       './index.jsx',
     ],
@@ -22,8 +23,8 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        loader: 'babel-loader',
-        options: { presets: ['react', 'es2015', 'stage-0', 'react-hmre'] },
+        exclude: /node_modules/,
+        use: ['babel-loader'],
       },
       {
         test: /\.pcss$/,

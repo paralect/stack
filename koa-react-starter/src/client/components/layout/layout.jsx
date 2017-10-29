@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 import { fetchUser } from 'resources/user/user.actions';
-import Routes from 'components/routes';
+
+import Index from 'components/index';
+import Profile from 'components/profile';
 import Header from './components/header';
-import styles from './layout.styles';
 
+import styles from './layout.styles.pcss';
 
-class Layout extends React.Component {
+class Layout extends Component {
   static propTypes = {
     fetchUser: PropTypes.func.isRequired,
   }
@@ -24,13 +26,16 @@ class Layout extends React.Component {
         <Header />
 
         <div className={styles.page}>
-          <Routes />
+          <Switch>
+            <Route exact path="/" component={Index} />
+            <Route path="/profile" component={Profile} />
+          </Switch>
         </div>
       </div>
     );
   }
 }
 
-export default withRouter(connect(null, {
+export default connect(null, {
   fetchUser,
-})(Layout));
+})(Layout);

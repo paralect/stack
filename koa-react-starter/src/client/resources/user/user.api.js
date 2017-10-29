@@ -6,6 +6,6 @@ export function fetchUser() {
   }));
 }
 
-export function updateUser(id, newUsername, newInfo) { // eslint-disable-line
+export function updateUser(id, newUsername, newInfo) {
   return new Promise(resolve => resolve({}));
 }

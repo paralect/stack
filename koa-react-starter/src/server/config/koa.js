@@ -9,7 +9,7 @@ const handlebars = require('handlebars');
 
 const config = require('config');
 
-const logger = global.logger;
+const { logger } = global;
 
 // TODO: check koa-webpack-middleware for updates
 const { devMiddleware, hotMiddleware } = require('koa-webpack-middleware/middleware');

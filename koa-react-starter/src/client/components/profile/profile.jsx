@@ -10,23 +10,37 @@ import Button from 'components/common/button';
 class Profile extends React.Component {
   static propTypes = {
     updateUser: PropTypes.func.isRequired,
-
     user: PropTypes.shape({
       username: PropTypes.string,
       info: PropTypes.string,
     }).isRequired,
   }
 
-  state = {
-    username: '',
-    info: '',
+  constructor(props) {
+    super(props);
+
+    const { user = {} } = props;
+    this.state = {
+      username: user.username || '',
+      info: user.info || '',
+    };
   }
 
-  onInfoChange(info) {
+  componentWillReceiveProps(props) {
+    const { user } = props;
+    if (user.username !== this.state.username || user.info !== this.state.info) {
+      this.setState({
+        username: user.username,
+        info: user.info,
+      });
+    }
+  }
+
+  onInfoChange = (info) => {
     this.setState({ info });
   }
 
-  onUsernameChange(username) {
+  onUsernameChange = (username) => {
     this.setState({ username });
   }
 
@@ -35,13 +49,19 @@ class Profile extends React.Component {
   }
 
   render() {
-    const { user } = this.props;
-
     return (
       <div>
         <h1>Profile</h1>
-        <Input defaultText={user.username} onChange={this.onUsernameChange} />
-        <Input defaultText={user.info} onChange={this.onInfoChange} />
+
+        <Input
+          value={this.state.username}
+          onChange={this.onUsernameChange}
+        />
+        <Input
+          value={this.state.info}
+          onChange={this.onInfoChange}
+        />
+
         <Button to="/" text="Edit" onClick={this.updateUser} tabIndex={0} />
         <Button to="/" text="Cancel" tabIndex={-1} />
       </div>

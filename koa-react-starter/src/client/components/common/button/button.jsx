@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
@@ -6,29 +6,49 @@ import styles from './button.styles';
 
 const noop = () => {};
 
-const Button = ({ to, text, onClick, tabIndex }) => (
-  <Link to={to}>
-    <div
-      className={styles.button}
-      role="button"
-      onClick={onClick}
-      tabIndex={tabIndex}
-    >
-      {text}
-    </div>
-  </Link>
-);
+class Button extends Component {
+  static propTypes = {
+    onClick: PropTypes.func,
+    text: PropTypes.string.isRequired,
+    to: PropTypes.string.isRequired,
+    tabIndex: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+    ]).isRequired,
+  };
 
-Button.propTypes = {
-  onClick: PropTypes.func,
+  static defaultProps = {
+    onClick: noop,
+  };
 
-  text: PropTypes.string.isRequired,
-  to: PropTypes.string.isRequired,
-  tabIndex: PropTypes.number.isRequired,
-};
+  onKeyDown = (e) => {
+    if (e.keyCode === 13 && this.props.onClick) {
+      this.props.onClick(e);
+    }
+  }
 
-Button.defaultProps = {
-  onClick: noop,
-};
+  render() {
+    const {
+      to,
+      text,
+      onClick,
+      tabIndex,
+    } = this.props;
+
+    return (
+      <Link to={to}>
+        <div
+          className={styles.button}
+          role="button"
+          onClick={onClick}
+          onKeyDown={this.onKeyDown}
+          tabIndex={tabIndex}
+        >
+          {text}
+        </div>
+      </Link>
+    );
+  }
+}
 
 export default Button;

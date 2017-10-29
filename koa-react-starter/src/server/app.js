@@ -6,7 +6,7 @@ require('app-module-path').addPath(__dirname);
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 global.logger = require('logger');
 
-const logger = global.logger;
+const { logger } = global;
 const config = require('config');
 const Koa = require('koa');
 
