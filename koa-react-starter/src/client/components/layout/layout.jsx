@@ -5,8 +5,8 @@ import { Switch, Route } from 'react-router-dom';
 
 import { fetchUser } from 'resources/user/user.actions';
 
-import Index from 'components/index';
-import Profile from 'components/profile';
+import Index from 'components/index/async';
+import Profile from 'components/profile/async';
 import Header from './components/header';
 
 import styles from './layout.styles.pcss';
