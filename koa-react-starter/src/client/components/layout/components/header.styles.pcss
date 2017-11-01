@@ -1,11 +1,30 @@
+@import 'variables.pcss';
+
 .header {
   background-color: #1976D2;
-  color: white;
+  color: var(--white);
   padding: 20px;
+  display: flex;
 }
 
 .title {
-  color: #fff;
+  color: var(--white);
   font-weight: 600;
   text-decoration: none;
+}
+
+.user {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+
+  & .menu {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    right: 0;
+    background: var(--gray-light);
+  }
 }
