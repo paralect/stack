@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 
-import ArrowSvg from './arrow.svg';
+import ArrowSvg from './arrow';
 
 export default () => (
   <nav className="nav">
@@ -12,11 +12,6 @@ export default () => (
        margin-top: 25px;
        height: 50px;
        color: var(--color-white);
-
-       & .test {
-         @apply --primary;
-         font-weight: bold;
-       }
 
        & .menu {
          max-width: var(--max-container-width);
@@ -85,7 +80,7 @@ export default () => (
       <div className="menu">
         <div className="item logo">
           <Link href="/">
-            <a><img src="static/logo.png" alt="logo" /></a>
+            <a href="/"> <img src="static/logo.png" alt="logo" /> </a>
           </Link>
         </div>
         <div className="item">

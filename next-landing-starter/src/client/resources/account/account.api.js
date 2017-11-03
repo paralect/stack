@@ -1,6 +1,6 @@
-import { post } from '~/helpers/apiClient';
+import { postRequest } from '~/helpers/api/api.client';
 
 export const buildUrl = url => `/account${url}`;
 
-export const signup = params => post(buildUrl('/signup'), params);
-export const signin = params => post(buildUrl('/signin'), params);
+export const signup = params => postRequest(buildUrl('/signup'), params);
+export const signin = params => postRequest(buildUrl('/signin'), params);

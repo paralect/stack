@@ -18,19 +18,12 @@ export default () => (
 
       --color-brand: #55299a;
       --color-secondary: #59ca79;
+      --color-background: #fafafa;
+
+      --form-padding: 16px;
 
       --max-container-width: 1160px;
       --container-padding: 0 20px;
-    }
-
-    :root {
-      --padding-button-normal: 20px;
-
-      --primary-button: {
-        border-radius: 5px;
-        background-image: linear-gradient(to right, rgba(90, 97, 241, .9) 0%, #a900ff 100%);
-        padding: var(--padding-button-normal);
-      }
     }
 
     form {
@@ -40,9 +33,9 @@ export default () => (
         flex-direction: column;
 
         & .input {
-          border-radius: .5rem;
-          padding: 1rem 2rem;
-          margin: 1rem 0;
+          border-radius: 8px;
+          padding: var(--form-padding) calc(var(--form-padding) * 2);
+          margin: var(--form-padding) 0;
           background: white;
           border: 1px solid #e8e8e8;
           transition: box-shadow .5s;
@@ -52,6 +45,10 @@ export default () => (
             /*box-shadow: 0px 0px 10px color(var(--color-brand) alpha(-10%));*/
             box-shadow: 0px 0px 10px color(#55299a alpha(-50%));
           }
+        }
+
+        & button[type="submit"] {
+          margin: 16px;
         }
       }
     }
@@ -121,7 +118,7 @@ export default () => (
           width: auto;
           height: 100%;
           border-radius: 10px;
-          background: #fafafa;
+          background: var(--color-background);
 
           @media(--breakpoint-small) {
             display: none;
@@ -140,36 +137,6 @@ export default () => (
           & form {
             & a {
               color: #a1a1a1;
-            }
-
-            & button {
-              margin-top: 1.5rem;
-
-              transition: 0.5s;
-              border-radius: 5px;
-              cursor: pointer;
-              color: white;
-              padding: 15px 10px;
-              width: 100%;
-
-              &[disabled] {
-                cursor: default;
-              }
-
-              &.loading {
-                animation: Gradient 1s ease-in-out infinite;
-                background-position: right center;
-                opacity: .8;
-              }
-            }
-
-            & .error {
-              background: color(red alpha(-50%));
-              color: var(--color-white);
-              padding: 20px 10px;
-              border-radius: 5px;
-              margin: 10px 0;
-              text-align: center;
             }
           }
         }

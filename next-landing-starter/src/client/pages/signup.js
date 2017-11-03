@@ -1,14 +1,18 @@
 import React, { PureComponent } from 'react';
-import classNames from 'classnames/bind';
 import Layout from '~/layouts/main';
-import { setFormValue, formatError } from '~/helpers';
+import Button from '~/components/Button';
+import Error from '~/components/Error';
+import { setFormValue } from '~/helpers';
 import { signup } from '~/resources/account/account.api';
-import { buildUrl } from '~/helpers/apiClient';
+import config from '~/config';
 
 export default class Signup extends PureComponent {
   constructor(...args) {
     super(...args);
-    this.setFormValue = setFormValue.bind(this);
+    this.setFirstName = setFormValue('firstName').bind(this);
+    this.setLastName = setFormValue('lastName').bind(this);
+    this.setEmail = setFormValue('email').bind(this);
+    this.setPassword = setFormValue('password').bind(this);
   }
 
   componentWillMount() {
@@ -17,9 +21,11 @@ export default class Signup extends PureComponent {
       lastName: '',
       email: '',
       password: '',
-      isLoading: false,
-      errorMessage: null,
       signupSuccess: false,
+
+      isLoading: false,
+
+      error: null,
     };
   }
 
@@ -40,10 +46,8 @@ export default class Signup extends PureComponent {
         signupSuccess: true,
         _signupToken: signupResult._signupToken,
       });
-    } catch (err) {
-      this.setState({
-        errorMessage: formatError(err),
-      });
+    } catch (error) {
+      this.setState({ error });
     } finally {
       this.setState({
         isLoading: false,
@@ -52,14 +56,8 @@ export default class Signup extends PureComponent {
   }
 
   render() {
-    const errorEl = this.state.errorMessage ? (
-      <div className="error">
-        {this.state.errorMessage}
-      </div>
-    ) : null;
-
     const devVerifyEmailLink = this.state._signupToken ?
-      buildUrl(`/account/verifyEmail/${this.state._signupToken}`) :
+      `${config.apiUrl}/account/verifyEmail/${this.state._signupToken}` :
       null;
 
     const devVerifyEmailLinkEl = devVerifyEmailLink && (
@@ -82,12 +80,8 @@ export default class Signup extends PureComponent {
                 }
 
                 & form {
-                  & button {
-                    background-image: linear-gradient(to right, #18c76d 0%, #08af81 100%);
-                  }
-
                   & .input:first-child {
-                    margin-right: 1em;
+                    margin-right: 16px;
                   }
 
                   & .names {
@@ -95,6 +89,11 @@ export default class Signup extends PureComponent {
                     & .input {
                       width: 50%;
                     }
+                  }
+
+                  & :global(button.signup) {
+                    background-image: linear-gradient(to right, #18c76d 0%, #08af81 100%);
+                    margin-top: var(--form-padding)
                   }
                 }
 
@@ -125,7 +124,7 @@ export default class Signup extends PureComponent {
                   <div className="names">
                     <input
                       value={this.state.firstName}
-                      onChange={this.setFormValue('firstName')}
+                      onChange={this.setFirstName}
                       required
                       type="text"
                       placeholder="First Name"
@@ -133,7 +132,7 @@ export default class Signup extends PureComponent {
                     />
                     <input
                       value={this.state.lastName}
-                      onChange={this.setFormValue('lastName')}
+                      onChange={this.setLastName}
                       required
                       type="text"
                       placeholder="Last Name"
@@ -142,7 +141,7 @@ export default class Signup extends PureComponent {
                   </div>
                   <input
                     value={this.state.email}
-                    onChange={this.setFormValue('email')}
+                    onChange={this.setEmail}
                     required
                     type="email"
                     placeholder="Email"
@@ -150,24 +149,23 @@ export default class Signup extends PureComponent {
                   />
                   <input
                     value={this.state.password}
-                    onChange={this.setFormValue('password')}
+                    onChange={this.setPassword}
                     required
                     type="password"
                     placeholder="Password"
                     className="input"
                   />
 
-                  {errorEl}
+                  <Error error={this.state.error} />
 
-                  <button
+                  <Button
+                    className="signup"
                     action="submit"
-                    className={classNames({
-                      loading: this.state.isLoading,
-                    })}
-                    disabled={this.state.isLoading}
+                    isLoading={this.state.isLoading}
                   >
                     Join
-                  </button>
+                  </Button>
+
                 </form>
               </div>
             )}
