@@ -1,3 +1,4 @@
-import Button from './button';
+import Button, { colors } from './button';
 
 export default Button;
+export { colors };

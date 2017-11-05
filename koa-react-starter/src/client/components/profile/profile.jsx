@@ -5,7 +5,11 @@ import { connect } from 'react-redux';
 import * as fromUser from 'resources/user/user.selectors';
 import { updateUser } from 'resources/user/user.actions';
 import Input from 'components/common/input';
-import Button from 'components/common/button';
+import Button, {
+  colors as buttonColors,
+} from 'components/common/button';
+
+import styles from './profile.styles';
 
 class Profile extends React.Component {
   static propTypes = {
@@ -62,8 +66,23 @@ class Profile extends React.Component {
           onChange={this.onInfoChange}
         />
 
-        <Button to="/" text="Edit" onClick={this.updateUser} tabIndex={0} />
-        <Button to="/" text="Cancel" tabIndex={-1} />
+        <div>
+          <Button
+            className={styles.button}
+            tabIndex={-1}
+            color={buttonColors.red}
+          >
+            Cancel
+          </Button>
+          <Button
+            className={styles.button}
+            onClick={this.updateUser}
+            tabIndex={0}
+            color={buttonColors.green}
+          >
+            Save
+          </Button>
+        </div>
       </div>
     );
   }

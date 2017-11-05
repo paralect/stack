@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 
 import FaCaretDown from 'react-icons/lib/fa/caret-down';
+import FaUser from 'react-icons/lib/fa/user';
+import FaUnlockAlt from 'react-icons/lib/fa/unlock-alt';
 
 import { fetchUser } from 'resources/user/user.actions';
 import * as fromUser from 'resources/user/user.selectors';
@@ -24,6 +26,33 @@ class Header extends Component {
 
   state = {
     showMenu: false,
+    menuOpen: false,
+  }
+
+  componentDidMount() {
+    document.addEventListener('click', this.onCloseMenu);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('click', this.onCloseMenu);
+  }
+
+  onToggleMenu = (e) => {
+    this.setState({
+      menuOpen: !this.state.menuOpen,
+    });
+  }
+
+  onCloseMenu = (e) => {
+    if (e.target !== this.userBtn) {
+      this.setState({ menuOpen: false });
+    }
+  }
+
+  onEnterDown = action => (e) => {
+    if (e.keyCode === 13) {
+      action(e);
+    }
   }
 
   render() {
@@ -41,12 +70,28 @@ class Header extends Component {
             [styles.showMenu]: this.state.showMenu,
           })}
         >
-          {this.props.username}
-          <FaCaretDown size={20} />
+          <span
+            className={styles.userBtn}
+            role="button"
+            tabIndex="0"
+            onClick={this.onToggleMenu}
+            onKeyDown={this.onEnterDown(this.onToggleMenu)}
+            ref={(btn) => { this.userBtn = btn; }}
+          >
+            {this.props.username}
+            <FaCaretDown size={20} />
+          </span>
 
-          <div className={styles.menu}>
-            <Link to={profilePath()}>Profile</Link>
-            <Link to={changePasswordPath()}>Change Password</Link>
+          <div className={classnames(styles.menu, {
+            [styles.open]: this.state.menuOpen,
+          })}
+          >
+            <Link to={profilePath()}>
+              <FaUser size={15} /> Profile
+            </Link>
+            <Link to={changePasswordPath()}>
+              <FaUnlockAlt size={15} /> Change Password
+            </Link>
           </div>
         </span>
       </div>

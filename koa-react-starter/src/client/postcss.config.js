@@ -1,10 +1,14 @@
+const postcssImport = require('postcss-import');
+const postcssCssNext = require('postcss-cssnext');
+const cssnano = require('cssnano');
+
 module.exports = {
   plugins: [
-    require('postcss-import')({ // eslint-disable-line
+    postcssImport({
       root: __dirname,
       path: ['styles'],
     }),
-    require('postcss-cssnext'), // eslint-disable-line
-    require('cssnano'), // eslint-disable-line
+    postcssCssNext,
+    cssnano,
   ],
 };
