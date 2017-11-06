@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import styles from './buttonLink.styles';
+import Button from 'components/common/button';
+
+import styles from './link.styles';
 
 const noop = () => {};
 
-class Button extends Component {
+class ButtonLink extends Component {
   static propTypes = {
     onClick: PropTypes.func,
     text: PropTypes.string.isRequired,
@@ -36,19 +38,17 @@ class Button extends Component {
     } = this.props;
 
     return (
-      <Link to={to}>
-        <div
-          className={styles.button}
-          role="button"
+      <Link to={to} className={styles.link}>
+        <Button
           onClick={onClick}
           onKeyDown={this.onKeyDown}
           tabIndex={tabIndex}
         >
           {text}
-        </div>
+        </Button>
       </Link>
     );
   }
 }
 
-export default Button;
+export default ButtonLink;

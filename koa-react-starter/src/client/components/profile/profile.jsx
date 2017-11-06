@@ -2,12 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import * as fromUser from 'resources/user/user.selectors';
-import { updateUser } from 'resources/user/user.actions';
 import Input from 'components/common/input';
 import Button, {
   colors as buttonColors,
 } from 'components/common/button';
+import Form, { Row, Column } from 'components/common/form';
+
+import * as fromUser from 'resources/user/user.selectors';
+import { updateUser } from 'resources/user/user.actions';
 
 import styles from './profile.styles';
 
@@ -57,32 +59,43 @@ class Profile extends React.Component {
       <div>
         <h1>Profile</h1>
 
-        <Input
-          value={this.state.username}
-          onChange={this.onUsernameChange}
-        />
-        <Input
-          value={this.state.info}
-          onChange={this.onInfoChange}
-        />
+        <Form>
+          <Row>
+            <Column>
+              <Input
+                value={this.state.username}
+                onChange={this.onUsernameChange}
+              />
+            </Column>
 
-        <div>
-          <Button
-            className={styles.button}
-            tabIndex={-1}
-            color={buttonColors.red}
-          >
-            Cancel
-          </Button>
-          <Button
-            className={styles.button}
-            onClick={this.updateUser}
-            tabIndex={0}
-            color={buttonColors.green}
-          >
-            Save
-          </Button>
-        </div>
+            <Column>
+              <Input
+                value={this.state.info}
+                onChange={this.onInfoChange}
+              />
+            </Column>
+          </Row>
+          <Row>
+            <Column>
+              <Button
+                className={styles.button}
+                tabIndex={-1}
+                color={buttonColors.red}
+              >
+                Cancel
+              </Button>
+
+              <Button
+                className={styles.button}
+                onClick={this.updateUser}
+                tabIndex={0}
+                color={buttonColors.green}
+              >
+                Save
+              </Button>
+            </Column>
+          </Row>
+        </Form>
       </div>
     );
   }
