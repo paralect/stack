@@ -6,11 +6,9 @@ const env = process.env.NODE_ENV || 'development';
 
 let base = {
   env,
-  port: process.env.PORT || 3001,
+  port: process.env.PORT || 3002,
   isDev: env === 'development',
   isTest: env === 'test',
-  webUrl: 'http://localhost:3000',
-  jwtSecret: 'jwt_secret',
 };
 
 const envConfig = require(`./${env}.js`); // eslint-disable-line
