@@ -1,17 +1,27 @@
 import { createStore, applyMiddleware, compose } from 'redux';
-import thunkMiddleware from 'redux-thunk';
-import combineSectionReducers from 'combine-section-reducers';
+import thunk from 'redux-thunk';
+import { routerMiddleware } from 'react-router-redux';
 
-import user from './user/user.reducer';
+import reducer from './reducer';
 
+const configureStore = (initialState, history) => {
+  const store = createStore(
+    reducer,
+    initialState,
+    compose(
+      applyMiddleware(routerMiddleware(history), thunk),
+      window.devToolsExtension ? window.devToolsExtension() : f => f,
+    ),
+  );
 
-const reducer = combineSectionReducers({ user });
+  if (module.hot) {
+    module.hot.accept('./reducer', () => {
+      const nextRootReducer = require('./reducer').default; // eslint-disable-line
+      store.replaceReducer(nextRootReducer);
+    });
+  }
 
-export default createStore(
-  reducer,
-  compose(
-    applyMiddleware(thunkMiddleware),
-    window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() :
-      noop => noop,
-  ),
-);
+  return store;
+};
+
+export default configureStore;

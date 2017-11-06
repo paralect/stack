@@ -1,19 +1,36 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import createHistory from 'history/createBrowserHistory';
+import { ConnectedRouter } from 'react-router-redux';
 
-import Layout from './components/layout';
-import store from './resources/store';
+import routes from './routes';
+import configureStore from './resources/store';
 
 import './styles.pcss';
 
-ReactDOM.render((
-  <Provider store={store}>
-    <BrowserRouter>
-      <Layout />
-    </BrowserRouter>
-  </Provider>
-),
-  document.getElementById('root') // eslint-disable-line
-);
+const initialState = {};
+
+const history = createHistory();
+const store = configureStore(initialState, history);
+
+const renderApp = () => {
+  ReactDOM.render(
+    (
+      <Provider store={store}>
+        <ConnectedRouter history={history}>
+          {routes()}
+        </ConnectedRouter>
+      </Provider>
+    ),
+    document.getElementById('root'),
+  );
+};
+
+renderApp();
+
+if (module.hot) {
+  module.hot.accept('./routes', () => {
+    renderApp();
+  });
+}

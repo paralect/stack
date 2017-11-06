@@ -3,7 +3,6 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const incstr = require('incstr');
-const CssoWebpackPlugin = require('csso-webpack-plugin').default;
 
 const createUniqueIdGenerator = () => {
   const index = {};
@@ -60,7 +59,6 @@ module.exports = {
       test: /\.jsx?$/,
       loader: 'babel-loader',
       options: {
-        presets: ['react', 'es2015', 'stage-0'],
         plugins: [
           [
             'react-css-modules',
@@ -109,7 +107,6 @@ module.exports = {
 
   plugins: [
     new ExtractTextPlugin({ filename: '[name].[hash].css' }),
-    new CssoWebpackPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {

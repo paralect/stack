@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
 import styles from './input.styles';
 
@@ -7,29 +8,40 @@ import styles from './input.styles';
 export default class Input extends React.Component {
   static propTypes = {
     onChange: PropTypes.func.isRequired,
-
-    defaultText: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+    className: PropTypes.string,
+    type: PropTypes.oneOf([
+      'text',
+      'search',
+      'email',
+      'number',
+      'password',
+      'url',
+    ]),
   }
 
-  state = {
-    text: '',
-  }
-
-  componentDidMount = () => {
-    this.setState({ text: this.props.defaultText });
+  static defaultProps = {
+    className: null,
+    type: 'text',
   }
 
   onChange = (e) => {
-    this.setState({ text: e.target.value });
     this.props.onChange(e.target.value);
   }
 
   render() {
+    const {
+      type,
+      className,
+      value,
+    } = this.props;
+
     return (
-      <textarea
-        className={styles.input}
+      <input
+        type={type}
+        className={classnames(styles.input, className)}
         onChange={this.onChange}
-        value={this.state.text}
+        value={value}
       />
     );
   }

@@ -1,34 +1,72 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import classnames from 'classnames';
 
-import styles from './button.styles';
+import styles from './button.styles.pcss';
 
-const noop = () => {};
-
-const Button = ({ to, text, onClick, tabIndex }) => (
-  <Link to={to}>
-    <div
-      className={styles.button}
-      role="button"
-      onClick={onClick}
-      tabIndex={tabIndex}
-    >
-      {text}
-    </div>
-  </Link>
-);
-
-Button.propTypes = {
-  onClick: PropTypes.func,
-
-  text: PropTypes.string.isRequired,
-  to: PropTypes.string.isRequired,
-  tabIndex: PropTypes.number.isRequired,
+const colors = {
+  green: 'green',
+  blue: 'blue',
+  red: 'red',
 };
 
-Button.defaultProps = {
-  onClick: noop,
-};
+class Button extends Component {
+  static propTypes = {
+    children: PropTypes.node.isRequired,
+    onClick: PropTypes.func,
+    onKeyDown: PropTypes.func,
+    tabIndex: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
+    color: PropTypes.oneOf([
+      colors.green,
+      colors.blue,
+      colors.red,
+    ]),
+    className: PropTypes.string,
+  };
+
+  static defaultProps = {
+    onClick: null,
+    onKeyDown: null,
+    tabIndex: 0,
+    color: colors.blue,
+    className: null,
+  };
+
+  onEnterDown = (e) => {
+    if (e.keyCode === 13 && this.props.onClick) {
+      this.props.onClick(e);
+    }
+  }
+
+  render() {
+    const {
+      children,
+      tabIndex,
+      onClick,
+      onKeyDown,
+      color,
+      className,
+    } = this.props;
+
+    return (
+      <div
+        className={classnames(styles.button, styles[color], className)}
+        role="button"
+        tabIndex={tabIndex}
+        onClick={onClick}
+        onKeyDown={onKeyDown || this.onEnterDown}
+      >
+        {children}
+      </div>
+    );
+  }
+}
+
 
 export default Button;
+export {
+  colors,
+};

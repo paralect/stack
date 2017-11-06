@@ -2,40 +2,20 @@ const path = require('path');
 const requestLogger = require('koa-logger');
 const serve = require('koa-static');
 const mount = require('koa-mount');
-const webpack = require('webpack');
 const bodyParser = require('koa-bodyparser');
 const views = require('koa-views');
 const handlebars = require('handlebars');
 
 const config = require('config');
 
-const logger = global.logger;
+const { logger } = global;
 
-// TODO: check koa-webpack-middleware for updates
-const { devMiddleware, hotMiddleware } = require('koa-webpack-middleware/middleware');
-const webpackOptions = require('./../../client/webpack.dev.config');
 const routes = require('./routes');
+const hmr = require('../hmr');
 
 const pathToViews = path.join(__dirname, './../../client/views');
 const pathToStatic = path.join(__dirname, './../../client/static');
 handlebars.registerHelper('json', context => JSON.stringify(context));
-
-const configureWebpack = (app) => {
-  if (process.env.NODE_ENV === 'development') {
-    const webpackMiddlewareOptions = {
-      noInfo: false,
-      quiet: false,
-      hot: true,
-      publicPath: webpackOptions.output.publicPath,
-      stats: {
-        colors: true,
-      },
-    };
-
-    app.use(devMiddleware(webpack(webpackOptions), webpackMiddlewareOptions));
-    app.use(hotMiddleware(webpack(webpackOptions)));
-  }
-};
 
 module.exports = (app) => {
   app.use(requestLogger());
@@ -50,7 +30,12 @@ module.exports = (app) => {
   }));
 
   app.use(bodyParser());
-  configureWebpack(app);
+
+  if (config.isDev) {
+    hmr(app);
+  } else {
+    app.use(mount('/static', serve(pathToStatic)));
+  }
 
   app.use(async (ctx, next) => {
     try {
@@ -65,5 +50,4 @@ module.exports = (app) => {
   });
 
   app.use(routes);
-  app.use(mount('/static', serve(pathToStatic)));
 };
