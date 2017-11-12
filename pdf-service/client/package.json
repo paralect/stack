@@ -8,7 +8,7 @@
     "pdf-service-build": "./build.js"
   },
   "scripts": {
-    "test": "mocha --timeout 10000"
+    "test": "eslint ./; mocha --timeout 10000"
   },
   "keywords": [
     "pdf",

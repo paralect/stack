@@ -6,8 +6,6 @@ const pdfService = new PdfService({
   mode: 'production',
 });
 
-console.log(pdfService);
-
 const pdfParams = {
   pdfOptions: {
     format: 'Letter',
