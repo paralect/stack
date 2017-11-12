@@ -2,9 +2,11 @@ const fs = require('fs');
 const PdfService = require('./../index');
 
 const pdfService = new PdfService({
-  serverUrl: 'http://localhost:4444',
+  serverUrl: 'http://pdf-service:3000',
   mode: 'production',
 });
+
+console.log(pdfService);
 
 const pdfParams = {
   pdfOptions: {
