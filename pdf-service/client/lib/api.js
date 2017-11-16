@@ -1,6 +1,7 @@
 const fs = require('./promiseFs');
 const path = require('path');
 const fetchService = require('./fetchService');
+const PassThrough = require('stream').PassThrough;
 const logger = require('./logger');
 const Handlebars = require('handlebars');
 
@@ -73,9 +74,11 @@ const getPdfFromHtml = async ({
   if (mode === 'development') {
     await writePdf(pdfPath, pdfStream);
     pdfStream = fs.__fs.createReadStream(pdfPath);
+
+    return pdfStream;
   }
 
-  return pdfStream;
+  return pdfStream.pipe((PassThrough()));
 };
 
 module.exports = { getPdfFromHtml, isProdHtmlExists };

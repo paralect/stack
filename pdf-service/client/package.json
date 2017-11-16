@@ -1,6 +1,6 @@
 {
   "name": "@paralect/pdf-service-client",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Pdf service client for https://hub.docker.com/r/paralect/pdf-service/",
   "main": "index.js",
   "bin": {
@@ -8,7 +8,7 @@
     "pdf-service-build": "./build.js"
   },
   "scripts": {
-    "test": "eslint ./"
+    "test": "eslint ./; mocha --timeout 10000"
   },
   "keywords": [
     "pdf",
@@ -54,6 +54,7 @@
     "eslint-config-airbnb": "15.1.0",
     "eslint-plugin-import": "2.7.0",
     "eslint-plugin-jsx-a11y": "5.0.1",
-    "eslint-plugin-react": "7.1.0"
+    "eslint-plugin-react": "7.1.0",
+    "mocha": "^4.0.1"
   }
 }
