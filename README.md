@@ -15,7 +15,7 @@ A set of components for makers to ship better products faster 🚀.
 
 Every Stack component is actively maintained and production-tested on multiple products. 
 
-## Technology Stack
+## Primary Technologies
 
 To make collaboration simpler and more efficient we will focus around very specific and concise technology stack, which includes following:
 
@@ -24,9 +24,9 @@ To make collaboration simpler and more efficient we will focus around very speci
 3. **Databases:** MongoDB, PostgreSQL
 4. **Infastructure:** Ansible, Docker, Nginx, Drone CI, Grafana
 
-## Product stack Distribution
+## Stack Distribution types
 
-We distribute Product Stack components in four main ways:
+We distribute Stack components in four main ways:
 
 1. As public [npm](https://www.npmjs.com/) packages under common `@paralect` account.
 2. As source code, which you can just copy/paste to get started
