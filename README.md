@@ -48,7 +48,7 @@ We distribute Product Stack components in four main ways:
 ## Stack components
 
 |Name|Description|
-|:--:|:----------|
+|:---|:----------|
 |[Next.JS landing starter](https://github.com/paralect/nextjs-landing-starter)|Build your landing site based on Next.JS in minutes|
 |[Koa.JS REST api starter](https://github.com/paralect/koa-api-starter)|A starter kit for building Koa.JS based restful api|
 |[React.JS (wtih Redux) starter](https://github.com/paralect/koa-react-starter)|A starter kit for building React.JS (with Redux) based applications|
