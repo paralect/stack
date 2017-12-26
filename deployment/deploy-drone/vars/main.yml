@@ -1,5 +1,5 @@
 drone_version: latest
-drone_github_users: "anorsich,maqpie,hovoodd,gavruk,filipochka97,NesterenkoNikita,ezhivitsa,KuhArt,IharKrasnik,nastya-kostyukova"
+drone_github_users: "anorsich,maqpie,hovoodd,gavruk,filipochka97,NesterenkoNikita,ezhivitsa,KuhArt,IharKrasnik,nastya-kostyukova,akovshparalect,chepicov"
 drone_agents: [{name: "Nancy"}]
 drone_url: http://product-stack-ci.paralect.com
 

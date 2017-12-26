@@ -45,6 +45,15 @@ We distribute Product Stack components in four main ways:
 3. As public docker images for isolated services under common `paralect` DockerHub account.
 4. As Ansible roles for common deployment tasks
 
+## Stack components
+
+|Name|Description|
+|:--:|:----------|
+|[Next.JS landing starter](https://github.com/paralect/nextjs-landing-starter)|Build your landing site based on Next.JS in minutes|
+
+TODO: complete the list
+
+
 ## Change Log
 
 This project adheres to [Semantic Versioning](http://semver.org/).
@@ -58,15 +67,15 @@ Ship is released under the [MIT License](LICENSE).
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
-#### Contributors
+## Contributors
 
-1. Artem Kukharenko
-2. Evgeny Givitsa
-3. Nikita Nesterenko
-4. Igor Krasnik
-5. Andrew Orsich
-6. Ulad Mitskevich
-7. Evgeny Leschev
-8. Nastya Kostukova
+Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
 
-TODO: find a nice way to display all contributors, their activity, packages they contribute to and their stats
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore -->
+| [<img src="https://avatars3.githubusercontent.com/u/14125982?v=4" width="100px;"/><br /><sub><b>KuhArt</b></sub>](https://github.com/KuhArt)<br />[💻](https://github.com/paralect/stack/commits?author=KuhArt "Code") [📖](https://github.com/paralect/stack/commits?author=KuhArt "Documentation") [💡](#example-KuhArt "Examples") | [<img src="https://avatars2.githubusercontent.com/u/6461311?v=4" width="100px;"/><br /><sub><b>Evgeny Zhivitsa</b></sub>](https://github.com/ezhivitsa)<br />[💻](https://github.com/paralect/stack/commits?author=ezhivitsa "Code") [📖](https://github.com/paralect/stack/commits?author=ezhivitsa "Documentation") [💡](#example-ezhivitsa "Examples") [🤔](#ideas-ezhivitsa "Ideas, Planning, & Feedback") | [<img src="https://avatars1.githubusercontent.com/u/12069883?v=4" width="100px;"/><br /><sub><b>NesterenkoNikita</b></sub>](https://github.com/NesterenkoNikita)<br />[💻](https://github.com/paralect/stack/commits?author=NesterenkoNikita "Code") | [<img src="https://avatars3.githubusercontent.com/u/2302873?v=4" width="100px;"/><br /><sub><b>Ihar</b></sub>](https://github.com/IharKrasnik)<br />[🐛](https://github.com/paralect/stack/issues?q=author%3AIharKrasnik "Bug reports") [💻](https://github.com/paralect/stack/commits?author=IharKrasnik "Code") [📖](https://github.com/paralect/stack/commits?author=IharKrasnik "Documentation") [🤔](#ideas-IharKrasnik "Ideas, Planning, & Feedback") | [<img src="https://avatars2.githubusercontent.com/u/2989199?v=4" width="100px;"/><br /><sub><b>Uladzimir Mitskevich</b></sub>](https://github.com/umitskevich)<br />[💻](https://github.com/paralect/stack/commits?author=umitskevich "Code") | [<img src="https://avatars3.githubusercontent.com/u/22181943?v=4" width="100px;"/><br /><sub><b>Евгений</b></sub>](https://github.com/EugenLeshchov)<br />[💻](https://github.com/paralect/stack/commits?author=EugenLeshchov "Code") | [<img src="https://avatars1.githubusercontent.com/u/9166217?v=4" width="100px;"/><br /><sub><b>Anton Tsapliuk</b></sub>](https://github.com/tsapa44)<br />[💻](https://github.com/paralect/stack/commits?author=tsapa44 "Code") |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| [<img src="https://avatars3.githubusercontent.com/u/681396?v=4" width="100px;"/><br /><sub><b>Andrew Orsich</b></sub>](http://paralect.com)<br />[💬](#question-anorsich "Answering Questions") [💻](https://github.com/paralect/stack/commits?author=anorsich "Code") [📖](https://github.com/paralect/stack/commits?author=anorsich "Documentation") [🤔](#ideas-anorsich "Ideas, Planning, & Feedback") [👀](#review-anorsich "Reviewed Pull Requests") | [<img src="https://avatars1.githubusercontent.com/u/11842784?v=4" width="100px;"/><br /><sub><b>Anastasia Kostyukova</b></sub>](https://github.com/nastya-kostyukova)<br />[💻](https://github.com/paralect/stack/commits?author=nastya-kostyukova "Code") [📖](https://github.com/paralect/stack/commits?author=nastya-kostyukova "Documentation") [💡](#example-nastya-kostyukova "Examples") |
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification. Contributions of any kind welcome!
