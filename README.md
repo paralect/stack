@@ -50,9 +50,18 @@ We distribute Product Stack components in four main ways:
 |Name|Description|
 |:--:|:----------|
 |[Next.JS landing starter](https://github.com/paralect/nextjs-landing-starter)|Build your landing site based on Next.JS in minutes|
-
-TODO: complete the list
-
+|[Koa.JS REST api starter](https://github.com/paralect/koa-api-starter)|A starter kit for building Koa.JS based restful api|
+|[React.JS (wtih Redux) starter](https://github.com/paralect/koa-react-starter)|A starter kit for building React.JS (with Redux) based applications|
+|[Ansible Grafana role](https://github.com/paralect/ansible-grafana)|An ansible role for server monitoring using grafana.|
+|[Deploy Grafana](https://github.com/paralect/deploy-grafana)|Grafana, InfluxDB and Telegraf deployment automation with Ansible|
+|[MongoDB Api for Node.JS](https://github.com/paralect/node-mongo)|Reactive wrapper around MongoDB for Node.JS|
+|[Ansible Drone role](https://github.com/paralect/ansible-drone)|Ansible role for drone deployment|
+|[Deploy Drone CI](https://github.com/paralect/deploy-drone)|Ansible automation for production-ready Drone CI deployment|
+|[Eslint config](https://github.com/paralect/eslint-config)|Eslint configuration used across all Stack components|
+|[React Native Starter](./react-native-starter/README.md)|Starter kit for React Native applications|
+|[PDF Service](./pdf-service/README.md)|A puppeteer based PDF generation services, shipped as docker image|
+|[Emails Service](./mail-service/README.md)|An mjml and webpack based service for templates generation and email sending|
+|[Stack Component Template](./stack-component-template/README.md)|A stack component template for starting new Stack components|
 
 ## Change Log
 

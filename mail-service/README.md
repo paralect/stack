@@ -1,4 +1,4 @@
-Mail service by Paralect
+Mail service
 ========================
 This client service by Paralect. It is using [mailgun node client](https://www.npmjs.com/package/mailgun-js) to send emails.
 We are inspired by [mjml](https://github.com/mjmlio/mjml) project. So, you can use mjml in your project and
