@@ -38,6 +38,18 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "IharKrasnik",
+      "name": "Ihar",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/2302873?v=4",
+      "profile": "https://github.com/IharKrasnik",
+      "contributions": [
+        "bug",
+        "code",
+        "doc",
+        "ideas"
+      ]
     }
   ]
 }
