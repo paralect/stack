@@ -8,7 +8,7 @@
 [![Watch on GitHub](https://img.shields.io/github/watchers/paralect/stack.svg?style=social&label=Watch)](https://github.com/paralect/ship/watchers)
 [![Star on GitHub](https://img.shields.io/github/stars/paralect/stack.svg?style=social&label=Stars)](https://github.com/paralect/ship/stargazers)
 [![Follow](https://img.shields.io/twitter/follow/paralect.svg?style=social&label=Follow)](https://twitter.com/paralect)
-[![Tweet](https://img.shields.io/twitter/url/https/github.com/paralect/stack.svg?style=social)](https://twitter.com/intent/tweet?I%27m%20using%20Stack%20components%20to%20build%20my%20next%20product%20🚀.%20Check%20it%20out:%20https://github.com/paralect/stack)
+[![Tweet](https://img.shields.io/twitter/url/https/github.com/paralect/stack.svg?style=social)](https://twitter.com/intent/tweet?text=I%27m%20using%20Stack%20components%20to%20build%20my%20next%20product%20🚀.%20Check%20it%20out:%20https://github.com/paralect/stack)
 
 A set of components for makers to ship better products faster 🚀.
 [Stack](https://github.com/paralect/stack) is an number of open-source components, resulted from years of hard work on a number of awesome products. We carefully select, document and share our production-ready knowledge with you. Stack aims to help to improve your product quality and time to market. Every component can be used as standalone component and you can combine different components to create your product or just use [Ship](https://github.com/paralect/ship).
