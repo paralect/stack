@@ -13,19 +13,7 @@
 A set of components for makers to ship better products faster 🚀.
 [Stack](https://github.com/paralect/stack) is an number of open-source components, resulted from years of hard work on a number of awesome products. We carefully select, document and share our production-ready knowledge with you. Stack aims to help to improve your product quality and time to market. Every component can be used as standalone component and you can combine different components to create your product or just use [Ship](https://github.com/paralect/ship).
 
-Main concepts:
-1. Every component has an owner who maintain and contribute to the component, keeping it up to date all the time and fixing any issues.
-2. Every Product Stack component has extensive documentation which allow to learn it quite quickly.  
-
-## Tools
-
-Tools we use internally to collaborate on the project. If you have any questions, suggestions or ideas — just [create an issue](https://github.com/paralect/stack/issues/new).
-
-1. [Slack](https://paralect-stack.slack.com/messages)
-2. [Drone CI](http://product-stack-ci.paralect.com)
-3. [Internal Trello Board](https://trello.com/b/ZmxYFqWa/product-stack-development)
-4. [NPM Organization](https://www.npmjs.com/org/paralect)
-5. [Docker Hub](https://hub.docker.com/u/paralect/dashboard/)
+Every Stack component is actively maintained and production-tested on multiple products. 
 
 ## Technology Stack
 
@@ -63,6 +51,16 @@ We distribute Product Stack components in four main ways:
 |[Emails Service](./mail-service/README.md)|An mjml and webpack based service for templates generation and email sending|
 |[Stack Component Template](./stack-component-template/README.md)|A stack component template for starting new Stack components|
 
+## Tools
+
+Tools we use internally to collaborate on the project. If you have any questions, suggestions or ideas — just [create an issue](https://github.com/paralect/stack/issues/new).
+
+1. [Slack](https://paralect-stack.slack.com/messages)
+2. [Drone CI](http://product-stack-ci.paralect.com)
+3. [Internal Trello Board](https://trello.com/b/ZmxYFqWa/product-stack-development)
+4. [NPM Organization](https://www.npmjs.com/org/paralect)
+5. [Docker Hub](https://hub.docker.com/u/paralect/dashboard/)
+
 ## Change Log
 
 This project adheres to [Semantic Versioning](http://semver.org/).
@@ -70,7 +68,7 @@ Every release is documented on the Github [Releases](https://github.com/paralect
 
 ## License
 
-Ship is released under the [MIT License](LICENSE).
+Stack is released under the [MIT License](LICENSE).
 
 ## Contributing
 
