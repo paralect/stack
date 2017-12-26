@@ -90,6 +90,17 @@
         "ideas",
         "review"
       ]
+    },
+    {
+      "login": "nastya-kostyukova",
+      "name": "Anastasia Kostyukova",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/11842784?v=4",
+      "profile": "https://github.com/nastya-kostyukova",
+      "contributions": [
+        "code",
+        "doc",
+        "example"
+      ]
     }
   ]
 }
