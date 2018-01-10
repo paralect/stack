@@ -1,4 +1,4 @@
-# Stack 🎉 
+![Stack](https://raw.githubusercontent.com/paralect/stack/master/stack-component-template/stack.png)
 
 [![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square)](#contributors)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)](LICENSE)
