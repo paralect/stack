@@ -7,19 +7,8 @@ pipeline:
       status: [ failure, success ]
       event: [ pull_request ]
 
-  run-pdf-service-tests:
-    image: node:8.2
-    commands:
-      - cd pdf-service/client && ./bin/run.sh && cd ../../
-      - cd pdf-service/server && ./bin/run.sh && cd ../../
-    when:
-      status: [ failure, success ]
-      event: [ pull_request ]
-
 services:
   mongo:
     image: mongo:3.4
-  pdf-service:
-    image: paralect/pdf-service
 
 branches: [ master, "*:master" ]
