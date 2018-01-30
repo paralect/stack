@@ -47,7 +47,7 @@ We distribute Stack components in four main ways:
 |[Deploy Drone CI](https://github.com/paralect/deploy-drone)|Ansible automation for production-ready Drone CI deployment|
 |[Eslint config](https://github.com/paralect/eslint-config)|Eslint configuration used across all Stack components|
 |[React Native Starter](./react-native-starter/README.md)|Starter kit for React Native applications|
-|[PDF Service](./pdf-service/README.md)|A puppeteer based PDF generation services, shipped as docker image|
+|[PDF Service](https://github.com/paralect/pdf-service)|A puppeteer based PDF generation services, shipped as docker image|
 |[Emails Service](./mail-service/README.md)|An mjml and webpack based service for templates generation and email sending|
 |[Stack Component Template](./stack-component-template/README.md)|A stack component template for starting new Stack components|
 

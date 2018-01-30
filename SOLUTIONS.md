@@ -14,7 +14,7 @@ Every solution should include comprehensive documentation, which explains at lea
 |:--:|:----:|:----------|
 |[JS Style](https://github.com/paralect/eslint-config)|![](https://img.shields.io/badge/status-solution-green.svg)|Javascript style conventions|
 |[Node.JS conventions](./conventions/node-js/README.md)|![](https://img.shields.io/badge/status-solution-green.svg)|Node.JS, package.json conventions|
-|[PDF generation service](./pdf-service/README.md)|![](https://img.shields.io/badge/status-solution-green.svg)|Service that allow generate PDF documents from html files|
+|[PDF generation service](https://github.com/paralect/pdf-service)|![](https://img.shields.io/badge/status-solution-green.svg)|Service that allow generate PDF documents from html files|
 
 
 #### Standalone packages
