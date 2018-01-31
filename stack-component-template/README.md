@@ -4,7 +4,7 @@ Stack was created with a single goal: help ourself and others ship better produc
 
 If you're looking to add your component to the Stack family or trying to understand internal Stack structure keep reading. 
 
-## The basics
+## Component files
 
 Every Stack component must include following parts:
 1. [CODE_OF_CONDUCT](./CODE_OF_CONDUCT.md) — general code of conduct
@@ -15,6 +15,17 @@ Every Stack component must include following parts:
 6. [LICENSE](./LICENSE) — all Stack components are released under MIT license.
 7. [CHANGELOG.md](./CHANGELOG.md) — we keep every change in the CHANGELOG.md
 8. [SHIP_README](./SHIP_README.md) — this is optional readme which becomes README.md, when component get integrated into the [Ship](https://github.com/paralect/ship). 
+
+## A beautiful README
+
+A good README needs to contain all the essential information so that developers understand what the project is about, why they should use it, and how to use it. It should also be stylish and attractive (use smiles and easy, concise language). 
+
+1. *Headline* — every component should have a headline, which is one sentense description of how component can be helful or what it does. 
+2. *Github topics* — every component should have a list of relevant topics.
+3. *Features* — briefly describe primary features (use smiles 🔥⚡️, they make life more fun). See [an example](https://github.com/paralect/node-mongo#features)
+4. *Installation guide* — users should know how to install/use component.
+5. *Example* — include short component example usage, move full api reference into separate document. See [an example](https://github.com/paralect/node-mongo#quick-example)
+6. *Changelog*, *License*, *Contributing*, *Contributors* sections are required to every repository. See [an example 1](./COMPONENT_README.md) and an [example 2](https://github.com/paralect/node-mongo#change-log).
 
 ## Creating your own Stack component
 
