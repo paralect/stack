@@ -1,5 +1,5 @@
 drone_version: latest
-drone_github_users: "anorsich,maqpie,hovoodd,gavruk,filipochka97,NesterenkoNikita,ezhivitsa,KuhArt,IharKrasnik,nastya-kostyukova,akovshparalect,chepicov,danilyanich,SobakaSlava,Rudenkopolina,nrt3,AllDayAlone,AlionaMozol,Max-Starling,kazeens,GNAGONI,purpleow1,maxmabius,annakoro,Evshved,ukryvenka"
+drone_github_users: "anorsich,maqpie,hovoodd,gavruk,filipochka97,NesterenkoNikita,ezhivitsa,KuhArt,IharKrasnik,nastya-kostyukova,akovshparalect,chepicov,danilyanich,SobakaSlava,Rudenkopolina,nrt3,AllDayAlone,AlionaMozol,Max-Starling,kazeens,GNAGONI,purpleow1,maxmabius,annakoro,Evshved,ukryvenka,Rylko,alex96frolov"
 drone_agents: [{name: "Nancy"}, {name: "Sid"}]
 drone_url: http://product-stack-ci.paralect.com
 
